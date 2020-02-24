@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Clientes = require('../../models/clients');
+const Clientes = require('../../models/clientes');
 
 /*----------------------------------------------------------
                          Routes
