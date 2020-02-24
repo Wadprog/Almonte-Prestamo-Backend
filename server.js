@@ -10,10 +10,10 @@ connectDB();
 
 //use the routes
 
-app.use('/api/clientes',require('./routes/api/clientes'))
-app.use('/api/planes',require('./routes/api/planes'))
-app.use('/api/prestamos',require('./routes/api/prestamos'))
-app.use('/api/usuarios',require('./routes/api/usuarios'))
+app.use('/api/client',require('./routes/api/client'))
+app.use('/api/plan',require('./routes/api/plan'))
+app.use('/api/loan',require('./routes/api/loan'))
+app.use('/api/user',require('./routes/api/user'))
 
 
 app.get('/', (req, res)=> res.send('We are working good'))

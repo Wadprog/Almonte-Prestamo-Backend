@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-const prestamoSchema = mongoose.Schema({
+const loanSchema = mongoose.Schema({
 	client: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'clientes'
+		ref: 'client'
 	},
 	monto: {
 		type: Number,
@@ -11,7 +11,7 @@ const prestamoSchema = mongoose.Schema({
 	},
 	plan: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'plans'
+		ref: 'plan'
 	},
 	estadoPago: {
 		type: Boolean,
@@ -25,7 +25,7 @@ const prestamoSchema = mongoose.Schema({
 		{
 			id: {
 				type: mongoose.Schema.Types.ObjectId,
-				ref: 'prestamos'
+				ref: 'loan'
 			}
 		}
 	],
@@ -52,7 +52,7 @@ const prestamoSchema = mongoose.Schema({
 			},
 			colector: {
 				type: mongoose.Schema.Types.ObjectId,
-				ref: 'usuarios'
+				ref: 'user'
 			}
 		}
 	],
@@ -63,4 +63,4 @@ const prestamoSchema = mongoose.Schema({
 	}
 });
 
-module.exports = Prestamo = mongoose.model('prestamo', prestamoSchema);
+module.exports = Loan = mongoose.model('loan', loanSchema);

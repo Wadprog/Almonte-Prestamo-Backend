@@ -19,4 +19,4 @@ const planesSchema = mongoose.Schema({
 	}
 });
 
-module.exports = Planes = mongoose.model('plane', planesSchema);
+module.exports = Plan = mongoose.model('plan', planesSchema);

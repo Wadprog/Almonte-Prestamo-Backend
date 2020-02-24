@@ -1,30 +1,30 @@
 const express = require('express');
 const router = express.Router();
-const Planes = require('../../models/plan');
+const Plan = require('../../models/plan');
 
 /*----------------------------------------------------------
                          Routes
 ------------------------------------------------------------*/
 
-//@routes get api/planes/
-//@desc get all planes route
+//@routes get api/Plan/
+//@desc get all Plan route
 //@desc access public temp
 router.get('/', async (req, res) => {
 	try {
-		let plans = await Planes.find();
+		let plans = await Plan.find();
 		res.json(plans);
 	} catch (error) {
 		console.log(`Get not complete task get all Plans`);
 		res.json({ msg: 'Server error ${error}' });
 	}
 });
-//@routes get api/planes/:id
-//@desc Get  a  planes by id route
+//@routes get api/Plan/:id
+//@desc Get  a  Plan by id route
 //@desc access public temp
 
 router.get('/:id', async (req, res) => {
 	try {
-		let plan = await Planes.findById(req.params.id);
+		let plan = await Plan.findById(req.params.id);
 		if (!plan) res.status(404).json({ msg: 'This plan does not exist' });
 		res.json(plan);
 	} catch (error) {
@@ -32,18 +32,18 @@ router.get('/:id', async (req, res) => {
 		res.json({ msg: 'Server error ${error}' });
 	}
 });
-//@routes post api/planes/
-//@desc Create new  planes route
+//@routes post api/Plan/
+//@desc Create new  Plan route
 //@desc access public temp
 router.post('/', async (req, res) => {
 	try {
 		const { name } = req.body;
-		let plan = await Planes.findOne({ name });
+		let plan = await Plan.findOne({ name });
 		if (plan) res.status(400).json({ msg: 'Un plan con este nombre existe' });
 
 		const { cuotas, percentaje } = req.body;
 
-		plan = new Planes({
+		plan = new Plan({
 			name,
 			cuotas,
 			percentaje
