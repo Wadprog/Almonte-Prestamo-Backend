@@ -1,20 +1,22 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const planSchema =  mongoose.Schema({
+const planesSchema = mongoose.Schema({
+	name: {
+		type: String,
+		required: true
+	},
+	cuotas: {
+		type: Number,
+		required: true
+	},
+	percentaje: {
+		type: Number,
+		required: true
+	},
+	fecha: {
+		type: Date,
+		default: Date.now
+	}
+});
 
-    name:{
-        type:String, 
-        required:true, 
-    }, 
-    cuotas:{
-        type:Number, 
-        required:true
-    }, 
-    percentaje:{
-        type:Number, 
-        required:true, 
-        
-    }
-})
-
-module.exports =Plan= mongoose.Model('plan', planSchema)
+module.exports = Planes = mongoose.model('plane', planesSchema);
