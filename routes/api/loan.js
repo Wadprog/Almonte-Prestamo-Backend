@@ -11,7 +11,7 @@ const Loan = require('../../models/loan');
 //@desc access public temp
 router.get('/', async (req, res) => {
 	try {
-		let loans = await Loan.find();
+		let loans = await Loan.find().populate(['plan','client']);
 		res.json(loans);
 	} catch (error) {
 		console.log(`Get not complete task get all Loan`);
@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
 	try {
-		let loan = await Loan.findById(req.params.id).populate('plane', ['name', 'cuotas']);
+		let loan = await Loan.findById(req.params.id).populate(['plan','client']);
 		if (!loan) res.status(404).json({ msg: 'This loan does not exist' });
 		res.json(loan);
 	} catch (error) {
@@ -32,6 +32,21 @@ router.get('/:id', async (req, res) => {
 		res.json({ msg: 'Server error ${error}' });
 	}
 });
+//@routes get api/Loan/:id
+//@desc Get  a  Loan by id route
+//@desc access public temp
+
+
+router.get('/client/:id', async (req, res)=>{
+	try {
+		let loans = await Loan.find({client:req.params.id}).populate('plan');
+		res.json(loans)
+		
+	} catch (error) {
+		console.log(`Get not complete task get all Loan`);
+		res.json({ msg: `Server error ${error}` });
+	}
+})
 //@routes post api/Loan/
 //@desc Create new  Loan route
 //@desc access public temp
