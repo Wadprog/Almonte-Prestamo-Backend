@@ -1,21 +1,22 @@
 {
-	"name": "almonteprestamobk",
-	"version": "1.0.0",
-	"description": "This is the backend for  money lending management system",
-	"main": "server.js",
-	"scripts": {
-		"start": "node server",
-		"server": "nodemon server"
-	},
-	"author": "Wadson Vaval",
-	"license": "ISC",
-	"dependencies": {
-		"bcryptjs": "^2.4.3",
-		"config": "^3.2.5",
-		"express": "^4.17.1",
-		"express-validator": "^6.4.0",
-		"jsonwebtoken": "^8.5.1",
-		"mongoose": "^5.9.1",
-		"nodemon": "^2.0.2"
-	}
+  "name": "almonteprestamobk",
+  "version": "1.0.0",
+  "description": "This is the backend for  money lending management system",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "server": "nodemon server",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install"
+  },
+  "author": "Wadson Vaval",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.2.5",
+    "express": "^4.17.1",
+    "express-validator": "^6.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.1",
+    "nodemon": "^2.0.2"
+  }
 }
