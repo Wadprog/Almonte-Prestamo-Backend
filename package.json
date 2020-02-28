@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server",
     "server": "nodemon server",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && node run server"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && node start"
   },
   "author": "Wadson Vaval",
   "license": "ISC",
