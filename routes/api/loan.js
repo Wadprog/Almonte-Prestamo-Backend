@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
 	try {
-		let loan = await Loan.findById(req.params.id).populate('plane', ['name', 'cuotas']);
+		let loan = await Loan.findById(req.params.id).populate([ 'plan', 'client' ]);
 		if (!loan) res.status(404).json({ msg: 'This loan does not exist' });
 		res.json(loan);
 	} catch (error) {
@@ -45,6 +45,34 @@ router.post('/', async (req, res) => {
 	} catch (error) {
 		console.log(`Error creating new loan`);
 		res.json({ msg: 'Server error ${error}' });
+	}
+});
+
+//@routes post api/Loan/due/:id
+//@desc Create new  Loan route
+//@desc access public temp
+router.post('/due/:id', async (req, res) => {
+	try {
+		let loan = await Loan.findById(req.params.id).populate([ 'plan', 'client' ]);
+		if (!loan) return res.status(404).json({ msg: 'Prestamo no existe' });
+		
+		if(loan.estadoPago)
+		return res.status(401).json({msg:'todo pagado'});
+
+		const { amount, collector } = req.body;
+		let newDue = { amount };
+		if (collector) newDue.collector = collector;
+		loan.dues.push(newDue);
+		// check if  all payment are made
+		if (loan.plan.cuotas <= loan.dues.length - 1) {
+			loan.estadoPago = true;
+			loan.status = 'paid';
+		}
+		await loan.save();
+		res.json(loan);
+	} catch (error) {
+		console.log(`server error ${error}`);
+		return res.status(500).json({ msg: 'server error' + error.message });
 	}
 });
 
