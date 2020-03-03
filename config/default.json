@@ -1,3 +1,4 @@
 {
-    "mongoUri":"mongodb+srv://Wadson:Password@cluster0-8et6g.mongodb.net/test?retryWrites=true&w=majority"
+	"mongoUri": "mongodb+srv://Wadson:Password@cluster0-8et6g.mongodb.net/test?retryWrites=true&w=majority",
+	"jwtSecret": "My big secret"
 }
