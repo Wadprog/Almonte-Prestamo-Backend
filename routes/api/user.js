@@ -11,6 +11,7 @@ const User = require('../../models/user');
 //@desc access public temp
 router.get('/', async (req, res) => {
 	try {
+  
 		let users = await User.find();
 		res.json(users);
 	} catch (error) {

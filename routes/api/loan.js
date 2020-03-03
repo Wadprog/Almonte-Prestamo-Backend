@@ -55,16 +55,16 @@ router.post('/due/:id', async (req, res) => {
 	try {
 		let loan = await Loan.findById(req.params.id).populate([ 'plan', 'client' ]);
 		if (!loan) return res.status(404).json({ msg: 'Prestamo no existe' });
-		
+
 		if(loan.estadoPago)
 		return res.status(401).json({msg:'todo pagado'});
 
-		const { amount, collector } = req.body;
-		let newDue = { amount };
+		const { monto, collector } = req.body;
+		let newDue = { monto };
 		if (collector) newDue.collector = collector;
-		loan.dues.push(newDue);
+		loan.pagos.push(newDue);
 		// check if  all payment are made
-		if (loan.plan.cuotas <= loan.dues.length - 1) {
+		if (loan.plan.cuotas <= loan.pagos.length - 2) {
 			loan.estadoPago = true;
 			loan.status = 'paid';
 		}
@@ -75,5 +75,63 @@ router.post('/due/:id', async (req, res) => {
 		return res.status(500).json({ msg: 'server error' + error.message });
 	}
 });
+
+//@routes post api/Loan/due/:id
+//@desc Create new  Loan route
+//@desc access public temp
+
+router.get('/get/routine/', async (req, res) => {
+	try {
+
+		let loans = await Loan.find({ estadoPago: false }).populate([ 'client', 'plan' ]);
+
+		/*const loanWitnNopayment = [];
+		loans.forEach(loan => {
+			if (loan.pagos.length == 0) {
+				let loanDate = new Date(loan.fecha, 'DD/MM/YYYY');
+				let currentDate = (Date.now();
+				if (currentDate.diff(loanDate, 'days') >= 1) loanWitnNopayment.push(loan);
+			}
+		});*/
+
+	
+/*limitdate= new Date()+15;
+	
+		const tempL = loans.map(loan => {
+			if (loan.pagos.length > 0) {
+			
+				if (Date(loan.pagos[loan.pagos.length - 1].fecha) > limitdate) {
+		
+					return loan;
+				}
+			} else {
+		
+				return loan;
+			}
+		});
+
+		loans = tempL;
+*/
+		const cities = loans.reduce(
+			(unique, loan) => (unique.includes(loan.client.ciudad) ? unique : [ ...unique, loan.client.ciudad ]),
+			[]
+		);
+		let response = [];
+		cities.forEach(city => {
+			let tempCity = loans.reduce(
+				(allLoans, loan) => (loan.client.ciudad != city ? allLoans : [ ...allLoans, loan ]),
+				[]
+			);
+			response.push({ city: tempCity });
+		});
+
+		res.json({ response });
+	} catch (error) {
+		console.log(`Get not complete task get all Loan`);
+		res.json({ msg: `Server error ${error}` });
+	}
+});
+
+
 
 module.exports = router;
