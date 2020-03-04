@@ -37,7 +37,7 @@ router.post(
 		const { name, password } = req.body;
 		try {
 			let user = await User.findOne({ name });
-			if (!user) return req.status(401).json({ msg: 'usuario no existe' });
+			if (!user) return res.status(401).json({ msg: 'usuario no existe' });
 
 			const isMatch = await bcrypt.compare(password, user.password);
 			if (!isMatch) return res.status(400).json({ msg: 'usuario no existe' });

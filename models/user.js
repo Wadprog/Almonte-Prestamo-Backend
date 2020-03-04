@@ -5,6 +5,7 @@ const usuariosSchema = mongoose.Schema({
 		type: String,
 		required: true
 	},
+	
 	nombreUsuarios: {
 		type: String,
 		required: true
