@@ -25,6 +25,7 @@ app.use('/api/plan', require('./routes/api/plan'));
 app.use('/api/loan', require('./routes/api/loan'));
 app.use('/api/user', require('./routes/api/user'));
 app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/clientwloan', require('./routes/api/clientLoan'));
 
 app.get('/', (req, res) => res.send('We are working good'));
 const PORT = process.env.Port || 80;
