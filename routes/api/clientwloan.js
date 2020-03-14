@@ -14,10 +14,10 @@ const Client = require('../../models/client');
 router.post('/', async (req, res) => {
 	try {
 		const { client, loan } = req.body;
-
-		let cliente = await Client.find({ cedula: client.cedula });
+		let cliente = await Client.findOne({ cedula: client.cedula });
 
 		if (cliente) {
+			console.log(` Cedla cliente es ${cliente.cedula}`);
 			let newLoan = new Loan({
 				client: cliente.id,
 				...loan
@@ -25,19 +25,22 @@ router.post('/', async (req, res) => {
 			await newLoan.save();
 			return res.json({ cliente, newLoan });
 		} else {
-			cliente = new Client({
+			let newCliente = new Client({
 				...client
 			});
-			await cliente.save();
+			newCliente = await newCliente.save();
+			console.log(newCliente.id);
 			let newLoan = new Loan({
-				client: cliente.id,
+				client: newCliente.id,
 				...loan
 			});
 			await newLoan.save();
-			return res.json({ newLoan, cliente });
+			return res.json({ newLoan, newCliente });
 		}
 	} catch (error) {
 		console.log(`Get not complete task  create cliente and Prestamo `);
+
+		console.log(`hwere is the error ${error}`);
 		res.json({ msg: `Server error ${error}` });
 	}
 });
