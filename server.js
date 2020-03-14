@@ -28,5 +28,5 @@ app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/clientwloan', require('./routes/api/clientwloan'));
 
 app.get('/', (req, res) => res.send('We are working good'));
-const PORT = process.env.Port || 6000;
+const PORT = process.env.Port || 80;
 app.listen(PORT, () => console.log(`Server runing on port ${PORT}`));
