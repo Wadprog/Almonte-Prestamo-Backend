@@ -56,8 +56,7 @@ router.post('/due/:id', async (req, res) => {
 		let loan = await Loan.findById(req.params.id).populate([ 'plan', 'client' ]);
 		if (!loan) return res.status(404).json({ msg: 'Prestamo no existe' });
 
-		if(loan.estadoPago)
-		return res.status(401).json({msg:'todo pagado'});
+		if (loan.estadoPago) return res.status(401).json({ msg: 'todo pagado' });
 
 		const { monto, collector } = req.body;
 		let newDue = { monto };
@@ -82,7 +81,6 @@ router.post('/due/:id', async (req, res) => {
 
 router.get('/get/routine/', async (req, res) => {
 	try {
-
 		let loans = await Loan.find({ estadoPago: false }).populate([ 'client', 'plan' ]);
 
 		/*const loanWitnNopayment = [];
@@ -94,8 +92,7 @@ router.get('/get/routine/', async (req, res) => {
 			}
 		});*/
 
-	
-/*limitdate= new Date()+15;
+		/*limitdate= new Date()+15;
 	
 		const tempL = loans.map(loan => {
 			if (loan.pagos.length > 0) {
@@ -132,6 +129,14 @@ router.get('/get/routine/', async (req, res) => {
 	}
 });
 
-
+router.get('/client/:id', async (req, res) => {
+	try {
+		let loans = await Loan.find({ client: req.params.id }).populate('plan');
+		res.json(loans);
+	} catch (error) {
+		console.log(`Get not complete task get all Loan`);
+		res.json({ msg: `Server error ${error}` });
+	}
+});
 
 module.exports = router;
