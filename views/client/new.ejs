@@ -1,0 +1,35 @@
+<%-include("../partials/head")%>
+    <title> crear nuevo cliente</title>
+  </head>
+  <body>
+    <div class="container mt-5 pt-5">
+        <div class="card">
+            <div class="card-header">Crear nuevo cliente</div>
+            <div class="card-body">
+                <form>
+                    <%-include("../partials/formdata")%>
+
+                    <div class="Form-group">
+                        <label>cidudad</label>
+                        <select class="form-control" id="">
+                        <% ciudades.forEach( ciudad =>{%>
+                            
+                          <option value='<%=ciudad.id %>'> <%= ciudad.name %> </option>
+                         
+                          <%  })%>
+                        </select>
+                      </div>
+                      <div class="Form-group">
+                        <label>tel</label>
+                        <input name="tel" type="text" class="form-control" />
+                      </div>
+                      <div class="mt-3 d-flex">
+                        <input type="submit" class=" mr-2 btn  btn-lg btn-outline-primary" value='Guardar Nuevo Cliente' />
+                        <a class ='btn btn-lg btn-outline-warning' href='/client'>cancelar</a>
+                      </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
