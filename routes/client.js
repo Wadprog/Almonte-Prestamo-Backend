@@ -44,9 +44,9 @@ router.get('/new/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    let client = await Client.findById(req.params.id)
-    if (!client) res.status(404).json({ msg: 'This client does not exist' })
-    res.json(client)
+    let cliente = await Client.findById(req.params.id)
+    if (!cliente) res.status(404).json({ msg: 'This client does not exist' })
+    res.render('./client/client', { cliente })
   } catch (error) {
     console.log(`Could not get this client ${req.params.id}`)
     res.json({ msg: 'Server error ${error}' })
