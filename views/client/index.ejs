@@ -2,25 +2,31 @@
     <title> Todo los clientes</title>
   </head>
   <body>
+    <div class="page-wrapper chiller-theme toggled">
+      <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+        <i class="fas fa-bars"></i>
+      </a>
+    <%-include("../partials/sideBar")%>
+    <main class="page-content">
     <div class="container-fluid">
       <div class="my-4 py-4">
         <div class="row mb-0">
           <div class="col-md-4 offset-md-8 ">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
+                    <button id='type' class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
+                    <div id ="dropdownMenu" class="dropdown-menu">
+                      <a class="dropdown-item" href="#">nombre</a>
+                      <a class="dropdown-item" href="#">telefono </a>
+                      <a class="dropdown-item" href="#">cedula</a>
                       <div role="separator" class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Separated link</a>
+                      <a class="dropdown-item" href="#">ciudad</a>
                     </div>
                   </div>
             
-            <input placeholder="Buscar ..." type="text" class="form-control" />
+            <input id= "searchInput" placeholder="Buscar ..." type="text" class="form-control" />
             <div class="input-group-append">
-              <button class="btn btn-outline-primary" type="button">
+              <button id = "btnSearch" class="btn btn-outline-primary" type="button">
                 <i class="fa fa-search"></i>
               </button>
             </div>
@@ -41,8 +47,8 @@
         </div>
         <div class="bg-transparent">
         <div class="table-responsive-sm">
-          <table class="my-0 table table-bordered table-responsive-md">
-            <thead class="thead-dark">
+          <table class="my-0 table table-bordered  table-hover table-sm">
+            <thead style=" background-color:#31353d  ;"class="text-white text-center">
               <tr>
                 <th>Nombre</th>
                 <th>Cedula</th>
@@ -57,22 +63,22 @@
               <% clients.forEach(client=>{%>
 
               <tr>
-                <td><%=client.name + " " + client.apellido %></td>
-                <td><%=client.cedula %></td>
-                <td><%=client.dirreccion %></td>
-                <td><%=client.ciudad %></td>
-                <td><%=client.ciudad %></td>
-                <td><%=client.telefono %></td>
+                <td class="nombre"><%=client.name + " " + client.apellido %></td>
+                <td class="cedula"><%=client.cedula %></td>
+                <td ><%=client.dirreccion %></td>
+                <td ><%=client.ciudad %></td>
+                <td class="ciudad"><%=client.ciudad %></td>
+                <td class="telefono"><%=client.telefono %></td>
                 <td>
                   <a
                     href="/client/<%=client._id %>"
-                    class="btn btn-sm btn-outline-info mr-2 "
+                    class="btn btn-sm btn-outline-info mr-2 mb-2 "
                   >
                     Ver
                   </a>
                   <a
                     class="btn btn-sm btn-outline-warning mr-2 "
-                    href="</client/edit/%= client._id %>"
+                    href="</client/edit/<%= client._id %>"
                   >
                     Modificar
                   </a>
@@ -86,5 +92,54 @@
         </div>
       </div>
     </div>
+    </div>
+  </main>
+</div>
+<script>
+var dropdownMenu= document.getElementById('dropdownMenu');
+var btnType= document.getElementById('type'); 
+btnType.addEventListener('click', ()=>{
+  if(dropdownMenu.classList.contains('d-block')){
+    dropdownMenu.classList.remove('d-block')
+  }
+  else
+  dropdownMenu.classList.add('d-block');
+})
+var dropdownItems =document.getElementsByClassName('dropdown-item'); 
+for (let dropdownItem of dropdownItems) {
+
+  dropdownItem.addEventListener('click',()=>{
+    btnType.innerText=dropdownItem.innerText;
+    dropdownMenu.classList.remove('d-block')
+
+  })
+
+}
+const filterTable =(category,term)=>{
+
+  const elements= document.getElementsByClassName(category);
+  
+  for (let element of elements) {
+    element.parentNode.classList.remove('d-none')
+  }
+
+  for (let element of elements) {
+    if(!element.innerText.includes(term))
+    element.parentNode.classList.add('d-none')
+  }
+
+}
+var btnSearch= document.getElementById('btnSearch')
+btnSearch.addEventListener('click', e=>{
+  e.preventDefault(); 
+  const category = btnType.innerText;
+  if(category ==="Dropdown")
+  alert('Select a category ')
+  else{
+const term= document.getElementById('searchInput').value; 
+filterTable(category,term )
+  }
+})
+</script>
   </body>
 </html>
