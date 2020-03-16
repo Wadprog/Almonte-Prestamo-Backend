@@ -56,22 +56,20 @@ router.get('/:id', async (req, res) => {
 //@desc Create new  Client route
 //@desc access public temp
 router.post('/', async (req, res) => {
+  console.log({...req.body})
   try {
     const { cedula } = req.body
     let client = await Client.findOne({ cedula })
     if (client)
       res.status(400).json({ msg: 'Un client con este cedula existe' })
 
-    const { cuotas, percentaje } = req.body
-
     client = new Client(req.body)
-
     await client.save()
 
-    res.json(client)
+    res.redirect('/client')
   } catch (error) {
     console.log(`Error creating new client`)
-    res.json({ msg: 'Server error ${error}' })
+    res.json({ msg: `Server error ${error}` })
   }
 })
 

@@ -43,18 +43,14 @@ router.post('/', async (req, res) => {
 
 		const { cuotas, percentaje } = req.body;
 
-		plan = new Plan({
-			name,
-			cuotas,
-			percentaje
-		});
+		plan = new Plan(req.body);
 
 		await plan.save();
 
 		res.json(plan);
 	} catch (error) {
 		console.log(`Error creating new plan`);
-		res.json({ msg: 'Server error ${error}' });
+		res.json({ msg: `Server error ${error}`});
 	}
 });
 

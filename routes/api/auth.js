@@ -24,7 +24,7 @@ router.get('/', auth, async (req, res) => {
 
 //@routes get api/auth/
 //@desc test route
-//@desc access public
+//@desc access public 
 router.post(
 	'/',
 	[

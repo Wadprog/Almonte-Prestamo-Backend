@@ -24,7 +24,7 @@
                     </div>
                   </div>
             
-            <input id= "searchInput" placeholder="Buscar ..." type="text" class="form-control" />
+            <input onchange="handleChange()"id= "searchInput" placeholder="Buscar ..." type="text" class="form-control" />
             <div class="input-group-append">
               <button id = "btnSearch" class="btn btn-outline-primary" type="button">
                 <i class="fa fa-search"></i>
@@ -115,13 +115,22 @@ for (let dropdownItem of dropdownItems) {
   })
 
 }
+const clearall=()=>{
+  const tds= document.getElementsByTagName('td'); 
+  for(let td of tds)
+  element.classList.remove('d-none')
+}
+const handleChange=()=>{
+  const category = btnType.innerText;
+  if(category !="Dropdown"){
+  const term= document.getElementById('searchInput').value; 
+  filterTable(category,term);
+  }
+}
 const filterTable =(category,term)=>{
+  clearall();
 
   const elements= document.getElementsByClassName(category);
-  
-  for (let element of elements) {
-    element.parentNode.classList.remove('d-none')
-  }
 
   for (let element of elements) {
     if(!element.innerText.includes(term))
