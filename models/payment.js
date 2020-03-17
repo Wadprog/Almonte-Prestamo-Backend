@@ -5,15 +5,15 @@ const paymentSchema = mongoose.Schema({
     ref: 'loan'
   },
   dateToPay: {
-    type: Date,
+    type: String,
     required: true
   },
 
   dateAmountPaid: {
-    type: Date
+    type: String
   },
   dateInterestPaid: {
-    type: Date
+    type: String
   },
   quota: {
     type: Number
@@ -29,6 +29,9 @@ const paymentSchema = mongoose.Schema({
 
   interestPaid: {
     type: Number
+  }, 
+  comment:{
+    type:String
   }
 })
 

@@ -53,15 +53,21 @@ router.post('/', async (req, res) => {
     var interestPerQuota = Math.round(
       (amountPerQuota * steps - req.body.amount) / steps
     )
+    var date = req.body.date || moment()
+    const nextpaymentDate = nextPayment(date, plan.interval, 0)
     let loan = new Loan({
       ...req.body,
       amountPerQuota,
-      interestPerQuota
+      interestPerQuota,
+      nextpaymentDate,
+      date: moment(date).format('l')
     })
     loan = await loan.save()
-
+    // creating all payments needed
     for (var step = 1; step < steps + 1; step++) {
-      var newdate = moment(loan.date).add(step * interval, 'days')
+      var newdate = moment(loan.date)
+        .add(step * interval, 'days')
+        .format('l')
       let payment = new Payment({
         loan: loan.id,
         dateToPay: newdate,
@@ -81,44 +87,65 @@ router.post('/', async (req, res) => {
 //@desc access public temp
 router.post('/due/:id', async (req, res) => {
   try {
-    let loan_ = await Loan.findById(req.params.id)
+    let loan_ = await Loan.findById(req.params.id).populate('plan')
     if (!loan_) return res.status(404).json({ msg: 'Prestamo no existe' })
     if (loan_.status)
-      return res.status(400).json({ msg: `Payment rejected loan paid` })
+      return res.status(400).json({ msg: `Pago rechazado prestamo pagado` })
+
     let payment = await Payment.findOne({
       loan: req.params.id,
       dateToPay: loan_.nextpaymentDate
     })
     if (!payment) return res.status(404).json({ msg: 'Pagos Vacio' })
 
-    var temp = {}
     var date = null
-    if (req.body.date) date = req.body.date
+    if (req.body.date) date = moment(req.body.date).format('l')
 
     if (req.body.interest) {
-      payment.interestPaid = req.body.interest
-      payment.dateInterestPaid = date || new Date.now()
+      payment.interestPaid =
+        req.body.interest <= loan_.interestPerQuota
+          ? req.body.interest
+          : loan_.interestPerQuota
+      payment.dateInterestPaid = date || moment().format('l')
       payment.status =
         req.body.interest == payment.interestToPay
           ? 'interest partial'
           : ' interest paid'
     }
     if (req.body.amount) {
-      payment.amountPaid = req.body.amount
-      payment.dateAmountPaid = date || new Date.now()
+      payment.amountPaid =
+        req.body.amount <= loan_.amountPerQuota
+          ? req.body.amount
+          : loan_.amountPerQuota
+      payment.dateAmountPaid = date || moment().format('l')
       payment.status =
         req.body.amount == payment.amountToPay
           ? 'amount paid'
           : 'amount partial'
+
+      loan_.quota += 1
+      loan_.nextpaymentDate = nextPayment(
+        moment(loan_.date),
+        loan_.plan.interval,
+        loan_.quota
+      )
     }
+    payment.comment = req.body.comment || ''
+
+    if (req.body.amount > loan_.amountPerQuota) {
+      console.log('Paid too much take care of this ')
+      var dif = req.body.amount - loan_.amountPerQuota
+      payment.comment += `pago  ${dif}  mas`
+    }
+
     if (
-      payment.amountPaid == payment.amountToPay &&
-      payment.interestPaid == payment.interestToPay
+      payment.amountPaid == loan_.amountPerQuota &&
+      payment.interestPaid == loan_.interestPerQuota
     )
       payment.status = 'paid'
-    loan_.quota += 1
+
     payment.quota = loan_.quota
-    loan_.nextpaymentDate = nextPayment(loan_.date, loan_.plan, loan_.quota)
+    if (loan_.quota == loan_.plan.steps) loan_.status = true
     loan_ = await loan_.save()
     payment = await payment.save()
     return res.json({ loan_, payment })
@@ -199,10 +226,10 @@ router.get('/client/:id', async (req, res) => {
   }
 })
 
-const nextPayment = (fecha, plan, cuota) => {
-  const { intervalo } = plan
-  var date = moment(fecha)
-  return date.add(intervalo * (cuota + 1), 'days')
+const nextPayment = (date, interval, quota) => {
+  return moment(date)
+    .add(interval * (quota + 1), 'days')
+    .format('l')
 }
 
 const createPayments = (fecha, amount, plan, id) => {

@@ -24,15 +24,15 @@ const loanSchema = mongoose.Schema({
     default: false
   },
   quota: {
-    type: Number
+    type: Number,
+    default: 0
   },
 
   nextpaymentDate: {
-    type: Date
+    type: String
   },
   date: {
-    type: Date,
-    default: Date.now
+    type: String
   }
 })
 
