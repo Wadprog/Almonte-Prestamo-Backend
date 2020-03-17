@@ -64,6 +64,7 @@ router.post('/', async (req, res) => {
     })
     loan = await loan.save()
     // creating all payments needed
+  //  let payments = []
     for (var step = 1; step < steps + 1; step++) {
       var newdate = moment(loan.date)
         .add(step * interval, 'days')
@@ -74,7 +75,9 @@ router.post('/', async (req, res) => {
         quota: step
       })
       await payment.save()
+    //  payments.push(Payment)
     }
+  
     return res.json({ loan })
   } catch (error) {
     console.log(`Error creating new loan`)
@@ -184,7 +187,7 @@ router.get('/get/routine/', async (req, res) => {
           ? unique
           : [...unique, loan.client.ciudad],
       []
-    ) 
+    )
     let response = []
     cities.forEach(city => {
       let tempCity = loans.reduce(
@@ -192,7 +195,7 @@ router.get('/get/routine/', async (req, res) => {
           loan.client.ciudad != city ? allLoans : [...allLoans, loan],
         []
       )
-      response.push({ "city": tempCity })
+      response.push({ city: tempCity })
     })
 
     res.json({ count: loans.length, cities, response })
@@ -218,22 +221,4 @@ const nextPayment = (date, interval, quota) => {
     .format('l')
 }
 
-const createPayments = (fecha, amount, plan, id) => {
-  return async (req, res) => {
-    const { interval, steps, interest } = plan
-    for (var step = 1; step < steps + 1; step++) {
-      var newdate = moment(fecha).add(step * interval, 'days')
-      var amountToPay = (amount * interest) / 100
-      var interestToPay = amountToPay * steps - amount
-      var payment = new Payment({
-        loan: id,
-        dateToPay: newdate,
-        quota: step - 1,
-        amountToPay: amountToPay,
-        interestToPay: interestToPay
-      })
-      await payment.save()
-    }
-  }
-}
 module.exports = router
