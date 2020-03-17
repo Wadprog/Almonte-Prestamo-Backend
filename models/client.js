@@ -23,11 +23,15 @@ const clienteSchema = mongoose.Schema({
     required: true
   },
   ciudad: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'city'
+    type: String,
+    required: true
   },
   DirReferencia: {
     type: String
+  },
+  puntos: {
+    type: Number,
+    default: 500
   }
 })
 
