@@ -161,44 +161,30 @@ router.post('/due/:id', async (req, res) => {
 
 router.get('/get/routine/', async (req, res) => {
   try {
-    let loans = await Loan.find({ estadoPago: false }).populate([
-      'client',
-      'plan'
-    ])
+    let loans = await Loan.find({ status: false }).populate(['client', 'plan'])
 
-    /*const loanWitnNopayment = [];
-		loans.forEach(loan => {
-			if (loan.pagos.length == 0) {
-				let loanDate = new Date(loan.fecha, 'DD/MM/YYYY');
-				let currentDate = (Date.now();
-				if (currentDate.diff(loanDate, 'days') >= 1) loanWitnNopayment.push(loan);
-			}
-		});*/
+    console.log(`Before filter ${loans.length}`)
 
-    /*limitdate= new Date()+15;
-	
-		const tempL = loans.map(loan => {
-			if (loan.pagos.length > 0) {
-			
-				if (Date(loan.pagos[loan.pagos.length - 1].fecha) > limitdate) {
-		
-					return loan;
-				}
-			} else {
-		
-				return loan;
-			}
-		});
+    const tempL = []
+    loans.forEach(loan => {
+      let nextpaymentDate = moment(loan.nextpaymentDate)
+      let now = moment()
+      if (nextpaymentDate.isSameOrBefore(now)) {
+        console.log(`here is the next pay ${nextpaymentDate} and we are ${now}`)
+        tempL.push(loan)
+      }
+    })
 
-		loans = tempL;
-*/
+    loans = tempL
+    console.log(` After filter ${loans.length}`)
+
     const cities = loans.reduce(
       (unique, loan) =>
         unique.includes(loan.client.ciudad)
           ? unique
           : [...unique, loan.client.ciudad],
       []
-    )
+    ) 
     let response = []
     cities.forEach(city => {
       let tempCity = loans.reduce(
@@ -206,10 +192,10 @@ router.get('/get/routine/', async (req, res) => {
           loan.client.ciudad != city ? allLoans : [...allLoans, loan],
         []
       )
-      response.push({ city: tempCity })
+      response.push({ "city": tempCity })
     })
 
-    res.json({ response })
+    res.json({ count: loans.length, cities, response })
   } catch (error) {
     console.log(`Get not complete task get all Loan`)
     res.json({ msg: `Server error ${error}` })
