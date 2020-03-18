@@ -1,0 +1,31 @@
+.Modal-wrapper {
+  background-color: rgba(0, 0, 0, 0.5);
+
+  height: 100vw;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+
+  z-index: 90;
+}
+.Modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.Modal-close-btn {
+  background-color: white;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  border-radius: 50%;
+  position: absolute;
+  top: -30px;
+  right: -10px;
+  line-height: 20px;
+  font-weight:bold;
+}
+.Modal-close-btn:hover {
+    transform:scale(1.2,1.2);
+}
