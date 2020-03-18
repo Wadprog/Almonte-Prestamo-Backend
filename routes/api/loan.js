@@ -48,11 +48,13 @@ router.post('/', async (req, res) => {
         .json({ msg: `Este plan ${req.body.plan} no existe` })
 
     const { interval, steps, interest } = plan
+
     var amountPerQuota = Math.round((req.body.amount * interest) / 100)
-    console.log(amountPerQuota)
+    
     var interestPerQuota = Math.round(
       (amountPerQuota * steps - req.body.amount) / steps
     )
+
     var date = req.body.date || moment()
     const nextpaymentDate = nextPayment(date, plan.interval, 0)
     let loan = new Loan({
@@ -136,7 +138,6 @@ router.post('/due/:id', async (req, res) => {
     payment.comment = req.body.comment || ''
 
     if (req.body.amount > loan_.amountPerQuota) {
-      console.log('Paid too much take care of this ')
       var dif = req.body.amount - loan_.amountPerQuota
       payment.comment += `pago  ${dif}  mas`
     }

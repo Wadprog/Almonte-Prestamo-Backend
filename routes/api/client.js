@@ -41,9 +41,9 @@ router.post('/', async (req, res) => {
 		let client = await Client.findOne({ cedula });
 		if (client) res.status(400).json({ msg: 'Un client con este cedula existe' });
 
-		const { name, apellido, telefono, telefono2, telefono3, dirreccion, ciudad, DirReferencia } = req.body;
+		const { name, apellido, telefono, dirreccion, ciudad, DirReferencia } = req.body;
 
-		client = new Client({ name, apellido, telefono, dirreccion, ciudad, DirReferencia });
+		client = new Client({ cedula,name, apellido, telefono, dirreccion, ciudad, DirReferencia });
 
 		if (req.body.telefono2 && req.body.telefono2 != '') client.telefono2 = req.body.telefono2;
 		if (req.body.telefono3 && req.body.telefono3 != '') client.telefono3 = req.body.telefono3;
