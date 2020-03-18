@@ -1,4 +1,6 @@
 {
 	"mongoUri": "mongodb+srv://Wadson:Password@cluster0-8et6g.mongodb.net/test?retryWrites=true&w=majority",
-	"jwtSecret": "My big secret"
+	"jwtSecret": "My big secret", 
+	"prefix":"http://localhost:6000"
+	
 }
