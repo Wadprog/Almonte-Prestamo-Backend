@@ -23,6 +23,7 @@ import PrivateRoute from './component/PrivateRoute';
 import './App.css';
 import { loadProfiles } from './redux/actions/profile';
 import { loadLoans } from './redux/actions/loans';
+import {loadCities} from './redux/actions/city'
 import setAuthToken from './utils/setAuthToken';
 import { loadUser } from './redux/actions/auth';
 import { Provider } from 'react-redux';
@@ -32,6 +33,7 @@ function App() {
 		store.dispatch(loadUser());
 		store.dispatch(loadProfiles());
 		store.dispatch(loadLoans());
+			store.dispatch(loadCities());
 	}, []);
 
 	if (localStorage.token) setAuthToken(localStorage.token);

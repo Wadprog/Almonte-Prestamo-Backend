@@ -4,6 +4,19 @@ root {
 .my-item {
 	max-width: 500px;
 }
+.modifier{
+  border:none; 
+  position: relative; 
+}
+.modifier i:{
+  position: absolute;
+
+}
+.modifier i:hover{
+color:#42a812; 
+top:-3px; 
+
+}
 .my-info {
 	max-width: 600px;
   background-color: #cccccc !important;

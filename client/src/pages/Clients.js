@@ -13,6 +13,7 @@ const Clients = ({ profiles, profilesFiltered, filterProfiles }) => {
 		newLoan: false,
 		id: ''
 	});
+	
 	const { id, modifyProfile, newPayment, newLoan } = pageState;
 
 	const openModal = e => {

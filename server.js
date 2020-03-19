@@ -28,6 +28,7 @@ app.use('/api/plan', require('./routes/api/plan'))
 app.use('/api/loan', require('./routes/api/loan'))
 app.use('/api/user', require('./routes/api/user'))
 app.use('/api/auth', require('./routes/api/auth'))
+app.use('/api/city', require('./routes/api/city'))
 app.use('/api/clientwloan', require('./routes/api/clientwloan'))
 
 app.set('view engine', 'ejs')
