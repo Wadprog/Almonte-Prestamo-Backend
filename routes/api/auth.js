@@ -24,7 +24,7 @@ router.get('/', auth, async (req, res) => {
 
 //@routes get api/auth/
 //@desc test route
-//@desc access public 
+//@desc access public
 router.post(
 	'/',
 	[
@@ -32,6 +32,7 @@ router.post(
 		check('password', 'Entrar contrasena con un minimo de 4 caracter').not().isEmpty()
 	],
 	async (req, res) => {
+		console.log('I was hit');
 		const error = validationResult(req);
 		if (!error.isEmpty()) return res.status(400).json({ errors: error.array() });
 		const { name, password } = req.body;
@@ -63,10 +64,5 @@ router.post(
 		}
 	}
 );
-
-
-
-
-
 
 module.exports = router;

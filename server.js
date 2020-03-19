@@ -12,7 +12,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
   res.header(
     'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    'Origin, X-Requested-With,x-auth-token, Content-Type, Accept, Authorization'
   )
   if (req.method === 'OPTIONS') {
     res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET')
@@ -33,7 +33,7 @@ app.use('/api/clientwloan', require('./routes/api/clientwloan'))
 app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => res.render('index', { test: 'sister' }))
-app.use('/client', require('./routes/client'))
 
-const PORT = process.env.Port || 6000
+
+const PORT = process.env.Port || 5000
 app.listen(PORT, () => console.log(`Server runing on port ${PORT}`))

@@ -1,139 +1,148 @@
-import React,{useState} from 'react'
-import { filterProfiles } from '../redux/actions/profile'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import ModifyProfile from '../component/Modals/ModifyProfile'
-
+import React, { useState } from 'react';
+import NumberFormat from 'react-number-format';
+import { filterProfiles } from '../redux/actions/profile';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import ModifyProfile from '../component/Modals/ModifyProfile';
 
 const Clients = ({ profiles, profilesFiltered, filterProfiles }) => {
+	const [ pageState, setPageState ] = useState({
+		modifyProfile: false,
+		newPayment: false,
+		newLoan: false,
+		id: ''
+	});
+	const { id, modifyProfile, newPayment, newLoan } = pageState;
 
+	const openModal = e => {
+		console.log(id);
+		setPageState({ ...pageState, [e.target.name]: true, id: e.target.id });
+	};
+	const closeModals = () => {
+		setPageState({ modifyProfile: false, newPayment: false, newLoan: false, newClient: false });
+	};
 
-  let filteredClients = [...profilesFiltered]
+	return (
+		<div className="container mt-5">
+			<div className="row">
+				<div className="col-md-6 " />
+				<div className="col-md-6 col-sm-12 ">
+					<div className="input-group mb-3">
+						<input type="text" className="form-control" />
+						<div class="input-group-append">
+							<span class="input-group-text">
+								<i className="fa fa-user" />
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div classNamee="card p-2">
+				<div className="card-header">
+					<div className="d-flex justify-content-between text-white">
+						<h5>Lista de los clientes</h5>
+						<div>
+							<a className="btn btn-info">Crear nuevo Cliente</a>
+						</div>
+					</div>
+				</div>
+				<div className="card-body">
+					<div className="list-group">
+						{profiles.map(client => (
+							<li key={client._id} className="my-item list-group-item mb-2 p-0">
+								<div className=" bg-light  rounded p-4">
+									<div className="d-flex justify-content-between text-bold ">
+										<h5 className="">{`${client.name} ${client.apellido}`}</h5>
 
-  const handleChange = e => {
-    filterProfiles(e.target.value.toLowerCase(), profiles)
-  }
+										<h5
+											className={`text-bold text-${client.punto > 700 ? 'success' : 'warning'}`}
+										>{`${client.puntos} `}</h5>
+									</div>
 
+									<div className="mb-1">
+										<span className="text-muted mr-4">Cedula</span>
 
-  const [pageState, setPageState] = useState({
-    modifyProfile: false,
-    newPayment: false,
-    newLoan: false,
-    id:""
-  })
-  const {id, modifyProfile, newPayment, newLoan} = pageState
+										<span className="text-muted mr-4 ">
+											{client.cedula.split().length == 11 ? (
+												<NumberFormat
+													value={client.cedula}
+													displayType={'text'}
+													format="###-#######-#"
+												/>
+											) : (
+												client.cedula
+											)}
+										</span>
+									</div>
+									<div className="mb-1">
+										<span className=" text-muted mr-4"> Telefono</span>
 
-  const openModal = e => {
-    
-    console.log(id)
-    setPageState({ ...pageState, [e.target.name]: true,id:e.target.id })
-  }
-  const closeModals = () => {
-    setPageState({ modifyProfile: false, newPayment: false, newLoan: false ,newClient:false})
-  }
+										<span className="text-muted mr-4  ">
+											<NumberFormat
+												value={client.telefono}
+												displayType={'text'}
+												format="(###) ###-####"
+											/>
+										</span>
+									</div>
 
-  return (
-    <div className="container-fluid">
-     {modifyProfile && <ModifyProfile id={id} closeModals={closeModals} />}
-     
-    <div className="container-fluid">
-      <div className="my-4 py-4">
-        <div className="row mb-0">
-          <span className="col-md-4 text-white h4 pt-2" />
-          <div className="col-md-4 offset-md-4 ">
-            <div className="input-group mb-3">
-              <input
-                onChange={handleChange}
-                placeholder="Buscar ..."
-                type="text"
-                className="form-control"
-                aria-label="Amount (to the nearest dollar)"
-              />
-              <div className="input-group-append">
-                <span className="input-group-text">
-                  <i className="fa fa-user" />
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="card bg-transparent mb-5">
-          <div className="card-header">
-            <div className="d-flex">
-              <h4 className="text-muted">Lista de clientes</h4>
-              <span className="ml-auto">
-                <Link
-                  to="/newClient"
-                  className="btn btn-sm btn-outline-info"
-                >
-                  Crear nuevo client
-                </Link>
-              </span>
-            </div>
-          </div>
-          <div className="bg-transparent">
-            {filteredClients.length > 0 ? (
-              <table className="my-0 table table-bordered">
-                <thead className="thead-dark">
-                  <tr>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Cedula</th>
-                    <th scope="col">Domicilio</th>
-                 
-                    <th scope="col"> Ref Dirreccion</th>
-                    <th scope="col">Telefono</th>
-                    <th scope="col">Actiones</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white">
-                  {filteredClients.map(client => (
-                    <tr key={client._id}>
-                      <td>{client.name}</td>
-                      <td>{client.cedula}</td>
-                      <td>{client.address}</td>
-                      <td>{client.addressRef}</td>
-                      <td>{client.tel}</td>
-                      <td>
-                        <Link
-                          to={`/client/${client._id}`}
-                          className="btn btn-sm btn-outline-info mr-2 "
-                        >
-                          Ver
-                        </Link>
-                        <button
-                        name="modifyProfile"
-                          id={client._id}
-                          onClick={openModal}
-                          className="btn btn-sm btn-outline-warning"
-                        >
-                          Modificar
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-				<h4 className="text-white text-center">
-                <i className="fa fa-bug text-danger" />
-                <i> No hay cliente con ese criterio.</i>
-				
-              </h4>
-              
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
-  )
-}
+									{client.telefono2 && (
+										<div className="mb-1">
+											<span className="text-muted mr-4">Telefono 2:</span>
+
+											<span className="text-muted ">
+												<NumberFormat
+													value={client.telefono2}
+													displayType={'text'}
+													format="(###) ###-####"
+												/>
+											</span>
+										</div>
+									)}
+									{client.telefono3 && (
+										<div className="mb-1">
+											<span className="text-muted mr-4">Telefono 3</span>
+
+											<span className="text-muted ">
+												<NumberFormat
+													value={client.telefono3}
+													displayType={'text'}
+													format="(###) ###-####"
+												/>
+											</span>
+										</div>
+									)}
+									<div className="mb-1">
+										<span className="text-muted ">{`${client.dirreccion} `}</span>
+									</div>
+
+									<div className="mb-3">
+										<span className="text-muted ">{`${client.ciudad.charAt(0).toUpperCase() +
+											client.ciudad.slice(1)} `}</span>
+									</div>
+									<div className="d-flex justify-content-between
+          ">
+										<a href={`/client/${client._id}`} className="btn btn-outline-info">
+											Detalle
+										</a>
+
+										<a className="btn btn-outline-info">Nuevo Prestamo</a>
+									</div>
+								</div>
+							</li>
+						))}
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+};
 Clients.propTypes = {
-  profiles: PropTypes.array.isRequired
-}
+	profiles: PropTypes.array.isRequired
+};
 const mapStateToProps = state => ({
-  profilesFiltered: state.profile.filteredProfiles,
-  profiles: state.profile.profiles
-})
-export default connect(mapStateToProps, { filterProfiles })(Clients)
+	profilesFiltered: state.profile.filteredProfiles,
+	profiles: state.profile.profiles
+});
+export default connect(mapStateToProps, { filterProfiles })(Clients);
