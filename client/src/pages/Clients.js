@@ -128,7 +128,7 @@ const Clients = ({ profiles, profilesFiltered, filterProfiles }) => {
 											Detalle
 										</a>
 
-										<a className="btn btn-outline-info">Nuevo Prestamo</a>
+										<a href={`newloan/${client._id}`}className="btn btn-outline-info">Nuevo Prestamo</a>
 									</div>
 								</div>
 							</li>

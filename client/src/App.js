@@ -10,7 +10,8 @@ import Test from './component/Test';
 import Login from './pages/Login';
 import Loading from './component/layout/Loading';
 import Register from './pages/Register';
-
+import NewLoan from './pages/NewLoan';
+import LoanId from './pages/LoanId';
 import NewClient from './pages/NewClient';
 
 //Routing ..
@@ -23,7 +24,9 @@ import PrivateRoute from './component/PrivateRoute';
 import './App.css';
 import { loadProfiles } from './redux/actions/profile';
 import { loadLoans } from './redux/actions/loans';
-import {loadCities} from './redux/actions/city'
+import { loadCities } from './redux/actions/city';
+import { loadPlan } from './redux/actions/plan';
+import { loadPayment } from './redux/actions/payment';
 import setAuthToken from './utils/setAuthToken';
 import { loadUser } from './redux/actions/auth';
 import { Provider } from 'react-redux';
@@ -33,7 +36,9 @@ function App() {
 		store.dispatch(loadUser());
 		store.dispatch(loadProfiles());
 		store.dispatch(loadLoans());
-			store.dispatch(loadCities());
+		store.dispatch(loadCities());
+		store.dispatch(loadPlan());
+		store.dispatch(loadPayment());
 	}, []);
 
 	if (localStorage.token) setAuthToken(localStorage.token);
@@ -50,9 +55,12 @@ function App() {
 							<PrivateRoute exact path="/clients" component={Clients} />
 							<PrivateRoute exact path="/loan" component={Loan} />
 							<PrivateRoute path="/client/:id" component={Client} />
+
 							<Route path="/login" component={Login} />
 							<Route path="/load" component={Loading} />
 							<Route path="/newClient" component={NewClient} />
+							<PrivateRoute path="/newloan/:id" component={NewLoan} />
+							<PrivateRoute path="/loan/:id" component={LoanId} />
 							<PrivateRoute path="/register" component={Register} />
 							<PrivateRoute path="/test" component={Test} />
 						</Switch>

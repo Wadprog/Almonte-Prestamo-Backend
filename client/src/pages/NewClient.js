@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-
-import { Redirect } from 'react-router'
+import NumberFormat from 'react-number-format';
+import { Redirect } from 'react-router';
 
 import { connect } from 'react-redux';
 import { registerClient } from '../redux/actions/profile';
@@ -16,7 +16,7 @@ const NewClient = ({ registerClient }) => {
 		dirreccion: '',
 		ciudad: '',
 		DirReferencia: '',
-		fireRedirect:false
+		fireRedirect: false
 	});
 
 	const handleChange = e => {
@@ -26,9 +26,20 @@ const NewClient = ({ registerClient }) => {
 		e.preventDefault();
 		console.log(formData);
 		registerClient(formData);
-		setFormData({ ...formData, fireRedirect :true })
+		setFormData({ ...formData, fireRedirect: true });
 	};
-	const { fireRedirect,name, apellido, cedula, telefono, telefono2, telefono3, dirreccion, ciudad, DirReferencia } = formData;
+	const {
+		fireRedirect,
+		name,
+		apellido,
+		cedula,
+		telefono,
+		telefono2,
+		telefono3,
+		dirreccion,
+		ciudad,
+		DirReferencia
+	} = formData;
 
 	return (
 		<div className="container mt-5 pt-5">
@@ -70,34 +81,48 @@ const NewClient = ({ registerClient }) => {
 
 						<div className="Form-group">
 							<label>Telefono</label>
-							<input
-								onChange={handleChange}
-								value={telefono}
-								name="telefono"
-								type="text"
+
+							<NumberFormat
 								className="form-control"
+								value={telefono}
+								format="(###) ###-####"
+								onValueChange={values => {
+									const { formattedValue, value } = values;
+									// formattedValue = $2,223
+									// value ie, 2223
+									setFormData({ ...formData, telefono: value });
+								}}
 							/>
 						</div>
 
 						<div className="Form-group">
 							<label>Telefono 2</label>
-							<input
-								onChange={handleChange}
-								value={telefono2}
-								name="telefono2"
-								type="text"
+
+							<NumberFormat
 								className="form-control"
+								value={telefono2}
+								format="(###) ###-####"
+								onValueChange={values => {
+									const { formattedValue, value } = values;
+									// formattedValue = $2,223
+									// value ie, 2223
+									setFormData({ ...formData, telefono2: value });
+								}}
 							/>
 						</div>
 
 						<div className="Form-group">
 							<label>Telefono 3</label>
-							<input
-								onChange={handleChange}
-								value={telefono3}
-								name="telefono3"
-								type="text"
+							<NumberFormat
 								className="form-control"
+								value={telefono3}
+								format="(###) ###-####"
+								onValueChange={values => {
+									const { formattedValue, value } = values;
+									// formattedValue = $2,223
+									// value ie, 2223
+									setFormData({ ...formData, telefono3: value });
+								}}
 							/>
 						</div>
 
@@ -135,7 +160,7 @@ const NewClient = ({ registerClient }) => {
 							<button className="btn btn-block btn-outline-info"> Crear Nuevo Cliente</button>
 						</div>
 					</form>
-					{fireRedirect && <Redirect to='/clients' />}
+					{fireRedirect && <Redirect to="/clients" />}
 				</div>
 			</div>
 		</div>
