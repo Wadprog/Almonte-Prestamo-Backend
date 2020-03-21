@@ -4,11 +4,24 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
-//The model 
+//The model
 const User = require('../../models/user');
 /*----------------------------------------------------------
                          Routes
 ------------------------------------------------------------*/
+
+//@routes get all Users api/user/
+//@desc Get all user
+//@desc access public will be protected
+
+router.get('/', async (req, res) => {
+	try {
+		let users = await User.find();
+		return res.json(user);
+	} catch (error) {
+		return res.status(500).json({ msg: 'Could not find ay user', error });
+	}
+});
 
 //@routes post api/user/
 //@desc create new user
@@ -23,7 +36,7 @@ router.post(
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 		//If no error
-		const { name, password,nombreUsuarios } = req.body;
+		const { name, password, nombreUsuarios } = req.body;
 		try {
 			let user = await User.findOne({ name });
 			if (user) return res.status(400).json({ errors: [ { msg: 'Existe un usuario con este nombre' } ] });
@@ -31,7 +44,8 @@ router.post(
 			//If user does not exist let create one
 			user = new User({
 				name,
-				password,nombreUsuarios
+				password,
+				nombreUsuarios
 			});
 
 			//Hashing the password.

@@ -32,6 +32,7 @@ import { loadPlan } from './redux/actions/plan';
 import { loadPayment } from './redux/actions/payment';
 import setAuthToken from './utils/setAuthToken';
 import { loadUser } from './redux/actions/auth';
+import { loadUsers } from './redux/actions/user';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 function App() {
@@ -42,6 +43,7 @@ function App() {
 		store.dispatch(loadCities());
 		store.dispatch(loadPlan());
 		store.dispatch(loadPayment());
+		store.dispatch(loadUsers());
 	}, []);
 
 	if (localStorage.token) setAuthToken(localStorage.token);
