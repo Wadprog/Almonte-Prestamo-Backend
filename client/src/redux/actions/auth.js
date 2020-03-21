@@ -28,7 +28,7 @@ export const login = ({ name, password }) => async dispatch => {
 	};
 	const body = JSON.stringify({ name, password });
 	try {
-		const res = await axios.post('api/auth', body, config);
+		const res = await axios.post( 'http://178.128.144.72/api/auth', body, config);
 		console.log(res);
 		dispatch({
 			type: LOG_IN_SUCCESS,
@@ -51,7 +51,7 @@ export const login = ({ name, password }) => async dispatch => {
 export const loadUser = () => async dispatch => {
 	if (localStorage.token) setAuthToken(localStorage.token);
 	try {
-		const res = await axios.get(PROXY+'/api/auth');
+		const res = await axios.get(PROXY + '/api/auth');
 		dispatch({
 			type: USER_LOADED,
 			payload: res.data
@@ -70,7 +70,7 @@ export const register = ({ name, password }) => async dispatch => {
 	};
 	const body = JSON.stringify({ name, password });
 	try {
-		const res = await axios.post(PROXY+'api/user', body, config);
+		const res = await axios.post(PROXY + 'api/user', body, config);
 		console.log(res);
 		dispatch({
 			type: REGISTER_SUCCESS,

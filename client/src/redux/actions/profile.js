@@ -11,6 +11,7 @@ import {
 } from './Const';
 
 import { setAlert } from './alert';
+import reducers from '../reducers';
 export const filterProfiles = (value, profiles) => async dispatch => {
 	let filter = profiles.filter(item => !item.name.trim().toLowerCase().indexOf(value.trim().toLowerCase()));
 	console.log(`Amen ${profiles[0]} and the filter is ${filter}`);
@@ -47,17 +48,18 @@ export const registerClient = formData => async dispatch => {
 		type: PROFILE_SAVE_REQUEST
 	});
 	try {
-		const res = await axios.post('api/client', body, config);
+		const res = await axios.post(PROXY+'/api/client', body, config);
 		console.log(res);
-		dispatch({ type: PROFILE_SAVE_SUCCESS });
+		dispatch({ type: PROFILE_SAVE_SUCCESS,
+		payload:res.data });
 		dispatch(setAlert(`${formData.name} creado con exito`, 'success'));
 		dispatch(loadProfiles());
 	} catch (error) {
-		const errors = error.response.data.errors;
+		//const errors = ;
 		console.log(`error is ${error}`);
-		if (errors) {
+		/*if (errors) {
 			errors.forEach(err => dispatch(setAlert(err.msg, 'danger')));
 			dispatch({ type: PROFILE_SAVE_FAIL });
-		}
+		}*/
 	}
 };

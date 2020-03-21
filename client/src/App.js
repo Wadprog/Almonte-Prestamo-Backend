@@ -11,6 +11,9 @@ import Login from './pages/Login';
 import Loading from './component/layout/Loading';
 import Register from './pages/Register';
 import NewLoan from './pages/NewLoan';
+import Payment from './pages/Payment';
+import NewPlan from './pages/NewPlan';
+import Plans from './pages/Plans';
 import LoanId from './pages/LoanId';
 import NewClient from './pages/NewClient';
 
@@ -61,6 +64,9 @@ function App() {
 							<Route path="/newClient" component={NewClient} />
 							<PrivateRoute path="/newloan/:id" component={NewLoan} />
 							<PrivateRoute path="/loan/:id" component={LoanId} />
+							<PrivateRoute path="/payment/:id" component={Payment} />
+							<PrivateRoute path="/plan" component={Plans} />
+							<PrivateRoute path="/newplan" component={NewPlan} />
 							<PrivateRoute path="/register" component={Register} />
 							<PrivateRoute path="/test" component={Test} />
 						</Switch>
