@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Loading from '../component/layout/Loading';
 import { addUser } from '../redux/actions/user';
 
-const NewPlan = ({ addUser, users, userLoading, authLoading }) => {
+const NewUser = ({ addUser, users, userLoading, authLoading }) => {
 	const [ formData, setFormData ] = useState({
 		name: '',
 		nombreUsuarios: '',
@@ -28,11 +28,11 @@ const NewPlan = ({ addUser, users, userLoading, authLoading }) => {
 	const { Fragment } = React;
 	return (
 		<div className="container mt-5 pt-5">
-			{!loanLoading && !authLoading ? (
+			{!userLoading && !authLoading ? (
 				<Fragment>
 					<form onSubmit={handleSubmit}>
 						<div className="Form-group">
-							<label>Nombre del plan</label>
+							<label>Nombre del usuario</label>
 							<input
 								name="name"
 								type="text"
@@ -43,7 +43,7 @@ const NewPlan = ({ addUser, users, userLoading, authLoading }) => {
 						</div>
 
 						<div className="Form-group">
-							<label>Nombre del plan</label>
+							<label>Usuario</label>
 							<input
 								name="nombreUsuarios"
 								type="text"
@@ -54,7 +54,7 @@ const NewPlan = ({ addUser, users, userLoading, authLoading }) => {
 						</div>
 
 						<div className="Form-group">
-							<label>Nombre del plan</label>
+							<label>Contrasena</label>
 							<input
 								name="password"
 								type="password"
@@ -64,7 +64,7 @@ const NewPlan = ({ addUser, users, userLoading, authLoading }) => {
 							/>
 						</div>
 						<div className="Form-group">
-							<label>Nombre del plan</label>
+							<label>Verificar contrasena</label>
 							<input
 								name="password2"
 								type="password"
@@ -99,4 +99,4 @@ const mapStateToProps = state => ({
 	users: state.user.users,
 	authLoading: state.auth.loading
 });
-export default connect(mapStateToProps, { addUser })(NewPlan);
+export default connect(mapStateToProps, { addUser })(NewUser);

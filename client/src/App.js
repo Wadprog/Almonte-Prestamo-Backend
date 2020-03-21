@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Navbar from './component/Navbar';
+import SideNav from './component/layout/SideNav';
 import Footer from './component/Footer';
 import Home from './pages/Home';
 import Clients from './pages/Clients';
@@ -14,6 +15,8 @@ import NewLoan from './pages/NewLoan';
 import Payment from './pages/Payment';
 import NewPlan from './pages/NewPlan';
 import Plans from './pages/Plans';
+import Users from './pages/Users';
+import NewUser from './pages/NewUser';
 import LoanId from './pages/LoanId';
 import NewClient from './pages/NewClient';
 
@@ -51,30 +54,40 @@ function App() {
 	return (
 		<Provider store={store}>
 			<Fragment>
-				<main>
-					<Navbar />
-					<div className=" mt-5">
-						<Alert />
-						<Switch>
-							<PrivateRoute exact path="/" component={Home} />
-							<PrivateRoute exact path="/clients" component={Clients} />
-							<PrivateRoute exact path="/loan" component={Loan} />
-							<PrivateRoute path="/client/:id" component={Client} />
+				<div className="page-wrapper chiller-theme toggled">
+  <a id="show-sidebar" className="btn btn-sm btn-dark" href="#">
+    <i class="fas fa-bars"></i>
+  </a>
+				<SideNav />
+				<main className="page-content">
+					<div class="container-fluid">
+						<div className=" mt-5">
+							<Alert />
+							<Switch>
+								<PrivateRoute exact path="/" component={Home} />
+								<PrivateRoute exact path="/clients" component={Clients} />
+								<PrivateRoute exact path="/loan" component={Loan} />
+								<PrivateRoute path="/client/:id" component={Client} />
 
-							<Route path="/login" component={Login} />
-							<Route path="/load" component={Loading} />
-							<Route path="/newClient" component={NewClient} />
-							<PrivateRoute path="/newloan/:id" component={NewLoan} />
-							<PrivateRoute path="/loan/:id" component={LoanId} />
-							<PrivateRoute path="/payment/:id" component={Payment} />
-							<PrivateRoute path="/plan" component={Plans} />
-							<PrivateRoute path="/newplan" component={NewPlan} />
-							<PrivateRoute path="/register" component={Register} />
-							<PrivateRoute path="/test" component={Test} />
-						</Switch>
+								<Route path="/login" component={Login} />
+								<Route path="/sidenav" component={SideNav} />
+								<Route path="/load" component={Loading} />
+								<Route path="/newClient" component={NewClient} />
+								<PrivateRoute path="/newloan/:id" component={NewLoan} />
+								<PrivateRoute path="/loan/:id" component={LoanId} />
+								<PrivateRoute path="/payment/:id" component={Payment} />
+								<PrivateRoute path="/users" component={Users} />
+								<PrivateRoute path="/newuser" component={NewUser} />
+								<PrivateRoute path="/plan" component={Plans} />
+								<PrivateRoute path="/newplan" component={NewPlan} />
+								<PrivateRoute path="/register" component={Register} />
+								<PrivateRoute path="/test" component={Test} />
+							</Switch>
+						</div>
+					
 					</div>
-					<Footer />
 				</main>
+				</div>
 			</Fragment>
 		</Provider>
 	);

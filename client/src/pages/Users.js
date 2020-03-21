@@ -3,20 +3,29 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Loading from '../component/layout/Loading';
 
-const Plan = ({ userLoading, authLoading }) => {
+const User = ({ users, userLoading, authLoading }) => {
 	const { Fragment } = React;
 	return (
 		<div className="container mt-5 pt-5">
 			<div className="my-info  mb-2 p-0 rounded-0">
-				<div className="  ">
-					<a href="/newplan" className=" text-white btn btn-outline-secondary btn-block ">
+				<div >
+					<a href="/newuser" className=" text-white btn btn-outline-secondary btn-block ">
 						Crear nuevo usuario
 					</a>
 				</div>
 			</div>
 			{!userLoading && !authLoading ? (
 				<Fragment>
-					{users && users !== null && users.length > 0 && users.map(user => <h1>{user.name}</h1>)}
+					
+					{users&&
+						users !== null &&
+						users.length > 0 &&
+						users.map(user => (
+							<div>
+								<h1>{user.name}</h1>
+								
+							</div>
+						))}
 				</Fragment>
 			) : (
 				<Loading />

@@ -7,7 +7,7 @@ const { check, validationResult } = require('express-validator');
 //The model
 const User = require('../../models/user');
 /*----------------------------------------------------------
-                         Routes
+                         Routes||||||||||||||||||||||||||
 ------------------------------------------------------------*/
 
 //@routes get all Users api/user/
