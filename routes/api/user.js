@@ -17,7 +17,7 @@ const User = require('../../models/user');
 router.get('/', async (req, res) => {
 	try {
 		let users = await User.find();
-		return res.json(user);
+		return res.json(users);
 	} catch (error) {
 		return res.status(500).json({ msg: 'Could not find ay user', error });
 	}
