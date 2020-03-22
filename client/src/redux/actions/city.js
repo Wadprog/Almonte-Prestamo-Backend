@@ -3,8 +3,8 @@ import {
 	CITY_FETCH_SUCCESS,
 	CITY_FETCH_FAIL,
 	CITY_ADD_FAIL,
- CITY_ADD_SUCCESS,
- PROXY
+	CITY_ADD_SUCCESS,
+	PROXY
 } from '../actions/Const';
 
 import axios from 'axios';
@@ -12,11 +12,11 @@ import axios from 'axios';
 import { setAlert } from './alert';
 
 export const loadCities = () => async dispatch => {
-  dispatch({
-    type:CITY_FETCH_REQUEST
-  })
+	dispatch({
+		type: CITY_FETCH_REQUEST
+	});
 	try {
-		const res = await axios.get(PROXY+'/api/city');
+		const res = await axios.get(PROXY + '/api/city');
 		dispatch({
 			type: CITY_FETCH_SUCCESS,
 			payload: res.data
@@ -39,11 +39,14 @@ export const addCity = formData => async dispatch => {
 		type: CITY_FETCH_REQUEST
 	});
 	try {
-		const res = await axios.post('api/client', body, config);
-	
-		dispatch({ type: CITY_ADD_SUCCESS });
-		dispatch(setAlert(`${formData.name} creado con exito`, 'success'));
-		
+		const res = await axios.post(PROXY + '/api/city', body, config);
+
+		dispatch({
+			type: CITY_ADD_SUCCESS,
+			payload: res.data
+		});
+		dispatch(loadCities);
+		dispatch(setAlert(` Ciudad ${formData.name} agregado con exito`, 'success'));
 	} catch (error) {
 		const errors = error.response.data.errors;
 		console.log(`error is ${error}`);

@@ -125,11 +125,11 @@ const Clients = ({ loans }) => {
 
 									<div className="d-flex justify-content-between
           ">
-										<a href={`/loan.client/${loan.client._id}`} className="btn btn-outline-info">
+										<a href={`/loan/${loan._id}`} className="btn btn-outline-info">
 											Detalle
 										</a>
-										<a className="btn btn-outline-warning">Modificar</a>
-										<a className="btn btn-outline-info">Nuevo Prestamo</a>
+										
+										<a href={`/newloan/${loan.client._id}`} className="btn btn-outline-info">Nuevo Prestamo</a>
 									</div>
 								</div>
 							</li>

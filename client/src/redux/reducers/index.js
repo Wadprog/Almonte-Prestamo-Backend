@@ -7,6 +7,7 @@ import city from './city';
 import plan from './plan';
 import payment from './payment';
 import user from './user';
+import routina from './routina';
 export default combineReducers({
 	alert,
 	auth,
@@ -15,5 +16,6 @@ export default combineReducers({
 	city,
 	plan,
 	payment,
-	user
+	user,
+	routina
 });

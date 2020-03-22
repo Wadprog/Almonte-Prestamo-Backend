@@ -624,12 +624,15 @@ const Client2 = ({
 																		</span>
 																	</div>
 
+																	
+
 																	<div>
+																
 																		<a
 																			href={`/loan/${loan._id}`}
 																			className="btn btn-block btn-outline-info"
 																		>
-																			Ver historial de pago
+																			Ver historial de pago 
 																		</a>
 																	</div>
 																</div>
@@ -649,9 +652,9 @@ const Client2 = ({
 														{unpaidLoan.map(loan => (
 															<li
 																key={loan._id}
-																className=" my-item list-group-item mb-2 p-0"
+																className=" my-info list-group-item mb-2 p-0"
 															>
-																<div className=" bg-secondary  rounded p-4">
+																<div className="  rounded p-4">
 																	<div className="mb-2">
 																		<span
 																			className={`text-${loan.status
@@ -688,6 +691,15 @@ const Client2 = ({
 																		<span className="text-muted">
 																			{loan.nextpaymentDate}
 																		</span>
+																	</div>
+
+																		<div className="mb-2">
+																		<a
+																			href={`/payment/${loan._id}`}
+																			className="btn btn-block btn-outline-info"
+																		>
+																			Pagar
+																		</a>
 																	</div>
 
 																	<div>

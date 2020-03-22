@@ -9,9 +9,9 @@ import { addPlan } from '../redux/actions/plan';
 const NewPlan = ({ addPlan, loans, loanLoading, authLoading }) => {
 	const [ formData, setFormData ] = useState({
 		name: '',
-		steps: 0,
-		interval: 0,
-		interest: 0,
+		steps: '',
+		interval: '',
+		interest: '',
 		fireRedirect: false
 	});
 
@@ -34,7 +34,7 @@ const NewPlan = ({ addPlan, loans, loanLoading, authLoading }) => {
 				<Fragment>
 					<form onSubmit={handleSubmit}>
 						<div className="Form-group">
-							<label>Nombre del plan</label>
+							<label className="text-white h6">Nombre del plan</label>
 
 							<input
 								name="name"
@@ -46,7 +46,7 @@ const NewPlan = ({ addPlan, loans, loanLoading, authLoading }) => {
 						</div>
 
 						<div className="Form-group">
-							<label>En cuanto paso se paga</label>
+							<label className="text-white h6">En cuanto paso se paga</label>
 
 							<input
 								onChange={handleChange}
@@ -59,7 +59,7 @@ const NewPlan = ({ addPlan, loans, loanLoading, authLoading }) => {
 						</div>
 
 						<div className="Form-group">
-							<label>Interest</label>
+							<label className="text-white h6">Tasa</label>
 							<NumberFormat
 								className="form-control"
 								value={interest}
@@ -73,7 +73,7 @@ const NewPlan = ({ addPlan, loans, loanLoading, authLoading }) => {
 						</div>
 
 						<div className="Form-group">
-							<label>Interest</label>
+							<label className="text-white h6">Cada cuanto dia</label>
 							<NumberFormat
 								className="form-control"
 								value={interval}
@@ -87,7 +87,7 @@ const NewPlan = ({ addPlan, loans, loanLoading, authLoading }) => {
 
 						<div className="mt-3">
 							<button className="btn btn-block btn-outline-info" type="sumbit">
-								Pagar
+								Agregar
 							</button>
 						</div>
 					</form>

@@ -15,10 +15,14 @@ import NewLoan from './pages/NewLoan';
 import Payment from './pages/Payment';
 import NewPlan from './pages/NewPlan';
 import Plans from './pages/Plans';
+import Cities from './pages/Cities';
+import NewCity from './pages/NewCity';
 import Users from './pages/Users';
 import NewUser from './pages/NewUser';
 import LoanId from './pages/LoanId';
 import NewClient from './pages/NewClient';
+import Instruction from './pages/Instruction';
+import LateLoans from './pages/LateLoans';
 
 //Routing ..
 
@@ -36,6 +40,7 @@ import { loadPayment } from './redux/actions/payment';
 import setAuthToken from './utils/setAuthToken';
 import { loadUser } from './redux/actions/auth';
 import { loadUsers } from './redux/actions/user';
+import { loadRoutina } from './redux/actions/routina';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 function App() {
@@ -47,6 +52,7 @@ function App() {
 		store.dispatch(loadPlan());
 		store.dispatch(loadPayment());
 		store.dispatch(loadUsers());
+		store.dispatch(loadRoutina());
 	}, []);
 
 	if (localStorage.token) setAuthToken(localStorage.token);
@@ -55,38 +61,41 @@ function App() {
 		<Provider store={store}>
 			<Fragment>
 				<div className="page-wrapper chiller-theme toggled">
-  <a id="show-sidebar" className="btn btn-sm btn-dark" href="#">
-    <i class="fas fa-bars"></i>
-  </a>
-				<SideNav />
-				<main className="page-content">
-					<div class="container-fluid">
-						<div className=" mt-5">
-							<Alert />
-							<Switch>
-								<PrivateRoute exact path="/" component={Home} />
-								<PrivateRoute exact path="/clients" component={Clients} />
-								<PrivateRoute exact path="/loan" component={Loan} />
-								<PrivateRoute path="/client/:id" component={Client} />
+					<a id="show-sidebar" className="btn btn-sm btn-dark" href="#">
+						<i class="fas fa-bars" />
+					</a>
+					<SideNav />
+					<main className="page-content">
+						<div class="container-fluid">
+							<div className=" mt-5">
+								<Alert />
+								<Switch>
+									<PrivateRoute exact path="/" component={Home} />
+									<PrivateRoute exact path="/clients" component={Clients} />
+									<PrivateRoute exact path="/loan" component={Loan} />
+									<PrivateRoute path="/client/:id" component={Client} />
 
-								<Route path="/login" component={Login} />
-								<Route path="/sidenav" component={SideNav} />
-								<Route path="/load" component={Loading} />
-								<Route path="/newClient" component={NewClient} />
-								<PrivateRoute path="/newloan/:id" component={NewLoan} />
-								<PrivateRoute path="/loan/:id" component={LoanId} />
-								<PrivateRoute path="/payment/:id" component={Payment} />
-								<PrivateRoute path="/users" component={Users} />
-								<PrivateRoute path="/newuser" component={NewUser} />
-								<PrivateRoute path="/plan" component={Plans} />
-								<PrivateRoute path="/newplan" component={NewPlan} />
-								<PrivateRoute path="/register" component={Register} />
-								<PrivateRoute path="/test" component={Test} />
-							</Switch>
+									<Route path="/login" component={Login} />
+									<Route path="/instruction" component={Instruction} />
+									<Route path="/sidenav" component={SideNav} />
+									<Route path="/load" component={Loading} />
+									<PrivateRoute path="/cities" component={Cities} />
+									<PrivateRoute path="/newClient" component={NewClient} />
+									<PrivateRoute path="/newcity" component={NewCity} />
+									<PrivateRoute path="/newloan/:id" component={NewLoan} />
+									<PrivateRoute path="/city" component={Cities} />
+									<PrivateRoute path="/loan/:id" component={LoanId} />
+									<PrivateRoute path="/payment/:id" component={Payment} />
+									<PrivateRoute path="/users" component={Users} />
+									<PrivateRoute path="/newuser" component={NewUser} />
+									<PrivateRoute path="/plan" component={Plans} />
+									<PrivateRoute path="/newplan" component={NewPlan} />
+									<PrivateRoute path="/register" component={Register} />
+									<PrivateRoute path="/lateLoan" component={LateLoans} />
+								</Switch>
+							</div>
 						</div>
-					
-					</div>
-				</main>
+					</main>
 				</div>
 			</Fragment>
 		</Provider>

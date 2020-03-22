@@ -23,20 +23,20 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				loading: false,
-				plans: [ ...state.plans, payload ]
+				payments: [ ...state.payments, payload ]
 			};
 		case PAYMENT_FETCH_SUCCESS:
 			return {
 				...state,
 				loading: false,
-				plans: payload
+				payments: payload
 			};
 		case PAYMENT_ADD_FAIL:
 		case PAYMENT_FETCH_FAIL:
 			return {
 				...state,
 				loading: false,
-				plans: []
+				payments: []
 			};
 		default:
 			return state;

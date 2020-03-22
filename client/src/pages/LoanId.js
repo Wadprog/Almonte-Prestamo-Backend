@@ -12,10 +12,12 @@ const NewLoan = ({
 	loans,
 	loanLoading,
 	authLoading,
-	payment,
+	payments,
 	match: { params: { id } }
 }) => {
 	const [ loan ] = loans.filter(loan => loan._id === id);
+	const loanPayments = payments.filter(payment => payment.loan === id);
+
 	const { Fragment } = React;
 	return (
 		<div className="container mt-5 pt-5">
@@ -23,8 +25,8 @@ const NewLoan = ({
 				<Fragment>
 					{loans &&
 					loans !== null &&
-					loans.length > 1 && (
-						<div key={loan._id} className=" my-item list-group-item mb-2 p-0 bg-none">
+					loans.length > 0 && (
+						<div key={loan._id} className=" my-info list-group-item mb-2 p-0">
 							<div className="   rounded p-4">
 								<div className="mb-2">
 									<span className={`text-${loan.status ? 'success' : 'danger'}`}>
@@ -91,10 +93,87 @@ const NewLoan = ({
 							</div>
 						</div>
 					)}
+					{loanPayments && loanPayments !== null && loanPayments.length > 0 ? (
+						<div>
+							{
+								<ul className="list-group">
+									{loanPayments.map(payment => (
+										<li className="list-group-item my-info">
+											<div
+												className={`d-flex justify-content-between text-${payment.status ===
+												'paid'
+													? 'success'
+													: 'danger'}`}
+											>
+												<span>Numero pago :</span>
+												<span>{payment.quota}</span>
+											</div>
+
+											<div
+												className={`d-flex justify-content-between text-${payment.status ===
+												'paid'
+													? 'success'
+													: 'danger'}`}
+											>
+												<span>Estado:</span>
+												<span>{payment.status}</span>
+											</div>
+
+											<div>
+												<span className="mr-2">Fecha a pagar:</span>
+												<span>{payment.dateToPay}</span>
+											</div>
+											<div>
+												<span className="mr-2">Fecha que pago:</span>
+												<span>{payment.dateAmountPaid}</span>
+											</div>
+											<div>
+												<span className="mr-2">Monto que pago:</span>
+												<span>
+													<NumberFormat
+														value={payment.amountPaid}
+														displayType={'text'}
+														thousandSeparator={true}
+														prefix={'RD$'}
+													/>
+												</span>
+											</div>
+											<div>
+												<span className="mr-2">Fecha que pago el interes:</span>
+												<span>{payment.dateInterestPaid}</span>
+											</div>
+											<div>
+												<span className="mr-2">Monto de interes que pago:</span>
+												<span>
+													<NumberFormat
+														value={payment.interestPaid}
+														displayType={'text'}
+														thousandSeparator={true}
+														prefix={'RD$'}
+													/>
+												</span>
+											</div>
+											<div />
+											{payment.comment &&
+											payment.comment != null &&
+											payment.comment !== '' && (
+												<div>
+													<span className="mr-2">Comentario</span>
+													<span>{payment.dateInterestPaid}</span>
+												</div>
+											)}
+										</li>
+									))}
+								</ul>
+							}
+						</div>
+					) : (
+						<h6>No hay pagos por este prestamo</h6>
+					)}
 				</Fragment>
 			) : (
 				<Loading />
-			  )}
+			)}
 		</div>
 	);
 };

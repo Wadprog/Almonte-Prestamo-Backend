@@ -90,7 +90,7 @@ const NewLoan = ({
 							</div>
 
 							<div className="mt-3">
-								<button className="btn btn-block btn-outline-info"> Crear Nuevo Cliente</button>
+								<button className="btn btn-block btn-outline-info"> Crear Nuevo Prestamo</button>
 							</div>
 						</form>
 						{fireRedirect && <Redirect to={`/client/${id}`} />}

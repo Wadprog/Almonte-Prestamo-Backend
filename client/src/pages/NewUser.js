@@ -32,7 +32,7 @@ const NewUser = ({ addUser, users, userLoading, authLoading }) => {
 				<Fragment>
 					<form onSubmit={handleSubmit}>
 						<div className="Form-group">
-							<label>Nombre del usuario</label>
+							<label className="text-white h6">Nombre del usuario</label>
 							<input
 								name="name"
 								type="text"
@@ -43,7 +43,7 @@ const NewUser = ({ addUser, users, userLoading, authLoading }) => {
 						</div>
 
 						<div className="Form-group">
-							<label>Usuario</label>
+							<label className="text-white h6">Usuario</label>
 							<input
 								name="nombreUsuarios"
 								type="text"
@@ -54,7 +54,7 @@ const NewUser = ({ addUser, users, userLoading, authLoading }) => {
 						</div>
 
 						<div className="Form-group">
-							<label>Contrasena</label>
+							<label className="text-white h6">Contrasena</label>
 							<input
 								name="password"
 								type="password"
@@ -64,7 +64,7 @@ const NewUser = ({ addUser, users, userLoading, authLoading }) => {
 							/>
 						</div>
 						<div className="Form-group">
-							<label>Verificar contrasena</label>
+							<label className="text-white h6">Verificar contrasena</label>
 							<input
 								name="password2"
 								type="password"

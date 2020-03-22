@@ -15,18 +15,23 @@ const User = ({ users, userLoading, authLoading }) => {
 				</div>
 			</div>
 			{!userLoading && !authLoading ? (
-				<Fragment>
-					
-					{users&&
+				<ul className="list-group">
+					<li className="list-group-item disabled">Usuarios</li>
+					{users &&
 						users !== null &&
 						users.length > 0 &&
-						users.map(user => (
+						users.map(user => <li className="list-group-item">
 							<div>
-								<h1>{user.name}</h1>
-								
+								<span className="mr-2"> Nombre :</span>
+								<span>{user.name}</span>
 							</div>
-						))}
-				</Fragment>
+							<div>
+								<span className="mr-2"> Usuario:</span>
+								<span>{user.nombreUsuarios}</span>
+							</div>
+							
+							</li>)}
+				</ul>
 			) : (
 				<Loading />
 			)}

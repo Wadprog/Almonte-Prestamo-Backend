@@ -16,9 +16,32 @@ const Plan = ({ addPlan, plans, planLoading, authLoading }) => {
 				</div>
 			</div>
 			{!planLoading && !authLoading ? (
-				<Fragment>
-					{plans && plans !== null && plans.length > 0 && plans.map(plan => <h1>{plan.name}</h1>)}
-				</Fragment>
+				<ul className="list-group">
+					<li className="list-group-item disabled">Planes</li>
+					{plans &&
+						plans !== null &&
+						plans.length > 0 &&
+						plans.map(plan => 
+						<li className="list-group-item">
+							<div>
+								<span className="mr-2">Nombre:</span>
+								<span>{plan.name}</span>
+							</div>
+							<div>
+								<span className="mr-2">Interes:</span>
+								<span>{plan.interest} % </span>
+							</div>
+							<div>
+								<span className="mr-2">Intervalo:</span>
+								<span> cada {plan.interval} dias </span>
+							</div>
+							<div>
+								<span className="mr-2">Cantidad de pasos:</span>
+								<span>  {plan.steps}  </span>
+							</div>
+							
+							</li>)}
+				</ul>
 			) : (
 				<Loading />
 			)}

@@ -12,16 +12,15 @@ root {
   position: absolute;
 
 }
-.modifier i:hover{
+.modifier:hover i{
 color:#42a812; 
-top:-3px; 
+
 
 }
 .my-info {
 	max-width: 600px;
-  background-color: #cccccc !important;
-  opacity:0.5;
-  color:rgba(65, 9, 9, 0.9)
+  background-color: #3a3f48 !important;
+  color:white
 }
 
 html {
@@ -33,6 +32,80 @@ body {
 	height: 100%;
 	background: linear-gradient(14deg, rgba(2, 0, 36, 1) 18%, rgba(105, 105, 105, 1) 70%, rgba(13, 13, 13, 1) 100%);
 }
+
+body {
+	font-size: 0.9rem;
+}
+.page-wrapper .sidebar-wrapper,
+.sidebar-wrapper .sidebar-brand > a,
+.sidebar-wrapper .sidebar-dropdown > a:after,
+.sidebar-wrapper .sidebar-menu .sidebar-dropdown .sidebar-submenu li a:before,
+.sidebar-wrapper ul li a i,
+.page-wrapper .page-content,
+.sidebar-wrapper .sidebar-search input.search-menu,
+.sidebar-wrapper .sidebar-search .input-group-text,
+.sidebar-wrapper .sidebar-menu ul li a,
+#show-sidebar,
+ul li a {
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-ms-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+
+@keyframes swing {
+	0% {
+		transform: rotate(0deg);
+	}
+	10% {
+		transform: rotate(10deg);
+	}
+	30% {
+		transform: rotate(0deg);
+	}
+	40% {
+		transform: rotate(-10deg);
+	}
+	50% {
+		transform: rotate(0deg);
+	}
+	60% {
+		transform: rotate(5deg);
+	}
+	70% {
+		transform: rotate(0deg);
+	}
+	80% {
+		transform: rotate(-5deg);
+	}
+	100% {
+		transform: rotate(0deg);
+	}
+}
+
+@keyframes sonar {
+	0% {
+		transform: scale(0.9);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(2);
+		opacity: 0;
+	}
+}
+
+
+/*----------------page-wrapper----------------*/
+
+.page-wrapper {
+	height: 100vh;
+}
+
+.page-wrapper .theme.chiller-theme {
+	background: #1e2229;
+}
+
 
 
 
