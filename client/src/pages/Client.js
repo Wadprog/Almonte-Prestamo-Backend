@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Redirect } from 'react-router';
 import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
@@ -8,7 +8,7 @@ import Loading from '../component/layout/Loading';
 import { updateClient } from '../redux/actions/profile';
 
 import './Client.css';
-const Client2 = ({
+const Client = ({
 	updateClient,
 	cityLoading,
 	profiles,
@@ -19,11 +19,6 @@ const Client2 = ({
 	authLoading,
 	match: { params: { id } }
 }) => {
-	const [ client ] = profiles.filter(profile => profile._id === id);
-	const clientLoans = loans.filter(loan => loan.client._id === id);
-	const paidLoans = clientLoans.filter(loan => loan.paidStatus);
-	const unpaidLoan = clientLoans.filter(loan => !loan.paidStatus);
-
 	const [ fields, setFields ] = useState({
 		fName: false,
 		fCedula: false,
@@ -85,10 +80,15 @@ const Client2 = ({
 		setFields({ ...fields, [e.target.name]: e.target.checked, modifyProfile: true });
 	};
 
+let clientLoans=[];
+	const [ client ] = profiles.filter(profile => profile._id === id);
+	if(loans.length>0)
+	 clientLoans = loans.filter(p=>p.client._id==id);
+	const paidLoans = clientLoans.filter(loan => loan.paidStatus);
+	const unpaidLoan = clientLoans.filter(loan => !loan.paidStatus);
+
+
 	const { Fragment } = React;
-
-	const closeModals = () => {};
-
 	return (
 		<Fragment>
 			{cityLoading || loanLoading || profileLoading || authLoading ? (
@@ -97,8 +97,9 @@ const Client2 = ({
 				<Fragment>
 					<div className="container pt-5">
 						<div className=" pb-5 border-bottom ">
-							{client !== undefined &&
-							client && (
+							{client &&
+							client !== undefined &&
+							client !== null && (
 								<div className=" mt-5 ">
 									<div className="my-info  mb-2 p-0 rounded-0">
 										<div className="  ">
@@ -316,7 +317,6 @@ const Client2 = ({
 															</span>
 
 															<div className="pr-3 modifier d-flex">
-																
 																{!client.telefono3 && (
 																	<div className="mr-3">
 																		<label htmlFor="fTelefon2add">
@@ -695,7 +695,7 @@ const Client2 = ({
 		</Fragment>
 	);
 };
-Client2.prototype = {
+Client.prototype = {
 	profiles: PropTypes.array.isRequired,
 	loans: PropTypes.array.isRequired,
 	loanLoading: PropTypes.bool.isRequired,
@@ -714,4 +714,4 @@ const mapStateToProps = state => ({
 	cityLoading: state.city.loading,
 	cities: state.city.cities
 });
-export default connect(mapStateToProps, { updateClient })(Client2);
+export default connect(mapStateToProps, { updateClient })(Client);
