@@ -9,9 +9,18 @@ import {
 	LOAN_PAYMENT_ADD_REQUEST,
 	LOAN_PAYMENT_ADD_SUCCESS,
 	LOAN_PAYMENT_ADD_FAIL,
+	FILTER_LOAN,
 	PROXY
 } from './Const';
 
+export const filterLoans = (value, loans) => async dispatch => {
+	let filter = loans.filter(loan => !loan.client.name.trim().toLowerCase().indexOf(value.trim().toLowerCase()));
+
+	dispatch({
+		type: FILTER_LOAN,
+		payload: filter
+	});
+};
 export const loadLoans = () => async dispatch => {
 	dispatch({
 		type: LOAN_FETCH_REQUEST
@@ -55,7 +64,7 @@ export const addLoan = formData => async dispatch => {
 };
 
 export const payLoan = formData => async dispatch => {
-	console.log('in payloan')
+	console.log('in payloan');
 	const config = {
 		headers: {
 			'Content-Type': 'application/json'

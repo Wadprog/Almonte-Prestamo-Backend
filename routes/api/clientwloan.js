@@ -17,7 +17,7 @@ router.post('/', async (req, res) => {
 		let cliente = await Client.findOne({ cedula: client.cedula });
 
 		if (cliente) {
-			console.log(` Cedla cliente es ${cliente.cedula}`);
+			console.log(` Cedula cliente es ${cliente.cedula}`);
 			let newLoan = new Loan({
 				client: cliente.id,
 				...loan

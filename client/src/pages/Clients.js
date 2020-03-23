@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Loading from '../component/layout/Loading';
-import ModifyProfile from '../component/Modals/ModifyProfile';
+
 
 const Clients = ({ profiles, profilesFiltered, filterProfiles, porfileLoading, authLoading }) => {
 	const [ pageState, setPageState ] = useState({
@@ -25,6 +25,9 @@ const Clients = ({ profiles, profilesFiltered, filterProfiles, porfileLoading, a
 		setPageState({ modifyProfile: false, newPayment: false, newLoan: false, newClient: false });
 	};
 
+	const handleFilter= e=>{
+filterProfiles(e.target.value, profiles)
+	}
 	return (
 		<div className="container mt-5">
 			{!authLoading && !porfileLoading ? (
@@ -33,7 +36,7 @@ const Clients = ({ profiles, profilesFiltered, filterProfiles, porfileLoading, a
 						<div className="col-md-6 " />
 						<div className="col-md-6 col-sm-12 ">
 							<div className="input-group mb-3">
-								<input type="text" className="form-control" />
+								<input onChange={handleFilter} type="text" className="form-control" />
 								<div class="input-group-append">
 									<span class="input-group-text">
 										<i className="fa fa-user" />
@@ -56,7 +59,7 @@ const Clients = ({ profiles, profilesFiltered, filterProfiles, porfileLoading, a
 						<div className="card-body">
 							<div className="list-group">
 								{profiles && profiles !== null && profiles.length > 0 ? (
-									profiles.map(client => (
+									profilesFiltered.map(client => (
 										<li key={client._id} className="my-item list-group-item mb-2 p-0">
 											<div className=" bg-light  rounded p-4">
 												<div className="d-flex justify-content-between text-bold ">

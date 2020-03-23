@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
-import { loadLoans, addLoan } from '../redux/actions/loans';
+
 import { connect } from 'react-redux';
 import Loading from '../component/layout/Loading';
+import { updateClient } from '../redux/actions/profile';
 
 import './Client.css';
 const Client2 = ({
+	updateClient,
 	cityLoading,
 	profiles,
 	loans,
@@ -73,6 +75,8 @@ const Client2 = ({
 	const handleSubmit = e => {
 		e.preventDefault();
 		console.log(formData);
+		formData.cedula = client.cedula;
+		updateClient(formData);
 		setFields({ ...fields, fireRedirect: true });
 	};
 
@@ -122,7 +126,7 @@ const Client2 = ({
 												<div className=" py-2 pl-2">
 													<h6 className="text-bold">Nombre</h6>
 													<div className="d-flex justify-content-between">
-														<span className={`text-${fName ? 'white' : 'muted'}`}>
+														<span className="text-white">
 															{!fName ? (
 																<span>
 																	{client.name.charAt(0).toUpperCase() +
@@ -164,7 +168,7 @@ const Client2 = ({
 												<div className=" py-2 pl-2">
 													<h6 className="text-bold">Apellido</h6>
 													<div className="d-flex justify-content-between">
-														<span className={`text-${fLName ? 'white' : 'muted'}`}>
+														<span className="text-white">
 															{!fLName ? (
 																<span>
 																	{client.apellido.charAt(0).toUpperCase() +
@@ -206,40 +210,15 @@ const Client2 = ({
 												<div className=" py-2 pl-2">
 													<h6 className="text-bold">Cedula</h6>
 													<div className="d-flex justify-content-between">
-														<span className={`text-${fName ? 'white' : 'muted'}`}>
-															{!fCedula ? (
-																<span>
-																	<NumberFormat
-																		value={client.cedula}
-																		displayType={'text'}
-																		format="###-#######-#"
-																	/>
-																</span>
-															) : (
-																<span>
-																	<input
-																		name="cedula"
-																		value={cedula}
-																		onChange={handleDataChange}
-																		className="border-0 pl-2 form-control text-success text-bold"
-																		placeholder={client.cedula}
-																	/>
-																</span>
-															)}
+														<span className="text-white">
+															<span>
+																<NumberFormat
+																	value={client.cedula}
+																	displayType={'text'}
+																	format="###-#######-#"
+																/>
+															</span>
 														</span>
-														<div className="pr-3 modifier">
-															<label htmlFor="fCedula">
-																<i className="fa fa-pencil" />
-															</label>
-															<input
-																id="fCedula"
-																name="fCedula"
-																onChange={handleChange}
-																className=" d-none "
-																type="checkbox"
-																checked={fCedula}
-															/>
-														</div>
 													</div>
 												</div>
 											</li>
@@ -251,7 +230,7 @@ const Client2 = ({
 												<div className=" py-2 pl-2">
 													<h6 className="text-bold">Telefono </h6>
 													<div className="d-flex justify-content-between">
-														<span className={`text-${fTelefono ? 'white' : 'muted'}`}>
+														<span className="text-white">
 															{!fTelefono ? (
 																<span>
 																	<NumberFormat
@@ -314,7 +293,7 @@ const Client2 = ({
 													<div className=" py-2 pl-2">
 														<h6 className="text-bold">Telefono 2</h6>
 														<div className="d-flex justify-content-between">
-															<span className={`text-${fTelefono2 ? 'white' : 'muted'}`}>
+															<span className="text-white">
 																{!fTelefono2 ? (
 																	<span>
 																		<NumberFormat
@@ -337,17 +316,7 @@ const Client2 = ({
 															</span>
 
 															<div className="pr-3 modifier d-flex">
-																<div className="mr-3">
-																	<button
-																		name="fTelefon2trash"
-																		onClick={console.log('hey')}
-																		className=" border-0  "
-																		type="checkbox"
-																		checked={fTelefon2add}
-																	>
-																		<i className="fa fa-trash" />
-																	</button>
-																</div>
+																
 																{!client.telefono3 && (
 																	<div className="mr-3">
 																		<label htmlFor="fTelefon2add">
@@ -383,67 +352,68 @@ const Client2 = ({
 												</li>
 											)}
 
-											{client.telefono3 && (
-												<li
-													name="fTelefono3"
-													className="my-info list-group-item mb-2 p-0 rounded-0"
-												>
-													<div className=" py-2 pl-2">
-														<h6 className="text-bold">Telefono 2</h6>
-														<div className="d-flex justify-content-between">
-															<span className={`text-${fTelefono3 ? 'white' : 'muted'}`}>
-																{!fTelefono3 ? (
-																	<span>
-																		<NumberFormat
-																			value={client.telefono3}
-																			displayType={'text'}
-																			format="(###) ###-####"
-																		/>
-																	</span>
-																) : (
-																	<span>
+											{client.telefono3 ||
+												(fTelefon2add && (
+													<li
+														name="fTelefono3"
+														className="my-info list-group-item mb-2 p-0 rounded-0"
+													>
+														<div className=" py-2 pl-2">
+															<h6 className="text-bold">Telefono 3</h6>
+															<div className="d-flex justify-content-between">
+																<span className="text-white">
+																	{!fTelefono3 ? (
+																		<span className="text-white">
+																			<NumberFormat
+																				value={client.telefono3}
+																				displayType={'text'}
+																				format="(###) ###-####"
+																			/>
+																		</span>
+																	) : (
+																		<span>
+																			<input
+																				name="telefono3"
+																				value={telefono3}
+																				onChange={handleDataChange}
+																				className="border-0 pl-2 form-control text-success text-bold"
+																				placeholder={client.telefono2}
+																			/>
+																		</span>
+																	)}
+																</span>
+
+																<div className="pr-3 modifier d-flex">
+																	<div className="mr-3">
+																		<button
+																			name="fTelefon3trash"
+																			onClick={console.log('hey')}
+																			className=" border-0  "
+																			type="checkbox"
+																			checked={fTelefon2add}
+																		>
+																			<i className="fa fa-trash" />
+																		</button>
+																	</div>
+
+																	<div>
+																		<label htmlFor="fTelefono3">
+																			<i className="fa fa-pencil" />
+																		</label>
 																		<input
-																			name="telefono3"
-																			value={telefono3}
-																			onChange={handleDataChange}
-																			className="border-0 pl-2 form-control text-success text-bold"
-																			placeholder={client.telefono2}
+																			id="fTelefono3"
+																			name="fTelefono3"
+																			onChange={handleChange}
+																			className=" d-none "
+																			type="checkbox"
+																			checked={fTelefono2}
 																		/>
-																	</span>
-																)}
-															</span>
-
-															<div className="pr-3 modifier d-flex">
-																<div className="mr-3">
-																	<button
-																		name="fTelefon3trash"
-																		onClick={console.log('hey')}
-																		className=" border-0  "
-																		type="checkbox"
-																		checked={fTelefon2add}
-																	>
-																		<i className="fa fa-trash" />
-																	</button>
-																</div>
-
-																<div>
-																	<label htmlFor="fTelefono3">
-																		<i className="fa fa-pencil" />
-																	</label>
-																	<input
-																		id="fTelefono3"
-																		name="fTelefono3"
-																		onChange={handleChange}
-																		className=" d-none "
-																		type="checkbox"
-																		checked={fTelefono2}
-																	/>
+																	</div>
 																</div>
 															</div>
 														</div>
-													</div>
-												</li>
-											)}
+													</li>
+												))}
 
 											<li
 												name="fDirreccion"
@@ -452,7 +422,7 @@ const Client2 = ({
 												<div className=" py-2 pl-2">
 													<h6 className="text-bold">Dirreccion</h6>
 													<div className="d-flex justify-content-between">
-														<span className={`text-${fDirreccion ? 'white' : 'muted'}`}>
+														<span className="text-white">
 															{!fDirreccion ? (
 																<span>
 																	{client.dirreccion.charAt(0).toUpperCase() +
@@ -494,7 +464,7 @@ const Client2 = ({
 												<div className=" py-2 pl-2">
 													<h6 className="text-bold">Ciudad</h6>
 													<div className="d-flex justify-content-between">
-														<span className={`text-${fCity ? 'white' : 'muted'}`}>
+														<span className="text-white">
 															{!fCity ? (
 																<span>
 																	{client.ciudad.charAt(0).toUpperCase() +
@@ -624,15 +594,12 @@ const Client2 = ({
 																		</span>
 																	</div>
 
-																	
-
 																	<div>
-																
 																		<a
 																			href={`/loan/${loan._id}`}
 																			className="btn btn-block btn-outline-info"
 																		>
-																			Ver historial de pago 
+																			Ver historial de pago
 																		</a>
 																	</div>
 																</div>
@@ -693,7 +660,7 @@ const Client2 = ({
 																		</span>
 																	</div>
 
-																		<div className="mb-2">
+																	<div className="mb-2">
 																		<a
 																			href={`/payment/${loan._id}`}
 																			className="btn btn-block btn-outline-info"
@@ -722,6 +689,7 @@ const Client2 = ({
 							)}
 						</div>
 					</div>
+					{fireRedirect && <Redirect to={`/client/${id}`} />}
 				</Fragment>
 			)}
 		</Fragment>
@@ -734,7 +702,8 @@ Client2.prototype = {
 	profileLoading: PropTypes.bool.isRequired,
 	authLoading: PropTypes.bool.isRequired,
 	cityLoading: PropTypes.bool.isRequired,
-	cities: PropTypes.array.isRequired
+	cities: PropTypes.array.isRequired,
+	updateClient: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
 	profiles: state.profile.profiles,
@@ -745,4 +714,4 @@ const mapStateToProps = state => ({
 	cityLoading: state.city.loading,
 	cities: state.city.cities
 });
-export default connect(mapStateToProps, { loadLoans, addLoan })(Client2);
+export default connect(mapStateToProps, { updateClient })(Client2);

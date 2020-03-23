@@ -13,6 +13,7 @@ const moment = require('moment');
 router.get('/', async (req, res) => {
 	try {
 		let payments = await Payment.find();
+		payments = payments.filter(payment => payment.status != 'unpaid');
 		res.json(payments);
 	} catch (error) {
 		console.log(`Get not complete task get all Payments`);
