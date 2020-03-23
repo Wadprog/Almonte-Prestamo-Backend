@@ -1,7 +1,7 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import NumberFormat from 'react-number-format';
-import PropTypes from 'prop-types';
+
 
 import { connect } from 'react-redux';
 import Loading from '../component/layout/Loading';
@@ -695,16 +695,7 @@ let clientLoans=[];
 		</Fragment>
 	);
 };
-Client.prototype = {
-	profiles: PropTypes.array.isRequired,
-	loans: PropTypes.array.isRequired,
-	loanLoading: PropTypes.bool.isRequired,
-	profileLoading: PropTypes.bool.isRequired,
-	authLoading: PropTypes.bool.isRequired,
-	cityLoading: PropTypes.bool.isRequired,
-	cities: PropTypes.array.isRequired,
-	updateClient: PropTypes.func.isRequired
-};
+
 const mapStateToProps = state => ({
 	profiles: state.profile.profiles,
 	loans: state.loan.loans,
