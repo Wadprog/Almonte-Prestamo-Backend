@@ -27,7 +27,7 @@ export const loadExpenses = () => async dispatch => {
 	}
 };
 
-export const addExpenses = formData => async dispatch => {
+export const addExpense = formData => async dispatch => {
 	const config = {
 		headers: {
 			'Content-Type': 'application/json'

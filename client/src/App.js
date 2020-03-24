@@ -17,6 +17,8 @@ import NewPlan from './pages/NewPlan';
 import Plans from './pages/Plans';
 import Cities from './pages/Cities';
 import NewCity from './pages/NewCity';
+import Expenses from './pages/Expenses';
+import NewExpense from './pages/NewExpense';
 import Users from './pages/Users';
 import NewUser from './pages/NewUser';
 import LoanId from './pages/LoanId';
@@ -43,8 +45,6 @@ import { loadUsers } from './redux/actions/user';
 import { loadRoutina } from './redux/actions/routina';
 import { loadStatistic } from './redux/actions/statistic';
 import { loadExpenses } from './redux/actions/expenses';
-
-
 
 import { Provider } from 'react-redux';
 import store from './redux/store';
@@ -89,6 +89,8 @@ function App() {
 									<PrivateRoute path="/cities" component={Cities} />
 									<PrivateRoute path="/newClient" component={NewClient} />
 									<PrivateRoute path="/newcity" component={NewCity} />
+									<PrivateRoute path="/expense" component={Expenses} />
+									<PrivateRoute path="/newexpense" component={NewExpense} />
 									<PrivateRoute path="/newloan/:id" component={NewLoan} />
 									<PrivateRoute path="/city" component={Cities} />
 									<PrivateRoute path="/loan/:id" component={LoanId} />
