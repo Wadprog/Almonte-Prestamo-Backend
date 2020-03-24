@@ -42,6 +42,7 @@ import { loadUser } from './redux/actions/auth';
 import { loadUsers } from './redux/actions/user';
 import { loadRoutina } from './redux/actions/routina';
 import { loadStatistic } from './redux/actions/statistic';
+import { loadExpenses } from './redux/actions/expenses';
 
 
 
@@ -58,6 +59,7 @@ function App() {
 		store.dispatch(loadUsers());
 		store.dispatch(loadRoutina());
 		store.dispatch(loadStatistic());
+		store.dispatch(loadExpenses());
 	}, []);
 
 	if (localStorage.token) setAuthToken(localStorage.token);

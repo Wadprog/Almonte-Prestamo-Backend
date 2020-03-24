@@ -8,7 +8,8 @@ import plan from './plan';
 import payment from './payment';
 import user from './user';
 import routina from './routina';
-import statistic from './statistic'
+import statistic from './statistic';
+import expense from './expense';
 export default combineReducers({
 	alert,
 	auth,
@@ -19,5 +20,6 @@ export default combineReducers({
 	payment,
 	user,
 	routina,
-	statistic
+	statistic,
+	expense
 });
