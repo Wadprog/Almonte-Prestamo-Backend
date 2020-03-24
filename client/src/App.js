@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import Navbar from './component/Navbar';
+
 import SideNav from './component/layout/SideNav';
-import Footer from './component/Footer';
+
 import Home from './pages/Home';
 import Clients from './pages/Clients';
 import Loan from './pages/Loan';
 import Client from './pages/Client';
 import Alert from './component/Alert';
-import Test from './component/Test';
+
 import Login from './pages/Login';
 import Loading from './component/layout/Loading';
 import Register from './pages/Register';
