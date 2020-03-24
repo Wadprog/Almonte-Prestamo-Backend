@@ -52,7 +52,7 @@ const totalPerMonth = (items, months) => {
 			[]
 		);
 		itemInMonths.push({
-			[monthsname[month]]: tempmonth.reduce((total, loan) => total + loan.amount, 0)
+			name: monthsname[month], total: tempmonth.reduce((total, loan) => total + loan.amount, 0)
 		});
 	});
 	return itemInMonths;
@@ -81,7 +81,7 @@ const PaymenttotalPerMonth = (items, months) => {
 			[]
 		);
 		itemInMonths.push({
-			[monthsname[month]]: tempmonth.reduce(
+			name: monthsname[month], total: tempmonth.reduce(
 				(total, element) => total + element.amountPaid + element.interestPaid,
 				0
 			)

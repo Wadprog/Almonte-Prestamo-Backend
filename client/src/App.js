@@ -41,6 +41,10 @@ import setAuthToken from './utils/setAuthToken';
 import { loadUser } from './redux/actions/auth';
 import { loadUsers } from './redux/actions/user';
 import { loadRoutina } from './redux/actions/routina';
+import { loadStatistic } from './redux/actions/statistic';
+
+
+
 import { Provider } from 'react-redux';
 import store from './redux/store';
 function App() {
@@ -53,6 +57,7 @@ function App() {
 		store.dispatch(loadPayment());
 		store.dispatch(loadUsers());
 		store.dispatch(loadRoutina());
+		store.dispatch(loadStatistic());
 	}, []);
 
 	if (localStorage.token) setAuthToken(localStorage.token);

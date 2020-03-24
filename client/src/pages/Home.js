@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import CardContainer from '../component/CardContainer';
 import cards from '../Temp/cards';
 import {Months,commonOptions} from '../utils/graphData';
@@ -58,4 +59,9 @@ const Home = props => {
 		</div>
 	);
 };
-export default Home;
+
+const mapStateToProps = state => ({
+
+});
+
+export default connect(mapStateToProps, {})(Home);
