@@ -38,5 +38,5 @@ app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => res.render('index', { test: 'sister' }));
 
-const PORT = process.env.Port || 5000;
+const PORT = process.env.Port || 80;
 app.listen(PORT, () => console.log(`Server runing on port ${PORT}`));
