@@ -96,6 +96,7 @@ const PaymenttotalPerMonth = (items, months) => {
 router.get('/', async (req, res) => {
 	try {
 		let loans = await Loan.find();
+		loans= loans.filter(loan=> new Date(loan.date).getFullYear()== new Date().getFullYear()); 
 		const loanMonthsTotal = totalPerMonth(loans, montInObject(loans));
 		let payments = await Payment.find();
 		payments = payments.filter(payment => payment.status != 'unpaid');
