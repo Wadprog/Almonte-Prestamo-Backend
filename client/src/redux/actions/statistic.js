@@ -8,7 +8,7 @@ export const loadStatistic = () => async dispatch => {
 		type: STATISTICS_FETCH_REQUEST
 	});
 	try {
-		const res = await axios.get(PROXY + '/api/plan');
+		const res = await axios.get(PROXY + '/api/statistic');
 		dispatch({
 			type: STATISTICS_FETCH_SUCCESS,
 			payload: res.data

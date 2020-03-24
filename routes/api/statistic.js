@@ -110,6 +110,8 @@ router.get('/', async (req, res) => {
 		payments = payments.filter(payment => payment.status != 'unpaid');
 		const paymentMonthsTotal = PaymenttotalPerMonth(payments, montInPayment(payments));
 
+
+ex
 		res.json({ loanMonthsTotal, paymentMonthsTotal, expenseMonthsTotal });
 	} catch (error) {
 		console.log(`Get not complete task get statistic`);

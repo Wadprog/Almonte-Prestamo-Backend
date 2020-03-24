@@ -15,7 +15,7 @@ export const loadExpenses = () => async dispatch => {
 		type: EXPENSES_FETCH_REQUEST
 	});
 	try {
-		const res = await axios.get(PROXY + '/api/expenses');
+		const res = await axios.get(PROXY + '/api/expense');
 		dispatch({
 			type: EXPENSES_FETCH_SUCCESS,
 			payload: res.data
@@ -38,7 +38,7 @@ export const addExpense = formData => async dispatch => {
 		type: EXPENSES_FETCH_REQUEST
 	});
 	try {
-		const res = await axios.post(PROXY + '/api/expenses', body, config);
+		const res = await axios.post(PROXY + '/api/expense', body, config);
 
 		dispatch({
 			type: EXPENSES_ADD_SUCCESS,

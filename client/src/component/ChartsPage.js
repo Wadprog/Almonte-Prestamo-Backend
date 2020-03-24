@@ -5,7 +5,7 @@ import { MDBContainer } from 'mdbreact';
 const ChartsPage = ({ dataLine }) => {
 	return (
 		<MDBContainer className="text-white">
-			<h3 className="mt-5">Report de los ultimos 12 meses</h3>
+			<h5 className="my-5">Report de los ultimos 12 meses</h5>
 			<Line data={dataLine} options={{ responsive: true }} />
 		</MDBContainer>
 	);
