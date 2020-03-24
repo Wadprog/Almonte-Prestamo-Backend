@@ -30,11 +30,12 @@ app.use('/api/user', require('./routes/api/user'));
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/city', require('./routes/api/city'));
 app.use('/api/payment', require('./routes/api/payment'));
+app.use('/api/statistic', require('./routes/api/statistic'));
 app.use('/api/clientwloan', require('./routes/api/clientwloan'));
 
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => res.render('index', { test: 'sister' }));
 
-const PORT = process.env.Port || 80;
+const PORT = process.env.Port || 5000;
 app.listen(PORT, () => console.log(`Server runing on port ${PORT}`));

@@ -24,6 +24,17 @@ router.get('/', async (req, res) => {
 //@desc Get  a  Payment by id route
 //@desc access public temp
 
+router.get('/loan/:id', async (req, res) => {
+	try {
+		let payment = await Payment.find({loan:req.params.id});
+		if (!payment) res.status(404).json({ msg: 'This Payment does not exist' });
+		res.json(payment);
+	} catch (error) {
+		console.log(`Could not get a Payment with id = ${req.params.id}`);
+		res.json({ msg: `Server error ${error}` });
+	}
+});
+
 router.get('/:id', async (req, res) => {
 	try {
 		let payment = await Payment.findById(req.params.id);
