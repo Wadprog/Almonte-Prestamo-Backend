@@ -61,6 +61,8 @@ const Home = props => {
 };
 
 const mapStateToProps = state => ({
+statistic: state.statistic.statistics,
+loading:state.statistic.loading
 
 });
 
