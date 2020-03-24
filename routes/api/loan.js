@@ -49,6 +49,7 @@ router.post('/', async (req, res) => {
 		var amountPerQuota = Math.round(req.body.amount * interest / 100);
 
 		var interestPerQuota = Math.round((amountPerQuota * steps - req.body.amount) / steps);
+		amountPerQuota -= interestPerQuota;
 
 		var date = req.body.date || moment();
 		const nextpaymentDate = nextPayment(date, plan.interval, 0);

@@ -26,9 +26,9 @@ router.get('/', async (req, res) => {
 
 router.get('/loan/:id', async (req, res) => {
 	try {
-		let payment = await Payment.find({ loan: req.params.id });
+		let payments = await Payment.find({ loan: req.params.id });
 		payments = payments.filter(payment => payment.status != 'unpaid');
-		if (!payment) res.status(404).json({ msg: 'This Payment does not exist' });
+		if (!payments) res.status(404).json({ msg: 'This Payment does not exist' });
 		res.json(payment);
 	} catch (error) {
 		console.log(`Could not get a Payment with id = ${req.params.id}`);
