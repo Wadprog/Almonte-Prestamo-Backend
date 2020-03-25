@@ -46,7 +46,7 @@ const NewPlan = ({ addPlan, loans, loanLoading, authLoading }) => {
 						</div>
 
 						<div className="Form-group">
-							<label className="text-white h6">En cuanto paso se paga</label>
+							<label className="text-white h6">En cuanto pago se paga</label>
 
 							<input
 								onChange={handleChange}
