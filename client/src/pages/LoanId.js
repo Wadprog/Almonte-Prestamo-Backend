@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Loading from '../component/layout/Loading';
 
 const NewLoan = ({
+	paymentLoading,
 	plans,
 	planLoading,
 	profiles,
@@ -21,7 +22,7 @@ const NewLoan = ({
 	const { Fragment } = React;
 	return (
 		<div className="container mt-5 pt-5">
-			{!loanLoading && !authLoading ? (
+			{!loanLoading && !authLoading && !paymentLoading ? (
 				<Fragment>
 					{loans &&
 					loans !== null &&
@@ -184,12 +185,14 @@ NewLoan.prototype = {
 	loans: PropTypes.array.isRequired,
 	loanLoading: PropTypes.bool.isRequired,
 	authLoading: PropTypes.bool.isRequired,
-	payments: PropTypes.array.isRequired
+	payments: PropTypes.array.isRequired,
+	paymentLoading:PropTypes.bool.isRequired
 };
 const mapStateToProps = state => ({
 	profiles: state.profile.profiles,
 	profileLoading: state.profile.isLoading,
 	payments: state.payment.payments,
+	paymentLoading: state.payment.loading,
 	plans: state.plan.plans,
 	planLoading: state.plan.loading,
 	loanLoading: state.loan.loading,
