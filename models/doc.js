@@ -6,7 +6,7 @@ const docSchema = mongoose.Schema({
 		required: true
 	},
 	title: {
-		type: string,
+		type: String,
 		required: true
 	}
 });
