@@ -40,7 +40,7 @@ const NewLoan = ({
 										<li className="list-group-item my-info">
 											<div
 												className={`d-flex justify-content-between text-${payment.status ===
-												'paid'
+												'Pagado'
 													? 'success'
 													: 'danger'}`}
 											>
@@ -50,7 +50,7 @@ const NewLoan = ({
 
 											<div
 												className={`d-flex justify-content-between text-${payment.status ===
-												'paid'
+												'Pagado'
 													? 'success'
 													: 'danger'}`}
 											>
