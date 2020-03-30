@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { login } from '../redux/actions/auth';
 import Loading from '../component/layout/Loading';
 
-const LOGIN = ({ loading, isAuthenticated, login }) => {
+const Login = ({ loading, isAuthenticated, login }) => {
 	const [ formData, setFormData ] = useState({
 		name: '',
 		password: ''
@@ -13,7 +13,6 @@ const LOGIN = ({ loading, isAuthenticated, login }) => {
 	const onSubmit = e => {
 		e.preventDefault();
 		const { name, password } = formData;
-
 		login({ name, password });
 	};
 	const onchange = e => {
@@ -26,11 +25,11 @@ const LOGIN = ({ loading, isAuthenticated, login }) => {
 			{!loading ? (
 				<div className="centered-box  d-flex justify-content-center align-items-center">
 					<div className="small-box rounded px-3 py-5 mb-5 bg-white h-75 w-100 ">
-						<h2 className="text-center text-muted">Login Form </h2>
+						
 						<form onSubmit={onSubmit} className="d-flex h-100 justify-content-center align-items-center">
 							<div className="w-100">
 								<div className="form-group">
-									<label htmlfor="exampleInputEmail1">Email address</label>
+									<label htmlfor="exampleInputEmail1">Usuario</label>
 									<input
 										name="name"
 										type="text"
@@ -65,7 +64,7 @@ const LOGIN = ({ loading, isAuthenticated, login }) => {
 		</div>
 	);
 };
-LOGIN.prototype = {
+Login.prototype = {
 	isAuthenticated: PropTypes.object.isRequired,
 	loading: PropTypes.bool.isRequired
 };
@@ -73,4 +72,4 @@ const mapStateToProps = state => ({
 	isAuthenticated: state.auth.isAuthenticated,
 	loading: state.auth.loading
 });
-export default connect(mapStateToProps, { login })(LOGIN);
+export default connect(mapStateToProps, { login })(Login);

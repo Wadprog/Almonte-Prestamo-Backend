@@ -48,11 +48,7 @@ export const addCity = formData => async dispatch => {
 		dispatch(loadCities);
 		dispatch(setAlert(` Ciudad ${formData.name} agregado con exito`, 'success'));
 	} catch (error) {
-		const errors = error.response.data.errors;
-		console.log(`error is ${error}`);
-		if (errors) {
-			errors.forEach(err => dispatch(setAlert(err.msg, 'danger')));
-			dispatch({ type: CITY_ADD_FAIL });
-		}
+		dispatch(setAlert('Error al agregar ciudad verifica que hay internet', 'danger'));
+		dispatch({ type: CITY_ADD_FAIL });
 	}
 };

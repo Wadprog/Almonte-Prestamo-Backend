@@ -56,8 +56,9 @@ export const loadUser = () => async dispatch => {
 			type: USER_LOADED,
 			payload: res.data
 		});
+		
 	} catch (error) {
-		console.log('error loading user'+ error)
+			dispatch(setAlert("Verificar usuarios o connection al internet", 'danger'));
 		dispatch({
 			type: AUTH_ERROR
 		});
@@ -79,9 +80,9 @@ export const register = ({ name, password }) => async dispatch => {
 		});
 	} catch (error) {
 		console.log(` Error registering ${error}`);
-		const errors = error.response.data.errors;
-		if (errors) {
-			errors.forEach(err => dispatch(setAlert(err.msg, 'danger')));
+		
+		if (error) {
+		dispatch(setAlert("Verificar usuarios o connection al internet", 'danger'));
 		}
 		dispatch({
 			type: REGISTER_FAIL

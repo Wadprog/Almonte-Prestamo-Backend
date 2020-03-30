@@ -47,11 +47,8 @@ export const addPlan = formData => async dispatch => {
 		});
 		dispatch(setAlert(` Plan de ${formData.name} creado con exito`, 'success'));
 	} catch (error) {
-		const errors = error.response.data.errors;
-		console.log(`error is ${error}`);
-		if (errors) {
-			errors.forEach(err => dispatch(setAlert(err.msg, 'danger')));
+		dispatch(setAlert('Error al agregar plan verifica que hay internet', 'danger'));
 			dispatch({ type: PLAN_ADD_FAIL });
 		}
 	}
-};
+

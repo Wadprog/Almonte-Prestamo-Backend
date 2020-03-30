@@ -49,7 +49,6 @@ router.post('/', async (req, res) => {
 		var amountPerQuota = Math.round(req.body.amount * interest / 100);
 
 		var interestPerQuota = Math.round((amountPerQuota * steps - req.body.amount) / steps);
-		amountPerQuota -= interestPerQuota;
 
 		var date = req.body.date || moment();
 		const nextpaymentDate = nextPayment(date, plan.interval, 0);
@@ -99,16 +98,16 @@ router.post('/due/:id', async (req, res) => {
 		var date = null;
 		if (req.body.date) date = moment(req.body.date).format('l');
 
-		if (req.body.interest) {
+		if (req.body.interest && req.body.interest != '' && req.body.interest !== 0) {
 			payment.interestPaid =
 				req.body.interest <= loan_.interestPerQuota ? req.body.interest : loan_.interestPerQuota;
 			payment.dateInterestPaid = date || moment().format('l');
-			payment.status = req.body.interest == payment.interestToPay ? 'interest partial' : ' interest paid';
+			payment.status = 'Mora pagada';
 		}
-		if (req.body.amount) {
-			payment.amountPaid = req.body.amount <= loan_.amountPerQuota ? req.body.amount : loan_.amountPerQuota;
+		if (req.body.amount && req.body.amount != '' && req.body.amount !== 0) {
+			payment.amountPaid = req.body.amount;
 			payment.dateAmountPaid = date || moment().format('l');
-			payment.status = req.body.amount == payment.amountToPay ? 'amount paid' : 'amount partial';
+			payment.status = 'Pagado';
 
 			loan_.quota += 1;
 			loan_.nextpaymentDate = nextPayment(moment(loan_.date), loan_.plan.interval, loan_.quota);
@@ -119,9 +118,6 @@ router.post('/due/:id', async (req, res) => {
 			var dif = req.body.amount - loan_.amountPerQuota;
 			payment.comment += `pago  ${dif}  mas`;
 		}
-
-		if (payment.amountPaid == loan_.amountPerQuota && payment.interestPaid == loan_.interestPerQuota)
-			payment.status = 'paid';
 
 		payment.quota = loan_.quota;
 		if (loan_.quota == loan_.plan.steps) loan_.status = true;

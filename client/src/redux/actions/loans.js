@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { setAlert } from './alert';
 import {
 	LOAN_ADD_REQUEST,
 	LOAN_ADD_FAIL,
@@ -55,6 +56,7 @@ export const addLoan = formData => async dispatch => {
 			type: LOAN_ADD_SUCCESS
 		});
 		dispatch(loadLoans());
+		dispatch(setAlert(` Prestamo creado con exito`, 'success'));
 	} catch (error) {
 		console.log(` here is the error ${error}`);
 		dispatch({
@@ -81,8 +83,9 @@ export const payLoan = formData => async dispatch => {
 			type: LOAN_PAYMENT_ADD_SUCCESS
 		});
 		dispatch(loadLoans());
+		dispatch(setAlert(` Prestamo Pagado con exito`, 'success'));
 	} catch (error) {
-		console.log(` here is the error ${error}`);
+		dispatch(setAlert(` Prestamo no pagao con exito`, 'danger'));
 		dispatch({
 			type: LOAN_PAYMENT_ADD_FAIL
 		});
