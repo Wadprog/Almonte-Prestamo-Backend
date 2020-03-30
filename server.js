@@ -32,15 +32,14 @@ app.use('/api/city', require('./routes/api/city'));
 app.use('/api/payment', require('./routes/api/payment'));
 app.use('/api/statistic', require('./routes/api/statistic'));
 app.use('/api/expense', require('./routes/api/expense'));
+app.use('/api/doc', require('./routes/api/doc'));
 app.use('/api/clientwloan', require('./routes/api/clientwloan'));
-
-
 
 app.use(express.static('client/build'));
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-		});
-		
+app.get('*', (req, res) => {
+	res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+});
+
 const PORT = process.env.Port || 80;
 app.listen(PORT, () => console.log(`Server runing on port ${PORT}`));
