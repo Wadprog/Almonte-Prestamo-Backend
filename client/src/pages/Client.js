@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import NumberFormat from 'react-number-format';
 
-
 import { connect } from 'react-redux';
 import Loading from '../component/layout/Loading';
 import { updateClient } from '../redux/actions/profile';
+import LoanDescription from '../component/LoanDescription';
 
 import './Client.css';
 const Client = ({
@@ -24,6 +24,7 @@ const Client = ({
 		fCedula: false,
 		fLName: false,
 		fDirreccion: false,
+		fDirReferencia:false,
 		fTelefono: false,
 		fTelefonadd: false,
 		fTelefono2: false,
@@ -32,6 +33,10 @@ const Client = ({
 		modifyProfile: false,
 		loanView: false,
 		fireRedirect: false
+	});
+
+	const [ toggle, setToggle ] = useState({
+		loanView: false
 	});
 
 	const [ formData, setFormData ] = useState({
@@ -51,8 +56,8 @@ const Client = ({
 	const {
 		fName,
 		fLName,
-		fCedula,
 		fDirreccion,
+		fDirReferencia,
 		fTelefono,
 		fTelefonadd,
 		fTelefono2,
@@ -60,10 +65,13 @@ const Client = ({
 		fTelefon2add,
 		fCity,
 		modifyProfile,
-		loanView,
 		fireRedirect
 	} = fields;
+	const { loanView } = toggle;
 
+	const handleToggle = e => {
+		setToggle({ ...toggle, [e.target.name]: e.target.checked });
+	};
 	const handleDataChange = e => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
@@ -80,13 +88,9 @@ const Client = ({
 		setFields({ ...fields, [e.target.name]: e.target.checked, modifyProfile: true });
 	};
 
-let clientLoans=[];
 	const [ client ] = profiles.filter(profile => profile._id === id);
-	if(loans.length>0)
-	 clientLoans = loans.filter(p=>p.client._id==id);
-	const paidLoans = clientLoans.filter(loan => loan.paidStatus);
-	const unpaidLoan = clientLoans.filter(loan => !loan.paidStatus);
-
+	let clientLoans = [];
+	if (loans.length > 0) clientLoans = loans.filter(loan => loan.client._id == id);
 
 	const { Fragment } = React;
 	return (
@@ -105,7 +109,7 @@ let clientLoans=[];
 										<div className="  ">
 											<a
 												href="/newclient"
-												className=" text-white btn btn-outline-secondary btn-block "
+												className="  btn btn-outline-secondary btn-block "
 											>
 												Crear nuevo cliente
 											</a>
@@ -115,7 +119,7 @@ let clientLoans=[];
 										<div className="  ">
 											<a
 												href={`/newloan/${client._id}`}
-												className=" text-white btn btn-outline-secondary btn-block "
+												className="   btn btn-outline-secondary btn-block "
 											>
 												Crear nuevo Prestamo
 											</a>
@@ -127,7 +131,7 @@ let clientLoans=[];
 												<div className=" py-2 pl-2">
 													<h6 className="text-bold">Nombre</h6>
 													<div className="d-flex justify-content-between">
-														<span className="text-white">
+														<span>
 															{!fName ? (
 																<span>
 																	{client.name.charAt(0).toUpperCase() +
@@ -169,7 +173,7 @@ let clientLoans=[];
 												<div className=" py-2 pl-2">
 													<h6 className="text-bold">Apellido</h6>
 													<div className="d-flex justify-content-between">
-														<span className="text-white">
+														<span>
 															{!fLName ? (
 																<span>
 																	{client.apellido.charAt(0).toUpperCase() +
@@ -211,7 +215,7 @@ let clientLoans=[];
 												<div className=" py-2 pl-2">
 													<h6 className="text-bold">Cedula</h6>
 													<div className="d-flex justify-content-between">
-														<span className="text-white">
+														<span>
 															<span>
 																<NumberFormat
 																	value={client.cedula}
@@ -231,7 +235,7 @@ let clientLoans=[];
 												<div className=" py-2 pl-2">
 													<h6 className="text-bold">Telefono </h6>
 													<div className="d-flex justify-content-between">
-														<span className="text-white">
+														<span>
 															{!fTelefono ? (
 																<span>
 																	<NumberFormat
@@ -294,7 +298,7 @@ let clientLoans=[];
 													<div className=" py-2 pl-2">
 														<h6 className="text-bold">Telefono 2</h6>
 														<div className="d-flex justify-content-between">
-															<span className="text-white">
+															<span>
 																{!fTelefono2 ? (
 																	<span>
 																		<NumberFormat
@@ -361,9 +365,9 @@ let clientLoans=[];
 														<div className=" py-2 pl-2">
 															<h6 className="text-bold">Telefono 3</h6>
 															<div className="d-flex justify-content-between">
-																<span className="text-white">
+																<span>
 																	{!fTelefono3 ? (
-																		<span className="text-white">
+																		<span>
 																			<NumberFormat
 																				value={client.telefono3}
 																				displayType={'text'}
@@ -422,7 +426,7 @@ let clientLoans=[];
 												<div className=" py-2 pl-2">
 													<h6 className="text-bold">Dirreccion</h6>
 													<div className="d-flex justify-content-between">
-														<span className="text-white">
+														<span>
 															{!fDirreccion ? (
 																<span>
 																	{client.dirreccion.charAt(0).toUpperCase() +
@@ -430,7 +434,8 @@ let clientLoans=[];
 																</span>
 															) : (
 																<span>
-																	<input
+																	<textarea
+																	rows={7}
 																		name="dirreccion"
 																		value={dirreccion}
 																		onChange={handleDataChange}
@@ -460,11 +465,60 @@ let clientLoans=[];
 												</div>
 											</li>
 
+
+
+												<li
+												name="fDirReferencia"
+												className="my-info list-group-item mb-2 p-0 rounded-0"
+											>
+												<div className=" py-2 pl-2">
+													<h6 className="text-bold"> Referencia Dirreccion</h6>
+													<div className="d-flex justify-content-between">
+														<span>
+															{!fDirReferencia ? (
+																<span>
+																	{client.DirReferencia.charAt(0).toUpperCase() +
+																		client.DirReferencia.slice(1)}
+																</span>
+															) : (
+																<span>
+																	<textarea
+																	rows={7}
+																		name="DirReferencia"
+																		value={DirReferencia}
+																		onChange={handleDataChange}
+																		className="border-0 pl-2 form-control text-success text-bold"
+																		placeholder={
+																			client.DirReferencia.charAt(0).toUpperCase() +
+																			client.DirReferencia.slice(1)
+																		}
+																	/>
+																</span>
+															)}
+														</span>
+														<div className="pr-3 modifier">
+															<label htmlFor="fDirReferencia">
+																<i className="fa fa-pencil" />
+															</label>
+															<input
+																id="fDirReferencia"
+																name="fDirReferencia"
+																onChange={handleChange}
+																className=" d-none "
+																type="checkbox"
+																checked={fDirReferencia}
+															/>
+														</div>
+													</div>
+												</div>
+											</li>
+
+
 											<li name="fCity" className="my-info list-group-item mb-2 p-0 rounded-0">
 												<div className=" py-2 pl-2">
 													<h6 className="text-bold">Ciudad</h6>
 													<div className="d-flex justify-content-between">
-														<span className="text-white">
+														<span>
 															{!fCity ? (
 																<span>
 																	{client.ciudad.charAt(0).toUpperCase() +
@@ -520,12 +574,12 @@ let clientLoans=[];
 									</form>
 									<div className="my-info  mt-4 mb-2 p-0 rounded-0">
 										<div className="  ">
-											<label className="btn btn-outline-secondary btn-block  text-white ">
+											<label className="btn btn-outline-secondary btn-block    ">
 												{clientLoans.length > 0 && clientLoans !== null ? (
 													<Fragment>
 														<input
 															name="loanView"
-															onChange={handleChange}
+															onChange={handleToggle}
 															checked={loanView}
 															type="checkBox"
 															href={`/newLoan/${client._id}`}
@@ -542,145 +596,22 @@ let clientLoans=[];
 									</div>
 									<div className={`d-${!loanView && 'none'}`}>
 										<Fragment>
-											{paidLoans &&
-											paidLoans !== null &&
-											paidLoans.length > 0 && (
+											{clientLoans &&
+											clientLoans !== null &&
+											clientLoans.length > 0 && (
 												<Fragment>
-													<label className="text-white ">
-														<h5>Prestamos pagados</h5>
-													</label>
-													<ul>
-														{paidLoans.map(loan => (
-															<li
-																key={loan._id}
-																className=" my-item list-group-item mb-2 p-0"
-															>
-																<div className=" bg-secondary  rounded p-4">
-																	<div className="mb-2">
-																		<span
-																			className={`text-${loan.status
-																				? 'success'
-																				: 'danger'}`}
-																		>
-																			{loan.status ? 'Pagado' : 'No Pagado'}
-																		</span>
-																	</div>
-																	<div className=" mb-1 d-flex justify-content-between  ">
-																		<h5 className="">{`${loan.date} `}</h5>
-
-																		<h5
-																			className={`text-bold text-${loan.status
-																				? 'success'
-																				: 'danger'}`}
-																		>
-																			<NumberFormat
-																				value={loan.amount}
-																				displayType={'text'}
-																				thousandSeparator={true}
-																				prefix={'RD$'}
-																			/>
-																		</h5>
-																	</div>
-
-																	<div className="mb-3">
-																		<span className="text-muted mr-3 ">
-																			{`Fecha ${loan.status
-																				? 'ultimo :'
-																				: 'proximo'} pago `}
-																		</span>
-
-																		<span className="text-muted">
-																			{loan.nextpaymentDate}
-																		</span>
-																	</div>
-
-																	<div>
-																		<a
-																			href={`/loan/${loan._id}`}
-																			className="btn btn-block btn-outline-info"
-																		>
-																			Ver historial de pago
-																		</a>
-																	</div>
-																</div>
-															</li>
-														))}
-													</ul>
-												</Fragment>
-											)}
-										</Fragment>
-										<Fragment>
-											{unpaidLoan.length > 0 && (
-												<Fragment>
-													<label className=" text-white ">
-														<h5>Prestamos no pagados</h5>
-													</label>
-													<ul>
-														{unpaidLoan.map(loan => (
-															<li
-																key={loan._id}
-																className=" my-info list-group-item mb-2 p-0"
-															>
-																<div className="  rounded p-4">
-																	<div className="mb-2">
-																		<span
-																			className={`text-${loan.status
-																				? 'success'
-																				: 'danger'}`}
-																		>
-																			{loan.status ? 'Pagado' : 'No Pagado'}
-																		</span>
-																	</div>
-																	<div className=" mb-1 d-flex justify-content-between  ">
-																		<h5 className="">{`${loan.date} `}</h5>
-
-																		<h5
-																			className={`text-bold text-${loan.status
-																				? 'success'
-																				: 'danger'}`}
-																		>
-																			<NumberFormat
-																				value={loan.amount}
-																				displayType={'text'}
-																				thousandSeparator={true}
-																				prefix={'RD$'}
-																			/>
-																		</h5>
-																	</div>
-
-																	<div className="mb-3">
-																		<span className="text-muted mr-3 ">
-																			{`Fecha ${loan.status
-																				? 'ultimo :'
-																				: 'proximo'} pago `}
-																		</span>
-
-																		<span className="text-muted">
-																			{loan.nextpaymentDate}
-																		</span>
-																	</div>
-
-																	<div className="mb-2">
-																		<a
-																			href={`/payment/${loan._id}`}
-																			className="btn btn-block btn-outline-info"
-																		>
-																			Pagar
-																		</a>
-																	</div>
-
-																	<div>
-																		<a
-																			href={`/loan/${loan._id}`}
-																			className="btn btn-block btn-outline-info"
-																		>
-																			Ver historial de pago
-																		</a>
-																	</div>
-																</div>
-															</li>
-														))}
-													</ul>
+													{clientLoans.map(loan => (
+														<li
+															key={loan._id}
+															className=" my-item list-group-item mb-2 p-0"
+														>
+															<LoanDescription
+																loan={loan}
+																noPaymentBtn={loan.status}
+																noClientDetails={true}
+															/>
+														</li>
+													))}
 												</Fragment>
 											)}
 										</Fragment>

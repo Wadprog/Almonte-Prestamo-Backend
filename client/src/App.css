@@ -4,23 +4,19 @@ root {
 .my-item {
 	max-width: 500px;
 }
-.modifier{
-  border:none; 
-  position: relative; 
+.modifier {
+	border: none;
+	position: relative;
 }
-.modifier i:{
-  position: absolute;
-
+.modifier i: {
+	position: absolute;
 }
-.modifier:hover i{
-color:#42a812; 
-
-
+.modifier:hover i {
+	color: #42a812;
 }
 .my-info {
-	max-width: 600px;
-  background-color: #3a3f48 !important;
-  color:white
+	background-color: #3a3f48 !important;
+	color: white;
 }
 
 html {
@@ -95,7 +91,6 @@ ul li a {
 	}
 }
 
-
 /*----------------page-wrapper----------------*/
 
 .page-wrapper {
@@ -105,9 +100,6 @@ ul li a {
 .page-wrapper .theme.chiller-theme {
 	background: #1e2229;
 }
-
-
-
 
 .centered-box {
 	height: 100vh;

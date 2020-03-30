@@ -67,14 +67,14 @@ function App() {
 	return (
 		<Provider store={store}>
 			<Fragment>
-				<div className="page-wrapper chiller-theme toggled">
+				<div className="page-wrapper chiller-theme">
 					<a id="show-sidebar" className="btn btn-sm btn-dark" href="#">
-						<i class="fas fa-bars" />
+						<i className="fa fa-bars" />
 					</a>
 					<SideNav />
 					<main className="page-content">
 						<div class="container-fluid">
-							<div className=" mt-5">
+						
 								<Alert />
 								<Switch>
 									<PrivateRoute exact path="/" component={Home} />
@@ -102,7 +102,7 @@ function App() {
 									<PrivateRoute path="/register" component={Register} />
 									<PrivateRoute path="/lateLoan" component={LateLoans} />
 								</Switch>
-							</div>
+						
 						</div>
 					</main>
 				</div>

@@ -11,19 +11,25 @@ const NewUser = ({ addUser, users, userLoading, authLoading }) => {
 		nombreUsuarios: '',
 		password: '',
 		password2: '',
-		fireRedirect: false
+		fireRedirect: false,
+		passwordSame: true
 	});
 
 	const handleChange = e => {
-		setFormData({ ...formData, [e.target.name]: e.target.value });
+		setFormData({
+			...formData,
+			[e.target.name]: e.target.value,
+			passwordSame: formData.password == formData.password2
+		});
 	};
 	const handleSubmit = e => {
 		e.preventDefault();
-		console.log(formData);
-		addUser(formData);
-		setFormData({ ...formData, fireRedirect: true });
+		if (password2 == password) {
+			addUser(formData);
+			setFormData({ ...formData, fireRedirect: true });
+		}
 	};
-	const { fireRedirect, name, nombreUsuarios, password, password2 } = formData;
+	const { passwordSame, fireRedirect, name, nombreUsuarios, password, password2 } = formData;
 
 	const { Fragment } = React;
 	return (
@@ -32,8 +38,9 @@ const NewUser = ({ addUser, users, userLoading, authLoading }) => {
 				<Fragment>
 					<form onSubmit={handleSubmit}>
 						<div className="Form-group">
-							<label className="text-white h6">Nombre del usuario</label>
+							<label className="text-white h6">Nombre del usuario *</label>
 							<input
+								required="true"
 								name="name"
 								type="text"
 								value={name}
@@ -45,6 +52,7 @@ const NewUser = ({ addUser, users, userLoading, authLoading }) => {
 						<div className="Form-group">
 							<label className="text-white h6">Usuario</label>
 							<input
+								required="true"
 								name="nombreUsuarios"
 								type="text"
 								value={nombreUsuarios}
@@ -56,6 +64,7 @@ const NewUser = ({ addUser, users, userLoading, authLoading }) => {
 						<div className="Form-group">
 							<label className="text-white h6">Contrasena</label>
 							<input
+								required="true"
 								name="password"
 								type="password"
 								value={password}
@@ -66,6 +75,7 @@ const NewUser = ({ addUser, users, userLoading, authLoading }) => {
 						<div className="Form-group">
 							<label className="text-white h6">Verificar contrasena</label>
 							<input
+								required="true"
 								name="password2"
 								type="password"
 								value={password2}
@@ -73,6 +83,10 @@ const NewUser = ({ addUser, users, userLoading, authLoading }) => {
 								className="form-control"
 							/>
 						</div>
+						<span className={` mt-2 text-danger d-${!passwordSame && 'none'}`}>
+							{' '}
+							Verifique con las contrasena sean igual
+						</span>
 
 						<div className="mt-3">
 							<button className="btn btn-block btn-outline-info" type="sumbit">

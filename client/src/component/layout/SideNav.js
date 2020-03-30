@@ -13,6 +13,9 @@ const SideNav = ({ user, isAuthLoading, logout }) => {
 					<div className="sidebar-content">
 						<div className="sidebar-brand">
 							<a href="#">Almonte Prestamo</a>
+							<div id="close-sidebar">
+          <i className="fa fa-times"></i>
+        </div>
 						</div>
 
 						{user !== null &&
@@ -27,8 +30,8 @@ const SideNav = ({ user, isAuthLoading, logout }) => {
 								</div>
 								<div className="user-info">
 									<span className="user-name">
-										{user.name}
-										<strong>Smith</strong>
+										
+										<strong>{user.name}</strong>
 									</span>
 									<span className="user-role">{user.nombreUsuarios}</span>
 									<span className="user-status">
@@ -131,6 +134,24 @@ const SideNav = ({ user, isAuthLoading, logout }) => {
 									<a href="/newcity">
 										<i className="fa fa-building-o" />
 										<span> Agregar nueva ciudad </span>
+									</a>
+								</li>
+								
+								<li className="header-menu">
+									<span>Gastos</span>
+								</li>
+
+								<li>
+									<a href="/expense">
+										<i className="fa fa-building-o" />
+										<span> Ver todo los gastos</span>
+									</a>
+								</li>
+
+								<li>
+									<a href="/newexpense">
+										<i className="fa fa-building-o" />
+										<span> Agregar nuevo gasto </span>
 									</a>
 								</li>
 

@@ -1,7 +1,14 @@
 import React, { Fragment } from 'react';
 import NumberFormat from 'react-number-format';
 
-const Loan = ({ loan, color = 'black', bgColor = 'bg-white' }) => {
+const Loan = ({
+	loan,
+	color = 'dark',
+	bgColor = 'bg-white',
+	noHistoryBtn = false,
+	noPaymentBtn = false,
+	noClientDetails = false
+}) => {
 	return (
 		<Fragment>
 			<div className={`${bgColor} rounded p-4`}>
@@ -12,7 +19,8 @@ const Loan = ({ loan, color = 'black', bgColor = 'bg-white' }) => {
 				</div>
 
 				<div className=" 2 d-flex justify-content-between mb-2 ">
-					<h5 className="">{`${loan.client.name} ${loan.client.apellido}`}</h5>
+					<h5 className={`text-${color} d-${noClientDetails && 'none'}`}>{`${loan.client.name} ${loan.client
+						.apellido}`}</h5>
 
 					<h5 className={`text-bold text-${loan.status ? 'success' : 'danger'}`}>
 						<NumberFormat
@@ -24,43 +32,57 @@ const Loan = ({ loan, color = 'black', bgColor = 'bg-white' }) => {
 					</h5>
 				</div>
 
-				<div className="mb-2">
+				<div className={`mb-2 d-${noClientDetails && 'none'}`}>
+					<span className={`text-${color} mr-4 h6`}>Cedula :</span>
 					<span className={`text-${color} mr-4`}>
-						{loan.client.cedula.split().length == 11 ? (
+						{loan.client.cedula.length == 11 ? (
 							<NumberFormat value={loan.client.cedula} displayType={'text'} format="###-#######-#" />
 						) : (
-							loan.client.cedula
+							<span>{loan.client.cedula}</span>
 						)}
 					</span>
+				</div>
+				<div className={`mb-2 d-${noClientDetails && 'none'}`}>
+					<span className={`text-${color} mr-4 h6`}>Telefono :</span>
 
 					<span className={`text-${color}`}>
 						<NumberFormat value={loan.client.telefono} displayType={'text'} format="(###) ###-####" />
 					</span>
 				</div>
-				<div className="2">
+				<div className={`mb-2 d-${noClientDetails && 'none'}`}>
+					<span className={`text-${color} mr-4 h6`}>Dirreccion :</span>
 					<span className={`text-${color}`}>{loan.client.dirreccion}</span>
 				</div>
-				<div>
-					<span className={`text-${color} mr-4`}>Ciudad :</span>
+				<div className={`mb-2 d-${noClientDetails && 'none'}`}>
+					<span className={`text-${color} mr-4 h6`}>Ciudad :</span>
 					<span className={`text-${color}`}>
 						{loan.client.ciudad.charAt(0).toUpperCase() + loan.client.ciudad.slice(1)}
 					</span>
 				</div>
 				<div className="mb-3">
-					<span className={`text-${color} mr-3 `}>{`Fecha ${loan.status
-						? 'ultimo :'
-						: 'proximo'} pago `}</span>
+					<span className={`text-${color} mr-3 h6 `}>{`Fecha ${loan.status
+						? 'ultimo'
+						: 'proximo'} pago :  `}</span>
 
 					<span className={`text-${color}`}>{loan.nextpaymentDate}</span>
 				</div>
-				<div className=" m-info d-flex bg-none justify-content-between">
-					<a href={`/loan/${loan._id}`} className="btn btn-outline-info">
-						Detalle
-					</a>
-
-					<a href={`/newloan/${loan.client._id}`} className="btn btn-outline-info">
-						Nuevo Prestamo
-					</a>
+				<div className=" m-info row ">
+					<div className="col-sm-12 col-md-6 mb-2">
+						<a
+							href={`/loan/${loan._id}`}
+							className={`btn btn-outline-info btn-block d-${noHistoryBtn && 'none'}`}
+						>
+							Historico
+						</a>
+					</div>
+					<div className="col-sm-12 col-md-6">
+						<a
+							href={`/payment/${loan._id}`}
+							className={`btn btn-outline-info btn-block d-${noPaymentBtn && 'none'}`}
+						>
+							Pagar
+						</a>
+					</div>
 				</div>
 			</div>
 		</Fragment>

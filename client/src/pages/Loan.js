@@ -41,7 +41,7 @@ const Loans = ({ loans, loanLoading, filteredLoans, filterLoans }) => {
 									<div className="list-group" />
 									{filteredLoans.map(loan => (
 										<li key={loan._id} className=" my-item list-group-item mb-2 p-0">
-											<LoanDescription loan={loan} />
+											<LoanDescription loan={loan}  noPaymentBtn={loan.status} />
 										</li>
 									))}
 								</div>

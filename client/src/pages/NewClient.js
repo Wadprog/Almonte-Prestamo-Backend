@@ -43,15 +43,16 @@ const NewClient = ({ cityLoading, cities, registerClient }) => {
 	} = formData;
 
 	return (
-		<div className="container mt-5 pt-5">
+		<div className="container  pt-2">
 			{!cityLoading ? (
-				<div className="card">
+				<div className="text-white">
 					<div className="card-header">Crear nuevo cliente</div>
 					<div className="card-body">
-						<form onSubmit={handleSubmit}>
+						<form className="mt-2" onSubmit={handleSubmit}>
 							<div className="Form-group">
-								<label>Nombre</label>
+								<label>Nombre *</label>
 								<input
+									required="true"
 									onChange={handleChange}
 									value={name}
 									name="name"
@@ -60,8 +61,9 @@ const NewClient = ({ cityLoading, cities, registerClient }) => {
 								/>
 							</div>
 							<div className="Form-group">
-								<label>Apellido</label>
+								<label>Apellido *</label>
 								<input
+									required="true"
 									onChange={handleChange}
 									value={apellido}
 									name="apellido"
@@ -71,8 +73,9 @@ const NewClient = ({ cityLoading, cities, registerClient }) => {
 							</div>
 
 							<div className="Form-group">
-								<label>Cedula</label>
+								<label>Cedula *</label>
 								<input
+									required="true"
 									onChange={handleChange}
 									value={cedula}
 									name="cedula"
@@ -80,12 +83,13 @@ const NewClient = ({ cityLoading, cities, registerClient }) => {
 									className="form-control"
 								/>
 							</div>
- 
+
 							<div className="Form-group">
-								<label>Telefono</label>
+								<label>Telefono *</label>
 
 								<NumberFormat
 									className="form-control"
+									required="true"
 									value={telefono}
 									format="(###) ###-####"
 									onValueChange={values => {
@@ -129,8 +133,9 @@ const NewClient = ({ cityLoading, cities, registerClient }) => {
 							</div>
 
 							<div className="Form-group">
-								<label>Dirreccion</label>
-								<input
+								<label>Dirreccion *</label>
+								<textarea
+									required="true"
 									onChange={handleChange}
 									value={dirreccion}
 									name="dirreccion"
@@ -139,8 +144,8 @@ const NewClient = ({ cityLoading, cities, registerClient }) => {
 								/>
 							</div>
 							<div className="Form-group">
-								<label>Referencia</label>
-								<input
+								<label>Referencia </label>
+								<textarea
 									onChange={handleChange}
 									value={DirReferencia}
 									name="DirReferencia"
@@ -150,7 +155,14 @@ const NewClient = ({ cityLoading, cities, registerClient }) => {
 							</div>
 							<div className="Form-group">
 								<label>Ciudad</label>
-								<select className="form-control" name="ciudad" value={ciudad} onChange={handleChange}>
+								<select
+									required="true"
+									className="form-control"
+									name="ciudad"
+									value={ciudad}
+									onChange={handleChange}
+								>
+									<option disable={true} />
 									{cities.map(city => (
 										<option key={city._id} value={city.name}>
 											{city.name}
@@ -161,11 +173,14 @@ const NewClient = ({ cityLoading, cities, registerClient }) => {
 							<div className="mt-3">
 								<button className="btn btn-block btn-outline-info"> Crear Nuevo Cliente</button>
 							</div>
+							<div className="mt-2"> Los * son necessario</div>
 						</form>
 						{fireRedirect && <Redirect to="/clients" />}
 					</div>
 				</div>
-			):(<Loading/>)}
+			) : (
+				<Loading />
+			)}
 		</div>
 	);
 };

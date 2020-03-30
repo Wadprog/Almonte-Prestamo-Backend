@@ -44,20 +44,17 @@ const NewLoan = ({
 		return amount !== 0 && plan !== '';
 	};
 	return (
-		<div className="container mt-5 pt-5">
+		<div className="container text-white mt-5 pt-5">
 			{!planLoading && !loanLoading && !profileLoading && !authLoading ? (
-				<div className="card">
-					<div className="card-header">
-						Crear Prestamo por
-						<span className="h5 text-bold ">{` ${client.name} ${client.apellido}`}</span>
-					</div>
+				<div>
+					<div className="h6 card-header">{`Crear Prestamo por ${client.name} ${client.apellido}`}</div>
+
 					<div className="card-body">
 						<form onSubmit={handleSubmit}>
-							<div>Cantidad</div>
-							<div className="input-group mb-3">
-
+							<div className="Form-group mb-3">
+								<label>Cantidad</label>
 								<NumberFormat
-        className="form-control"
+									className="form-control"
 									value={amount}
 									thousandSeparator={true}
 									prefix={'$'}
@@ -65,15 +62,9 @@ const NewLoan = ({
 										const { formattedValue, value } = values;
 										// formattedValue = $2,223
 										// value ie, 2223
-											setFormData({ ...formData, amount: value });
+										setFormData({ ...formData, amount: value });
 									}}
 								/>
-
-								
-
-								<div class="input-group-append">
-									<span class="input-group-text">RD$</span>
-								</div>
 							</div>
 							<div className="Form-group">
 								<label>Elegir el plan</label>

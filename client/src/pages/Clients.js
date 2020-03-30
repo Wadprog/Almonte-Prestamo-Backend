@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Loading from '../component/layout/Loading';
 
-
 const Clients = ({ profiles, profilesFiltered, filterProfiles, porfileLoading, authLoading }) => {
 	const [ pageState, setPageState ] = useState({
 		modifyProfile: false,
@@ -25,9 +24,9 @@ const Clients = ({ profiles, profilesFiltered, filterProfiles, porfileLoading, a
 		setPageState({ modifyProfile: false, newPayment: false, newLoan: false, newClient: false });
 	};
 
-	const handleFilter= e=>{
-filterProfiles(e.target.value, profiles)
-	}
+	const handleFilter = e => {
+		filterProfiles(e.target.value, profiles);
+	};
 	return (
 		<div className="container mt-5">
 			{!authLoading && !porfileLoading ? (
@@ -134,15 +133,24 @@ filterProfiles(e.target.value, profiles)
 														.charAt(0)
 														.toUpperCase() + client.ciudad.slice(1)} `}</span>
 												</div>
-												<div className="d-flex justify-content-between
-          ">
-													<a href={`/client/${client._id}`} className="btn btn-outline-info">
-														Detalle
-													</a>
+												<div className="row">
+													<div className="col-sm-12 col-md-6 mb-2">
+														<a
+															href={`/client/${client._id}`}
+															className="btn btn-outline-info btn-block"
+														>
+															Detalle
+														</a>
+													</div>
 
-													<a href={`newloan/${client._id}`} className="btn btn-outline-info">
-														Nuevo Prestamo
-													</a>
+													<div className="col-sm-12 col-md-6">
+														<a
+															href={`newloan/${client._id}`}
+															className="btn btn-outline-info btn-block "
+														>
+															Nuevo Prestamo
+														</a>
+													</div>
 												</div>
 											</div>
 										</li>
