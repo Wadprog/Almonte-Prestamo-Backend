@@ -16,7 +16,7 @@ const Instruction = ({ docs, loading }) => {
 							<h1 className="text-white"> Como usar el sistema </h1>
 
 							{docs.map(doc => (
-								<li className="list-group-item">
+								<li key={doc._id} className="list-group-item">
 									<h3>{doc.title}</h3>
 									<p>{doc.text}</p>
 								</li>
