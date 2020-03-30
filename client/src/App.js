@@ -45,6 +45,7 @@ import { loadUsers } from './redux/actions/user';
 import { loadRoutina } from './redux/actions/routina';
 import { loadStatistic } from './redux/actions/statistic';
 import { loadExpenses } from './redux/actions/expenses';
+import { loadDoc } from './redux/actions/doc';
 
 import { Provider } from 'react-redux';
 import store from './redux/store';
@@ -60,6 +61,7 @@ function App() {
 		store.dispatch(loadRoutina());
 		store.dispatch(loadStatistic());
 		store.dispatch(loadExpenses());
+		store.dispatch(loadDoc());
 	}, []);
 
 	if (localStorage.token) setAuthToken(localStorage.token);
@@ -74,35 +76,33 @@ function App() {
 					<SideNav />
 					<main className="page-content">
 						<div class="container-fluid">
-						
-								<Alert />
-								<Switch>
-									<PrivateRoute exact path="/" component={Home} />
-									<PrivateRoute exact path="/clients" component={Clients} />
-									<PrivateRoute exact path="/loan" component={Loan} />
-									<PrivateRoute path="/client/:id" component={Client} />
+							<Alert />
+							<Switch>
+								<PrivateRoute exact path="/" component={Home} />
+								<PrivateRoute exact path="/clients" component={Clients} />
+								<PrivateRoute exact path="/loan" component={Loan} />
+								<PrivateRoute path="/client/:id" component={Client} />
 
-									<Route path="/login" component={Login} />
-									<Route path="/instruction" component={Instruction} />
-									<Route path="/sidenav" component={SideNav} />
-									<Route path="/load" component={Loading} />
-									<PrivateRoute path="/cities" component={Cities} />
-									<PrivateRoute path="/newClient" component={NewClient} />
-									<PrivateRoute path="/newcity" component={NewCity} />
-									<PrivateRoute path="/expense" component={Expenses} />
-									<PrivateRoute path="/newexpense" component={NewExpense} />
-									<PrivateRoute path="/newloan/:id" component={NewLoan} />
-									<PrivateRoute path="/city" component={Cities} />
-									<PrivateRoute path="/loan/:id" component={LoanId} />
-									<PrivateRoute path="/payment/:id" component={Payment} />
-									<PrivateRoute path="/users" component={Users} />
-									<PrivateRoute path="/newuser" component={NewUser} />
-									<PrivateRoute path="/plan" component={Plans} />
-									<PrivateRoute path="/newplan" component={NewPlan} />
-									<PrivateRoute path="/register" component={Register} />
-									<PrivateRoute path="/lateLoan" component={LateLoans} />
-								</Switch>
-						
+								<Route path="/login" component={Login} />
+								<Route path="/instruction" component={Instruction} />
+								<Route path="/sidenav" component={SideNav} />
+								<Route path="/load" component={Loading} />
+								<PrivateRoute path="/cities" component={Cities} />
+								<PrivateRoute path="/newClient" component={NewClient} />
+								<PrivateRoute path="/newcity" component={NewCity} />
+								<PrivateRoute path="/expense" component={Expenses} />
+								<PrivateRoute path="/newexpense" component={NewExpense} />
+								<PrivateRoute path="/newloan/:id" component={NewLoan} />
+								<PrivateRoute path="/city" component={Cities} />
+								<PrivateRoute path="/loan/:id" component={LoanId} />
+								<PrivateRoute path="/payment/:id" component={Payment} />
+								<PrivateRoute path="/users" component={Users} />
+								<PrivateRoute path="/newuser" component={NewUser} />
+								<PrivateRoute path="/plan" component={Plans} />
+								<PrivateRoute path="/newplan" component={NewPlan} />
+								<PrivateRoute path="/register" component={Register} />
+								<PrivateRoute path="/lateLoan" component={LateLoans} />
+							</Switch>
 						</div>
 					</main>
 				</div>

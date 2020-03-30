@@ -1,5 +1,4 @@
 import React from 'react';
-import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Loading from '../component/layout/Loading';

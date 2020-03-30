@@ -10,6 +10,7 @@ import user from './user';
 import routina from './routina';
 import statistic from './statistic';
 import expense from './expense';
+import doc from './doc';
 export default combineReducers({
 	alert,
 	auth,
@@ -21,5 +22,6 @@ export default combineReducers({
 	user,
 	routina,
 	statistic,
-	expense
+	expense,
+	doc
 });
