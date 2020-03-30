@@ -32,7 +32,7 @@ app.use('/api/city', require('./routes/api/city'));
 app.use('/api/payment', require('./routes/api/payment'));
 app.use('/api/statistic', require('./routes/api/statistic'));
 app.use('/api/expense', require('./routes/api/expense'));
-
+app.use('/api/doc', require('./routes/api/doc'));
 app.use('/api/clientwloan', require('./routes/api/clientwloan'));
 
 app.use(express.static('client/build'));
