@@ -133,7 +133,7 @@ export const createDataSet = (loans, payments, expenses) => {
 			pointBorderColor: 'rgb(35, 26, 136)',
 			pointBackgroundColor: 'rgb(255, 255, 255)',
 			pointHoverBackgroundColor: 'rgb(0, 0, 0)',
-			data: dataPositionInObject(data[1])
+			data: dataPositionInObject(data[2])
 
 		},
 		{
@@ -145,7 +145,7 @@ export const createDataSet = (loans, payments, expenses) => {
 			pointBorderColor: 'rgb(35, 26, 136)',
 			pointBackgroundColor: 'rgb(255, 255, 255)',
 			pointHoverBorderColor: 'rgba(220, 220, 220, 1)',
-			data: dataPositionInObject(data[2])
+			data: dataPositionInObject(data[1])
 		}
 	];
 };
