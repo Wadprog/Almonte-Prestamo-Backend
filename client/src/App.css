@@ -1,6 +1,21 @@
 root {
 	--Navcolor: #1b121d;
 }
+
+.btn.btn-ouline-purple {
+	border: solid 2px #cd23b2 !important;
+	color: white;
+}
+.btn.btn-ouline-purple:hover,
+.btn-ouline-purple.active
+ {
+	background: rgb(255, 255, 255);
+	background: radial-gradient(circle, rgb(246, 213, 213) 2%, rgba(252, 70, 107, 1) 100%);
+}
+.card.card-chart {
+	background-color: #27293d !important;
+	max-height: 600px;
+}
 .my-item {
 	max-width: 500px;
 }
@@ -8,7 +23,7 @@ root {
 	border: none;
 	position: relative;
 }
-.modifier i: {
+.modifier i {
 	position: absolute;
 }
 .modifier:hover i {

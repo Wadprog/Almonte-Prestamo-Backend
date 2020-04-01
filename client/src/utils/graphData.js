@@ -1,3 +1,4 @@
+// Exported as they are
 export const Months = [
 	'Enero',
 	'Febrero',
@@ -13,19 +14,79 @@ export const Months = [
 	'Diciembre'
 ];
 
-export const commonOptions = {
+export const gradientChartOptionsConfiguration = {
+	maintainAspectRatio: true,
+	legend: {
+		display: false
+	},
+	tooltips: {
+		bodySpacing: 4,
+		mode: 'nearest',
+		intersect: 0,
+		position: 'nearest',
+		xPadding: 12,
+		yPadding: 10,
+		caretPadding: 10
+	},
+	responsive: true,
+	scales: {
+		yAxes: [
+			{
+				barPercentage: 1.6,
+				gridLines: {
+					drawBorder: false,
+					color: 'rgba(29,140,248,0.0)',
+					zeroLineColor: 'transparent'
+				},
+				ticks: {
+					suggestedMin: 60,
+					suggestedMax: 125,
+					padding: 20,
+					fontColor: '#9a9a9a'
+				}
+			}
+		],
+		xAxes: [
+			{
+				barPercentage: 1.6,
+				gridLines: {
+					drawBorder: false,
+					color: 'rgba(29,140,248,0.1)',
+					zeroLineColor: 'transparent'
+				},
+				ticks: {
+					padding: 20,
+					fontColor: '#9a9a9a'
+				}
+			}
+		]
+	},
+	layout: {
+		padding: {
+			left: 0,
+			right: 0,
+			top: 15,
+			bottom: 15
+		}
+	}
+};
+
+export const datasetOptions = {
 	fill: true,
-	lineTension: 0.3,
-	borderCapStyle: 'butt',
+	backgroundColor: 'transparent',
+	borderColor: '#d346b1',
+	borderWidth: 2,
 	borderDash: [],
 	borderDashOffset: 0.0,
-	borderJoinStyle: 'miter',
-	pointBorderWidth: 10,
-	pointHoverRadius: 5,
-	pointHoverBorderWidth: 2,
-	pointRadius: 1,
-	pointHitRadius: 10
+	pointBackgroundColor: '#d346b1',
+	pointBorderColor: 'rgba(255,255,255,0)',
+	pointHoverBackgroundColor: '#d346b1',
+	pointBorderWidth: 20,
+	pointHoverRadius: 4,
+	pointHoverBorderWidth: 15,
+	pointRadius: 4
 };
+//calculated fields
 
 export const montInObject = items => {
 	let months = items.reduce(
@@ -33,7 +94,7 @@ export const montInObject = items => {
 			unique.includes(new Date(item.date).getMonth()) ? unique : [ ...unique, new Date(item.date).getMonth() ],
 		[]
 	);
-	console.log(months);
+
 	return months;
 };
 
@@ -45,7 +106,7 @@ export const montInPayment = items => {
 				: [ ...unique, new Date(item.dateAmountPaid).getMonth() ],
 		[]
 	);
-	console.log(months);
+
 	return months;
 };
 
@@ -112,51 +173,36 @@ export const PaymenttotalPerMonth = (items, months) => {
 	return itemInMonths;
 };
 
-export const createDataSet = (loans, payments, expenses) => {
-	var data = temp(loans, payments, expenses);
-	return [
-		{
-			...commonOptions,
-			label: 'Prestamos',
-			backgroundColor: 'rgba(66, 89, 89, .4)',
-			borderColor: 'rgb(66, 89, 89)',
-			pointBackgroundColor: 'rgb(98, 66, 89)',
-			pointHoverBackgroundColor: 'rgb(0, 0, 0)',
-			pointHoverBorderColor: 'rgba(48, 89, 66,1)',
-			data: dataPositionInObject(data[0])
-		},
-		{
-...commonOptions,
-			label: 'Pagos',
-			backgroundColor: 'rgba(184, 185, 210, .3)',
-			borderColor: 'rgb(35, 26, 136)',
-			pointBorderColor: 'rgb(35, 26, 136)',
-			pointBackgroundColor: 'rgb(255, 255, 255)',
-			pointHoverBackgroundColor: 'rgb(0, 0, 0)',
-			data: dataPositionInObject(data[2])
-
-		},
-		{
-
-			...commonOptions,
-			label: 'Gastos',
-			backgroundColor: 'rgba(47, 69, 89, .2)',
-			borderColor: 'rgb(89, 269, 48)',
-			pointBorderColor: 'rgb(35, 26, 136)',
-			pointBackgroundColor: 'rgb(255, 255, 255)',
-			pointHoverBorderColor: 'rgba(220, 220, 220, 1)',
-			data: dataPositionInObject(data[1])
-		}
-	];
+const revenuePerMonth = (loans, payments, gastos) => {
+	var benefits = [];
+	for (var i = 0; i < loans.length; i++) {
+		var rev = payments[i] - (loans[i] + gastos[i]);
+		benefits.push(rev);
+	}
+	return benefits;
 };
-export const temp = (loans, payments, expenses) => {
-	 loans = loans.filter(loan => new Date(loan.date).getFullYear() == new Date().getFullYear());
+// not calculated
+const dataByCity = (loans, payments, expenses) => {
+	loans = loans.filter(loan => new Date(loan.date).getFullYear() == new Date().getFullYear());
 	const loanMonthsTotal = totalPerMonth(loans, montInObject(loans));
 
-	 expenses = expenses.filter(expense => new Date(expense.date).getFullYear() == new Date().getFullYear());
+	expenses = expenses.filter(expense => new Date(expense.date).getFullYear() == new Date().getFullYear());
 	const expenseMonthsTotal = totalPerMonth(expenses, montInObject(expenses));
 
-	 payments = payments.filter(payment => payment.status != 'unpaid');
+	payments = payments.filter(payment => payment.status != 'unpaid');
+	const paymentMonthsTotal = PaymenttotalPerMonth(payments, montInPayment(payments));
+
+	return [ loanMonthsTotal, expenseMonthsTotal, paymentMonthsTotal ];
+};
+const revByCity = (loans, payments, gastos) => {};
+export const Graph1dataSet = (loans, payments, expenses) => {
+	loans = loans.filter(loan => new Date(loan.date).getFullYear() == new Date().getFullYear());
+	const loanMonthsTotal = totalPerMonth(loans, montInObject(loans));
+
+	expenses = expenses.filter(expense => new Date(expense.date).getFullYear() == new Date().getFullYear());
+	const expenseMonthsTotal = totalPerMonth(expenses, montInObject(expenses));
+
+	payments = payments.filter(payment => payment.status != 'unpaid');
 	const paymentMonthsTotal = PaymenttotalPerMonth(payments, montInPayment(payments));
 
 	return [ loanMonthsTotal, expenseMonthsTotal, paymentMonthsTotal ];
@@ -172,3 +218,22 @@ export const dataPositionInObject = dataoB => {
 
 	return data;
 };
+export const createDataSet = (loans, payments, expenses) => {
+	var data = Graph1dataSet(loans, payments, expenses);
+	var dataBc = dataByCity(loans, payments, expenses);
+
+	var rev = revenuePerMonth(data[0], data[2], data[1]);
+	var revBc = revByCity(loans, payments, expenses);
+	return [ [ data[0], data[2], data[1], rev ], [ dataBc[0], dataBc[2], dataBc[1], revBc ] ];
+};
+
+//Demo data
+export const Cities = [ 'Santiago', 'Puerto Plata' ];
+
+export const dataGraph1 = [
+	[ 0, 0, 430, 550, 0, 0, 0, 0, 0, 0, 0, 0 ],
+	[ 0, 0, 430, 700, 0, 0, 0, 0, 0, 0, 0, 0 ],
+	[ 78, 480, 430, 330, 530, 100, 380, 100, 400, 500, 670, 340 ],
+	[ 145, 480, 333, 330, 530, 100, 444, 100, 400, 500, 670, 340 ]
+];
+export const dataGraph2 = [ [ 100, 600 ], [ 689, 230 ], [ 78, 480 ], [ 145, 480 ] ];
