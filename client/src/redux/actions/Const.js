@@ -2,9 +2,14 @@ export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
+export const REGISTER_REQUEST='REGISTER_REQUEST';
 export const USER_LOADED = 'USER_LOADED';
+export const USER_LOAD_REQUEST = 'USER_LOAD_REQUEST';
+export const USER_LOAD_SUCCESS = 'USER_LOAD_SUCCESS';
+export const USER_LOAD_FAIL= 'USER_LOAD_FAIL';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const LOG_OUT = 'LOG_OUT';
+export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 export const LOG_IN_FAIL = 'LOG_IN_FAIL';
 export const PROFILE_FETCH_REQUEST = 'PROFILE_FETCH_REQUEST';
@@ -80,4 +85,5 @@ export const PAYMENT_ADD_REQUEST = 'PAYMENT_ADD_REQUEST';
 export const PAYMENT_ADD_SUCCESS = 'PAYMENT_ADD_SUCCESS';
 export const PAYMENT_ADD_FAIL = 'PAYMENT_ADD_FAIL';
 
-export const PROXY = 'http://178.128.144.72'; //'http://localhost:5000';
+//Localhost Should work witht the server's address.
+export const PROXY = '';

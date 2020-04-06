@@ -5,10 +5,10 @@ import {
 	CITY_ADD_FAIL,
 	CITY_ADD_SUCCESS
 } from '../actions/Const';
+
 const initialState = {
 	cities: [],
-	loading: false,
-	user: null
+	loading: false
 };
 
 export default function(state = initialState, action) {

@@ -7,8 +7,7 @@ import {
 } from '../actions/Const';
 const initialState = {
 	payments: [],
-	loading: false,
-	user: null
+	loading: false
 };
 
 export default function(state = initialState, action) {

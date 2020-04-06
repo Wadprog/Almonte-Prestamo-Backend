@@ -1,11 +1,10 @@
 import React from 'react';
-import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Loading from '../component/layout/Loading';
 
-const City = ({ cities, cityLoading, authLoading }) => {
-	const { Fragment } = React;
+const City = ({ cities, cityLoading }) => {
+	
 	return (
 		<div className="container mt-5 pt-5">
 			<div className="my-info  mb-2 p-0 rounded-0">
@@ -15,7 +14,7 @@ const City = ({ cities, cityLoading, authLoading }) => {
 					</a>
 				</div>
 			</div>
-			{!cityLoading && !authLoading ? (
+			{!cityLoading ? (
 				<ul className="list-group">
 					<li className="list-group-item disabled">Ciudades</li>
 					{cities &&

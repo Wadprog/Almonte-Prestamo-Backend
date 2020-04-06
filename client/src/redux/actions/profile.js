@@ -9,9 +9,7 @@ import {
 	PROFILE_SAVE_FAIL,
 	PROFILE_UPDATE_REQUEST,
 	PROFILE_UPDATE_SUCCESS,
-	PROFILE_UPDATE_FAIL,
-	PROXY,
-	PROFILE_UPADTE_REQUEST
+	PROFILE_UPDATE_FAIL
 } from './Const';
 
 import { setAlert } from './alert';
@@ -29,16 +27,16 @@ export const loadProfiles = () => async dispatch => {
 		type: PROFILE_FETCH_REQUEST
 	});
 	try {
-		const res = await axios.get(PROXY + '/api/client');
+		const res = await axios.get('/api/client');
 		dispatch({
 			type: PROFILE_FETCH_SUCCESS,
 			payload: res.data
 		});
-		dispatch(setAlert(`Clientes cargado con exito`, 'success',400));
 	} catch (error) {
 		dispatch({
 			type: PROFILE_FETCH_FAIL
 		});
+		dispatch(setAlert(`Error ${error.response.data.msg}`, 'danger', 400));
 	}
 };
 
@@ -53,7 +51,7 @@ export const registerClient = formData => async dispatch => {
 		type: PROFILE_SAVE_REQUEST
 	});
 	try {
-		const res = await axios.post(PROXY + '/api/client', body, config);
+		const res = await axios.post('/api/client', body, config);
 		console.log(res);
 		dispatch({
 			type: PROFILE_SAVE_SUCCESS,
@@ -62,15 +60,8 @@ export const registerClient = formData => async dispatch => {
 		dispatch(setAlert(`${formData.name} creado con exito`, 'success'));
 		dispatch(loadProfiles());
 	} catch (error) {
-		dispatch({type:PROFILE_SAVE_FAIL})
-		dispatch(setAlert(`Dio erorr no se pudo agregar ${formData.name}`, 'danger'));
-		//const errors = ;
-		console.log(`error is ${error}`);
-		dispatch(setAlert('Error al bacargar los clientes', 'danger'));
-		/*if (errors) {
-			errors.forEach(err => dispatch(setAlert(err.msg, 'danger')));
-			dispatch({ type: PROFILE_SAVE_FAIL });
-		}*/
+		dispatch({ type: PROFILE_SAVE_FAIL });
+		dispatch(setAlert(`Error ${error.response.data.msg}`, 'danger'));
 	}
 };
 
@@ -85,7 +76,7 @@ export const updateClient = formData => async dispatch => {
 		type: PROFILE_UPDATE_REQUEST
 	});
 	try {
-		const res = await axios.put(PROXY + '/api/client', body, config);
+		const res = await axios.put('/api/client', body, config);
 		console.log(res);
 		dispatch({
 			type: PROFILE_UPDATE_SUCCESS,
@@ -97,8 +88,6 @@ export const updateClient = formData => async dispatch => {
 		dispatch({
 			type: PROFILE_UPDATE_FAIL
 		});
-		dispatch(setAlert(` Error al actualizar  ${formData.name}`, 'danger'));
-		console.log(`error is ${error}`);
-	
+		dispatch(setAlert(` Error  ${error.response.data.msg}`, 'danger'));
 	}
 };

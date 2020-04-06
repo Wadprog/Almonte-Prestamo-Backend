@@ -4,7 +4,7 @@ import {
 	CITY_FETCH_FAIL,
 	CITY_ADD_FAIL,
 	CITY_ADD_SUCCESS,
-	PROXY
+
 } from '../actions/Const';
 
 import axios from 'axios';
@@ -16,7 +16,7 @@ export const loadCities = () => async dispatch => {
 		type: CITY_FETCH_REQUEST
 	});
 	try {
-		const res = await axios.get(PROXY + '/api/city');
+		const res = await axios.get('/api/city');
 		dispatch({
 			type: CITY_FETCH_SUCCESS,
 			payload: res.data
@@ -25,6 +25,7 @@ export const loadCities = () => async dispatch => {
 		dispatch({
 			type: CITY_FETCH_FAIL
 		});
+			dispatch(setAlert(`Error ${error.response.data.msg}`, 'danger'));
 	}
 };
 
@@ -35,20 +36,22 @@ export const addCity = formData => async dispatch => {
 		}
 	};
 	const body = JSON.stringify({ ...formData });
-	dispatch({
+	
+	try {
+		dispatch({
 		type: CITY_FETCH_REQUEST
 	});
-	try {
-		const res = await axios.post(PROXY + '/api/city', body, config);
+		const res = await axios.post('/api/city', body, config);
 
 		dispatch({
 			type: CITY_ADD_SUCCESS,
 			payload: res.data
 		});
-		dispatch(loadCities);
+		
 		dispatch(setAlert(` Ciudad ${formData.name} agregado con exito`, 'success'));
 	} catch (error) {
-		dispatch(setAlert('Error al agregar ciudad verifica que hay internet', 'danger'));
 		dispatch({ type: CITY_ADD_FAIL });
+		dispatch(setAlert(`Error al agregar ciudad ${error.response.data.msg}`, 'danger'));
+		
 	}
 };

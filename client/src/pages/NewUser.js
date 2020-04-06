@@ -3,9 +3,9 @@ import { Redirect } from 'react-router';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Loading from '../component/layout/Loading';
-import { addUser } from '../redux/actions/user';
+import { register } from '../redux/actions/user';
 
-const NewUser = ({ addUser, users, userLoading, authLoading }) => {
+const NewUser = ({ register, userLoading }) => {
 	const [ formData, setFormData ] = useState({
 		name: '',
 		nombreUsuarios: '',
@@ -25,16 +25,18 @@ const NewUser = ({ addUser, users, userLoading, authLoading }) => {
 	const handleSubmit = e => {
 		e.preventDefault();
 		if (password2 == password) {
-			addUser(formData);
+			register(formData);
 			setFormData({ ...formData, fireRedirect: true });
 		}
+		else
+		setFormData({...formData,passwordSame:false})
 	};
 	const { passwordSame, fireRedirect, name, nombreUsuarios, password, password2 } = formData;
 
 	const { Fragment } = React;
 	return (
 		<div className="container mt-5 pt-5">
-			{!userLoading && !authLoading ? (
+			{!userLoading? (
 				<Fragment>
 					<form onSubmit={handleSubmit}>
 						<div className="Form-group">
@@ -105,12 +107,9 @@ const NewUser = ({ addUser, users, userLoading, authLoading }) => {
 
 NewUser.prototype = {
 	userLoading: PropTypes.bool.isRequired,
-	authLoading: PropTypes.bool.isRequired,
-	addUser: PropTypes.func.isRequired
+	register: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
 	userLoading: state.user.lodaing,
-	users: state.user.users,
-	authLoading: state.auth.loading
 });
-export default connect(mapStateToProps, { addUser })(NewUser);
+export default connect(mapStateToProps, { register })(NewUser);

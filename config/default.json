@@ -1,6 +1,5 @@
 {
-	"mongoUri": "mongodb+srv://Wadson:Password@cluster0-8et6g.mongodb.net/test?retryWrites=true&w=majority",
-	"jwtSecret": "My big secret", 
-	"prefix":"http://localhost:6000"
+	"mongoUri": "mongodb://127.0.0.1:27017/Almonte",
+	"jwtSecret": "Encrypt Data String For Almonte Project"
 	
 }

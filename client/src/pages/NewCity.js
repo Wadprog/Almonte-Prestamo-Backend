@@ -34,6 +34,7 @@ const NewCity = ({ addCity, loans, loanLoading, authLoading }) => {
 							<label className="text-white h6">Nombre de la ciudad</label>
 
 							<input
+							required="true"
 								name="name"
 								type="text"
 								value={name}

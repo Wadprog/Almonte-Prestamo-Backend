@@ -35,11 +35,13 @@ export default function(state = initialState, action) {
 			};
 		case LOAN_PAYMENT_ADD_FAIL:
 		case LOAN_PAYMENT_ADD_SUCCESS:
-		case LOAN_ADD_SUCCESS:
+			case LOAN_ADD_SUCCESS:
 			return {
 				...state,
 				loading: false
 			};
+
+		
 		case LOAN_ADD_FAIL:
 		case LOAN_FETCH_FAIL:
 			return {

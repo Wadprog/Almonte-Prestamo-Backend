@@ -2,6 +2,8 @@ import { DOC_FETCH_REQUEST, DOC_FETCH_SUCCESS, DOC_FETCH_FAIL, PROXY } from '../
 
 import axios from 'axios';
 
+import { setAlert } from './alert';
+
 export const loadDoc = () => async dispatch => {
 	dispatch({
 		type: DOC_FETCH_REQUEST
@@ -16,5 +18,6 @@ export const loadDoc = () => async dispatch => {
 		dispatch({
 			type: DOC_FETCH_FAIL
 		});
+				dispatch(setAlert(`Error ${error.response.data.msg}`, 'danger'));
 	}
 };

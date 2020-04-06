@@ -4,7 +4,7 @@ import {
 	EXPENSES_FETCH_FAIL,
 	EXPENSES_ADD_FAIL,
 	EXPENSES_ADD_SUCCESS,
-	PROXY
+
 } from '../actions/Const';
 
 import axios from 'axios';
@@ -15,7 +15,7 @@ export const loadExpenses = () => async dispatch => {
 		type: EXPENSES_FETCH_REQUEST
 	});
 	try {
-		const res = await axios.get(PROXY + '/api/expense');
+		const res = await axios.get('/api/expense');
 		dispatch({
 			type: EXPENSES_FETCH_SUCCESS,
 			payload: res.data
@@ -24,6 +24,7 @@ export const loadExpenses = () => async dispatch => {
 		dispatch({
 			type: EXPENSES_FETCH_FAIL
 		});
+			dispatch(setAlert(`Error ${error.response.data.msg}`, 'danger'));
 	}
 };
 
@@ -38,7 +39,7 @@ export const addExpense = formData => async dispatch => {
 		type: EXPENSES_FETCH_REQUEST
 	});
 	try {
-		const res = await axios.post(PROXY + '/api/expense', body, config);
+		const res = await axios.post('/api/expense', body, config);
 
 		dispatch({
 			type: EXPENSES_ADD_SUCCESS,
@@ -46,11 +47,9 @@ export const addExpense = formData => async dispatch => {
 		});
 		dispatch(setAlert(` Gatos de ${formData.amount} agregado con exito`, 'success'));
 	} catch (error) {
-		const errors = error.response.data.errors;
-		console.log(`error is ${error}`);
-		if (errors) {
-			errors.forEach(err => dispatch(setAlert(err.msg, 'danger')));
+		
 			dispatch({ type: EXPENSES_ADD_FAIL });
+				dispatch(setAlert(`Error ${error.response.data.msg}`, 'danger'));
 		}
-	}
+	
 };
