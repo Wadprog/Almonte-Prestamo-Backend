@@ -4,9 +4,10 @@ import CardContainer from '../component/CardContainer';
 import Loading from '../component/layout/Loading';
 import { Line, Bar} from 'react-chartjs-2';
 import { MDBContainer } from 'mdbreact';
-import { Months, datasetOptions,  dataGraph1, dataGraph2, gradientChartOptionsConfiguration, Cities } from '../utils/graphData';
+import { Months, datasetOptions,  dataGraph1, dataGraph2, gradientChartOptionsConfiguration, Cities,GraphsDataSet } from '../utils/graphData';
 
-const Home = ({ expenseLoading, paymentLoading, loanLoading }) => {
+const Home = ({ expenseLoading, paymentLoading, loanLoading, loans, payments, expenses}) => {
+var dataGraph12=	GraphsDataSet(loans, payments, expenses)[0]
 	const [ option, setOption ] = useState({
 		selectedOption: '1'
 	});
@@ -16,7 +17,7 @@ const Home = ({ expenseLoading, paymentLoading, loanLoading }) => {
 	};
 
 	;
-
+     
 	const dataLine = {
 		labels: Months,
 		datasets: [
@@ -27,7 +28,7 @@ const Home = ({ expenseLoading, paymentLoading, loanLoading }) => {
 					: selectedOption == '1'
 						? ' Prestamo Pagado'
 						: selectedOption == '2' ? 'Total Gastos' : 'Total Beneficios'} } `,
-				data:  dataGraph1[parseInt(selectedOption)]
+				data:  dataGraph12[parseInt(selectedOption)]
 			}
 		]
 	};

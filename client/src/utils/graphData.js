@@ -176,7 +176,10 @@ export const PaymenttotalPerMonth = (items, months) => {
 const revenuePerMonth = (loans, payments, gastos) => {
 	var benefits = [];
 	for (var i = 0; i < loans.length; i++) {
-		var rev = payments[i] - (loans[i] + gastos[i]);
+		var rev = 0;
+		if (payments[i]) rev += payments[i];
+		if (loans[i]) rev -= loans[i];
+		if (gastos[i]) rev -= gastos[i];
 		benefits.push(rev);
 	}
 	return benefits;
@@ -194,8 +197,8 @@ const dataByCity = (loans, payments, expenses) => {
 
 	return [ loanMonthsTotal, expenseMonthsTotal, paymentMonthsTotal ];
 };
-const revByCity = (loans, payments, gastos) => {};
-export const Graph1dataSet = (loans, payments, expenses) => {
+
+const Graph1dataSet = (loans, payments, expenses) => {
 	loans = loans.filter(loan => new Date(loan.date).getFullYear() == new Date().getFullYear());
 	const loanMonthsTotal = totalPerMonth(loans, montInObject(loans));
 
@@ -204,8 +207,8 @@ export const Graph1dataSet = (loans, payments, expenses) => {
 
 	payments = payments.filter(payment => payment.status != 'unpaid');
 	const paymentMonthsTotal = PaymenttotalPerMonth(payments, montInPayment(payments));
-
-	return [ loanMonthsTotal, expenseMonthsTotal, paymentMonthsTotal ];
+const revenue=revenuePerMonth(loans,payments,expenses)
+	return [ loanMonthsTotal, expenseMonthsTotal, paymentMonthsTotal,revenue];
 };
 
 export const dataPositionInObject = dataoB => {
@@ -213,18 +216,14 @@ export const dataPositionInObject = dataoB => {
 
 	dataoB.forEach(ob => {
 		data[ob.position] = ob.total;
-		console.log('position is ' + ob.position);
 	});
 
 	return data;
 };
-export const createDataSet = (loans, payments, expenses) => {
+export const GraphsDataSet = (loans, payments, expenses) => {
 	var data = Graph1dataSet(loans, payments, expenses);
 	var dataBc = dataByCity(loans, payments, expenses);
-
-	var rev = revenuePerMonth(data[0], data[2], data[1]);
-	var revBc = revByCity(loans, payments, expenses);
-	return [ [ data[0], data[2], data[1], rev ], [ dataBc[0], dataBc[2], dataBc[1], revBc ] ];
+	return [ [ data[0], data[2], data[1], data[3] ], [ dataBc[0], dataBc[2], dataBc[1], data[3] ] ];
 };
 
 //Demo data

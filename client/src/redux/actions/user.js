@@ -29,13 +29,13 @@ export const loadUsers = () => async dispatch => {
 	}
 };
 
-export const register = ({ name, password })  => async dispatch => {
+export const register = ({ name, password, nombreUsuarios})  => async dispatch => {
 	const config = {
 		headers: {
 			'Content-Type': 'application/json'
 		}
 	};
-	const body = JSON.stringify({ name, password});
+	const body = JSON.stringify({ name, password,nombreUsuarios});
 	
 	try {
 		dispatch({
