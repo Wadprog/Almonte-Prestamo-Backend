@@ -50,7 +50,8 @@ router.post('/', async (req, res) => {
 
 		var interestPerQuota = Math.round((amountPerQuota * steps - req.body.amount) / steps);
 
-		var date = req.body.date || moment();
+		var date = moment(req.body.date).format('l') || null;
+		if (!req.body.date) date == moment();
 		const nextpaymentDate = nextPayment(date, plan.interval, 0);
 		let loan = new Loan({
 			...req.body,
@@ -134,6 +135,69 @@ router.post('/due/:id', async (req, res) => {
 //@desc Create new  Loan route
 //@desc access public temp
 
+router.post('/renew/:id', async (req, res) => {
+	try {
+		let loan_ = await Loan.findById(req.params.id).populate('plan');
+
+		if (!loan_) return res.status(404).json({ msg: 'Prestamo no existe' });
+
+		const { interval, steps, interest } = loan_.plan;
+		//Cheking if we can renew
+		if (loan_.quota / steps * 100 < 51) return res.status(404).json({ msg: 'Rechazado Demasidao temprano' });
+
+		const debt = loan_.amountPerQuota * (steps - loan_.quota);
+
+		loan_ = cancelLoan(loan_, 'Prestamo Cancelado');
+
+		//Calculating new values
+
+		const { amount } = req.body;
+		const newLoanAmount = amount - debt;
+		var amountPerQuota = Math.round(newLoanAmount * interest / 100);
+		var interestPerQuota = Math.round((amountPerQuota * steps - newLoanAmount) / steps);
+
+		// Getting date
+		var date = moment(req.body.date).format('l') || null;
+		if (!req.body.date) date == moment();
+		const nextpaymentDate = nextPayment(date, plan.interval, 0);
+
+		//Creating the loan
+		let newLoan = new Loan({
+			...req.body,
+			amount: newLoanAmount,
+			amountPerQuota,
+			interestPerQuota,
+			nextpaymentDate,
+			date: moment(date).format('l'),
+			oldLoan: loan_._id
+		});
+		newLoan = await newLoan.save();
+
+		// creating all payments needed
+		createPayments(newLoan.id, { steps, interval });
+		return res.json({ newLoan });
+	} catch (error) {
+		console.log(`server error ${error}`);
+		return res.status(500).json({ msg: 'server error' + error.message });
+	}
+});
+
+router.post('/cancel/:id', async (req, res) => {
+	try {
+		let loan_ = await Loan.findById(req.params.id);
+		if (!loan_) return res.status(404).json({ msg: 'Prestamo no existe' });
+		loan_ = cancelLoan(loan_, 'Prestamo Cancelado sin renovar');
+		return res.json({ loan_ });
+	} catch (error) {
+		console.log(`server error ${error}`);
+		return res.status(500).json({ msg: 'server error' + error.message });
+	}
+});
+
+//@routes post api/Loan/due/:id
+//@desc Create new  Loan route
+//@desc access public temp
+
 router.get('/get/routine/', async (req, res) => {
 	try {
 		let loans = await Loan.find({ status: false }).populate([ 'client', 'plan' ]);
@@ -187,4 +251,22 @@ const nextPayment = (date, interval, quota) => {
 	return moment(date).add(interval * (quota + 1), 'days').format('l');
 };
 
+const cancelLoan = async (cloan, msg) => {
+	cloan.comment = msg;
+	cloan.status = true;
+	cloan = await cloan.save();
+	return cloan;
+};
+
+const createPayments = async (id, { steps, interval }) => {
+	for (var step = 1; step < steps + 1; step++) {
+		var newdate = moment(newLoan.date).add(step * interval, 'days').format('l');
+		let payment = new Payment({
+			loan: id,
+			dateToPay: newdate,
+			quota: step
+		});
+		await payment.save();
+	}
+};
 module.exports = router;
