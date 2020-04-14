@@ -107,7 +107,7 @@ const NewLoan = ({
 							}
 						</div>
 					) : (
-						<h6>No hay pagos por este prestamo</h6>
+						<h6 className="text-white">Aun no hay pagos por este prestamo</h6>
 					)}
 				</Fragment>
 			) : (

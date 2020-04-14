@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import Loading from './component/layout/Loading';
 import Register from './pages/Register';
 import NewLoan from './pages/NewLoan';
+import LoanRenew from './pages/LoanRenew';
 import Payment from './pages/Payment';
 import NewPlan from './pages/NewPlan';
 import Plans from './pages/Plans';
@@ -22,6 +23,7 @@ import NewExpense from './pages/NewExpense';
 import Users from './pages/Users';
 import NewUser from './pages/NewUser';
 import LoanId from './pages/LoanId';
+import LoanCancel from './pages/LoanCancel';
 import NewClient from './pages/NewClient';
 import Instruction from './pages/Instruction';
 import LateLoans from './pages/LateLoans';
@@ -95,7 +97,11 @@ function App() {
 								<PrivateRoute path="/newloan/:id" component={NewLoan} />
 								<PrivateRoute path="/city" component={Cities} />
 								<PrivateRoute path="/loan/:id" component={LoanId} />
+
+								<PrivateRoute path="/cancel/:id" component={LoanCancel} />
+
 								<PrivateRoute path="/payment/:id" component={Payment} />
+								<PrivateRoute path="/renew/:id" component={LoanRenew} />
 								<PrivateRoute path="/users" component={Users} />
 								<PrivateRoute path="/newuser" component={NewUser} />
 								<PrivateRoute path="/plan" component={Plans} />

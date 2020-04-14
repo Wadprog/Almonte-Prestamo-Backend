@@ -137,40 +137,45 @@ router.post('/due/:id', async (req, res) => {
 
 router.post('/renew/:id', async (req, res) => {
 	try {
+		console.log('more info' + req.body);
 		let loan_ = await Loan.findById(req.params.id).populate('plan');
-
 		if (!loan_) return res.status(404).json({ msg: 'Prestamo no existe' });
-
+		console.log('here bayby 2');
 		const { interval, steps, interest } = loan_.plan;
 		//Cheking if we can renew
-		if (loan_.quota / steps * 100 < 51) return res.status(404).json({ msg: 'Rechazado Demasidao temprano' });
-
+		if (loan_.quota == 0 || loan_.quota / steps * 100 < 51)
+			return res.status(404).json({ msg: 'Rechazado No hay suficiente pagos' });
+		console.log('here bayby ');
+		const { amount } = req.body;
 		const debt = loan_.amountPerQuota * (steps - loan_.quota);
-
-		loan_ = cancelLoan(loan_, 'Prestamo Cancelado');
+		if (debt > amount)
+			return res.status(404).json({ msg: `Rechazado solicito menos que su deuda la deuda es ${debt}` });
+		cancelLoan(loan_, 'Prestamo Cancelado');
 
 		//Calculating new values
 
-		const { amount } = req.body;
 		const newLoanAmount = amount - debt;
+
 		var amountPerQuota = Math.round(newLoanAmount * interest / 100);
 		var interestPerQuota = Math.round((amountPerQuota * steps - newLoanAmount) / steps);
 
 		// Getting date
 		var date = moment(req.body.date).format('l') || null;
 		if (!req.body.date) date == moment();
-		const nextpaymentDate = nextPayment(date, plan.interval, 0);
+		const nextpaymentDate = nextPayment(date, interval, 0);
 
 		//Creating the loan
 		let newLoan = new Loan({
-			...req.body,
+			client: loan_.client,
 			amount: newLoanAmount,
 			amountPerQuota,
 			interestPerQuota,
 			nextpaymentDate,
 			date: moment(date).format('l'),
-			oldLoan: loan_._id
+			oldLoan: loan_._id,
+			comment: `Prestamo renovado `
 		});
+		console.log('here is the value' + loan_.client);
 		newLoan = await newLoan.save();
 
 		// creating all payments needed
@@ -187,10 +192,10 @@ router.post('/cancel/:id', async (req, res) => {
 		let loan_ = await Loan.findById(req.params.id);
 		if (!loan_) return res.status(404).json({ msg: 'Prestamo no existe' });
 		loan_ = cancelLoan(loan_, 'Prestamo Cancelado sin renovar');
-		return res.json({ loan_ });
+		return res.json({ msg: 'Cancelado con exito' });
 	} catch (error) {
 		console.log(`server error ${error}`);
-		return res.status(500).json({ msg: 'server error' + error.message });
+		return res.status(500).json({ _loan });
 	}
 });
 

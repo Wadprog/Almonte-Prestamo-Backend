@@ -8,8 +8,15 @@ import {
 	LOAN_FETCH_REQUEST,
 	LOAN_PAYMENT_ADD_FAIL,
 	LOAN_PAYMENT_ADD_SUCCESS,
-	LOAN_PAYMENT_ADD_REQUEST
+	LOAN_PAYMENT_ADD_REQUEST,
+	LOAN_CANCEL_REQUEST,
+	LOAN_CANCEL_SUCCESS,
+	LOAN_CANCEL_FAIL,
+	LOAN_RENEW_REQUEST,
+	LOAN_RENEW_SUCCESS,
+	LOAN_RENEW_FAIL
 } from '../actions/Const';
+
 const initialState = {
 	filteredLoans: [],
 	loans: [],
@@ -26,6 +33,8 @@ export default function(state = initialState, action) {
 				filteredLoans: payload,
 				loading: false
 			};
+		case LOAN_RENEW_REQUEST:
+		case LOAN_CANCEL_REQUEST:
 		case LOAN_PAYMENT_ADD_REQUEST:
 		case LOAN_FETCH_REQUEST:
 		case LOAN_ADD_REQUEST:
@@ -33,15 +42,18 @@ export default function(state = initialState, action) {
 				...state,
 				loading: true
 			};
+		case LOAN_RENEW_SUCCESS:
+		case LOAN_RENEW_FAIL:
+		case LOAN_CANCEL_FAIL:
+		case LOAN_CANCEL_SUCCESS:
 		case LOAN_PAYMENT_ADD_FAIL:
 		case LOAN_PAYMENT_ADD_SUCCESS:
-			case LOAN_ADD_SUCCESS:
+		case LOAN_ADD_SUCCESS:
 			return {
 				...state,
 				loading: false
 			};
 
-		
 		case LOAN_ADD_FAIL:
 		case LOAN_FETCH_FAIL:
 			return {

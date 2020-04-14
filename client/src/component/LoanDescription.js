@@ -66,6 +66,22 @@ const Loan = ({
 
 					<span className={`text-${color}`}>{loan.nextpaymentDate}</span>
 				</div>
+
+				{loan.comment &&
+				loan.comment !== '' && loan.comment!=null&& (
+					<div className="mb-3">
+						<span className={`text-${color} mr-3 h6 `}>{loan.comment}</span>
+					</div>
+				)}
+	{loan.oldLoan &&
+				loan.oldLoan !== null && (
+					<div className="mb-3">
+						<a 
+						href={`/loan/${loan.oldLoan}`}
+						className={`text-${color} mr-3 h6 `}>Ver anterior</a>
+					</div>
+				)}
+
 				<div className=" m-info row ">
 					<div className="col-sm-12 col-md-6 mb-2">
 						<a
@@ -81,6 +97,24 @@ const Loan = ({
 							className={`btn btn-outline-info btn-block d-${noPaymentBtn && 'none'}`}
 						>
 							Pagar
+						</a>
+					</div>
+
+					<div className="col-sm-12 col-md-6 mb-2">
+						<a
+							href={`/renew/${loan._id}`}
+							className={`btn btn-outline-info btn-block d-${(noPaymentBtn ||loan.oldLoan)&& 'none'}`}
+						>
+							Renovar
+						</a>
+					</div>
+
+					<div className="col-sm-12 col-md-6 mb-2">
+						<a
+							href={`/cancel/${loan._id}`}
+							className={`btn btn-outline-info btn-block d-${noPaymentBtn && 'none'}`}
+						>
+							Cancelar
 						</a>
 					</div>
 				</div>

@@ -98,33 +98,25 @@ export const montInObject = items => {
 	return months;
 };
 
-export const montInPayment = items => {
-	let months = items.reduce(
-		(unique, item) =>
-			unique.includes(new Date(item.dateInterestPaid).getMonth())
-				? unique
-				: [ ...unique, new Date(item.dateAmountPaid).getMonth() ],
-		[]
-	);
+export const montInPayment = payments => {
+	let months = [];
+	for (var i = 0; i < payments.length; i++) {
+		let payment = payments[i];
+		let month;
+		if (payment.dateInterestPaid && payment.dateInterestPaid != null)
+			month = new Date(payment.dateInterestPaid).getMonth();
+		if (month && month != null) if (!months.includes(month)) months.push(month);
 
+		if (payment.dateAmountPaid && payment.dateAmountPaid != null)
+			month = new Date(payment.dateAmountPaid).getMonth();
+		if (month && month != null) if (!months.includes(month)) months.push(month);
+	}
+	console.log(`month is pay ${months} and size is ${months.length}`);
 	return months;
 };
 
 export const totalPerMonth = (items, months) => {
-	const monthsname = [
-		'Enero',
-		'Febrero',
-		'Marzo',
-		'Abril',
-		'Mayo',
-		'Junio',
-		'Julio',
-		'Agosto',
-		'Septiempre',
-		'Octubre',
-		'Noviembre',
-		'Diciembre'
-	];
+	const monthsname = Months;
 	let itemInMonths = [];
 
 	months.forEach(month => {
@@ -141,40 +133,54 @@ export const totalPerMonth = (items, months) => {
 	return itemInMonths;
 };
 
-export const PaymenttotalPerMonth = (items, months) => {
-	const monthsname = [
-		'Enero',
-		'Febrero',
-		'Marzo',
-		'Abril',
-		'Mayo',
-		'Junio',
-		'Julio',
-		'Agosto',
-		'Septiempre',
-		'Octubre',
-		'Noviembre',
-		'Diciembre'
-	];
+export const PaymenttotalPerMonth = (payments, months) => {
+	const monthsname = Months;
 	let itemInMonths = [];
 
 	months.forEach(month => {
-		let tempmonth = items.reduce(
-			(allItems, item) =>
-				new Date(item.dateInterestPaid).getMonth() != month ? allItems : [ ...allItems, item ],
-			[]
-		);
+		let group_Payment_in_EachMonth = [];
+		payments.forEach(payment => {
+			if (new Date(payment.dateInterestPaid).getMonth() === month)
+				if (!paymentInarray(payment, group_Payment_in_EachMonth)) group_Payment_in_EachMonth.push(payment);
+
+			if (new Date(payment.dateAmountPaid).getMonth() === month)
+				if (!paymentInarray(payment, group_Payment_in_EachMonth)) group_Payment_in_EachMonth.push(payment);
+			console.log(`For: ${monthsname[month]} I hold ${group_Payment_in_EachMonth.length} Payments `);
+		});
+
 		itemInMonths.push({
 			position: month,
 			name: monthsname[month],
-			total: tempmonth.reduce((total, element) => total + element.amountPaid + element.interestPaid, 0)
+			total: group_Payment_in_EachMonth.reduce(
+				(total, payment) => total + paymentTotal(payment),
+				0
+			)
 		});
 	});
+	//console.log(`total: ${itemInMonths[0].total}`)
 	return itemInMonths;
 };
 
+const paymentTotal= payment =>{
+	let  amountPaid=0,interestPaid=0; 
+if(payment.amountPaid&&payment.amountPaid!=null)
+amountPaid= payment.amountPaid; 
+if(payment.interestPaid&&payment.interestPaid!=null)
+interestPaid= payment.interestPaid; 
+return amountPaid+interestPaid
+}
+const paymentInarray = (payment, array) => {
+	
+	for (let i = 0; i < array.length; i++) {
+		if (array[i]._id == payment._id) return true;
+		else console.log(`payment id: ${payment._id} in array ${array[i]._id} `)
+	}
+console.log(` Receied ${array.length}`)
+	return false;
+};
 const revenuePerMonth = (loans, payments, gastos) => {
 	var benefits = [];
+
 	for (var i = 0; i < loans.length; i++) {
 		var rev = 0;
 		if (payments[i]) rev += payments[i];
@@ -205,10 +211,15 @@ const Graph1dataSet = (loans, payments, expenses) => {
 	expenses = expenses.filter(expense => new Date(expense.date).getFullYear() == new Date().getFullYear());
 	const expenseMonthsTotal = totalPerMonth(expenses, montInObject(expenses));
 
-	payments = payments.filter(payment => payment.status != 'unpaid');
+	payments = payments.filter(payment => payment.status !== 'unpaid');
 	const paymentMonthsTotal = PaymenttotalPerMonth(payments, montInPayment(payments));
-const revenue=revenuePerMonth(loans,payments,expenses)
-	return [ loanMonthsTotal, expenseMonthsTotal, paymentMonthsTotal,revenue];
+	const revenue = revenuePerMonth(loans, payments, expenses);
+	return [
+		dataPositionInObject(loanMonthsTotal),
+		dataPositionInObject(expenseMonthsTotal),
+		dataPositionInObject(paymentMonthsTotal),
+		[ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+	];
 };
 
 export const dataPositionInObject = dataoB => {
@@ -223,7 +234,7 @@ export const dataPositionInObject = dataoB => {
 export const GraphsDataSet = (loans, payments, expenses) => {
 	var data = Graph1dataSet(loans, payments, expenses);
 	var dataBc = dataByCity(loans, payments, expenses);
-	return [ [ data[0], data[2], data[1], data[3] ], [ dataBc[0], dataBc[2], dataBc[1], data[3] ] ];
+	return [ [ data[2], data[0], data[1], data[3] ], [ dataBc[0], dataBc[2], dataBc[1], data[3] ] ];
 };
 
 //Demo data
