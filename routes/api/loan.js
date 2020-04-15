@@ -141,7 +141,7 @@ router.post('/renew/:id', async (req, res) => {
 		let loan_ = await Loan.findById(req.params.id).populate('plan');
 		if (!loan_) return res.status(404).json({ msg: 'Prestamo no existe' });
 		console.log('here bayby 2');
-		const { interval, steps, interest } = loan_.plan;
+		const { _id, interval, steps, interest } = loan_.plan;
 		//Cheking if we can renew
 		if (loan_.quota == 0 || loan_.quota / steps * 100 < 51)
 			return res.status(404).json({ msg: 'Rechazado No hay suficiente pagos' });
@@ -166,6 +166,7 @@ router.post('/renew/:id', async (req, res) => {
 
 		//Creating the loan
 		let newLoan = new Loan({
+			plan: _id,
 			client: loan_.client,
 			amount: newLoanAmount,
 			amountPerQuota,
