@@ -166,7 +166,7 @@ router.post('/renew/:id', async (req, res) => {
 
 		//Creating the loan
 		let newLoan = new Loan({
-			plan: _id,
+			plan: _id, 
 			client: loan_.client,
 			amount: newLoanAmount,
 			amountPerQuota,
