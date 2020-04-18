@@ -156,7 +156,7 @@ const Clients = ({ profiles, profilesFiltered, filterProfiles, porfileLoading, a
 										</li>
 									))
 								) : (
-									<h1> No Existe clientes</h1>
+									<h1 className="text-white"> No Existe clientes</h1>
 								)}
 							</div>
 						</div>
