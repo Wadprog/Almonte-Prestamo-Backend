@@ -7,7 +7,7 @@ import {
 	LOAN_FETCH_FAIL,
 	LOAN_FETCH_SUCCESS,
 	LOAN_FETCH_REQUEST,
-	LOAN_PAYMENT_ADD_REQUEST,
+	PAYMENT_ADD_REQUEST,
 	PAYMENT_ADD_SUCCESS,
 	LOAN_PAYMENT_ADD_FAIL,
 	FILTER_LOAN,
@@ -96,7 +96,6 @@ export const removeLoan = id => async dispatch => {
 	}
 };
 
-
 export const renewLoan = formData => async dispatch => {
 	const config = {
 		headers: {
@@ -133,7 +132,7 @@ export const payLoan = formData => async dispatch => {
 
 	try {
 		dispatch({
-			type: LOAN_PAYMENT_ADD_REQUEST
+			type: PAYMENT_ADD_REQUEST
 		});
 		const res = await axios.post('/api/loan/due/' + formData.id, body, config);
 		dispatch({
