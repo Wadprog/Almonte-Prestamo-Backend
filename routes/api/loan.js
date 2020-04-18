@@ -155,7 +155,6 @@ router.post('/renew/:id', async (req, res) => {
 		//Calculating new values
 
 		const newLoanAmount = amount - debt;
-
 		var amountPerQuota = Math.round(newLoanAmount * interest / 100);
 		var interestPerQuota = Math.round((amountPerQuota * steps - newLoanAmount) / steps);
 
@@ -166,7 +165,7 @@ router.post('/renew/:id', async (req, res) => {
 
 		//Creating the loan
 		let newLoan = new Loan({
-			plan: _id, 
+			plan: _id,
 			client: loan_.client,
 			amount: newLoanAmount,
 			amountPerQuota,
@@ -180,7 +179,18 @@ router.post('/renew/:id', async (req, res) => {
 		newLoan = await newLoan.save();
 
 		// creating all payments needed
-		createPayments(newLoan.id, { steps, interval });
+		//createPayments(newLoan._id, { steps, interval });
+		for (var step = 1; step < steps + 1; step++) {
+			var newdate = moment(newLoan.date).add(step * interval, 'days').format('l');
+			let payment = new Payment({
+				loan: newLoan.id,
+				dateToPay: newdate,
+				quota: step
+			});
+			await payment.save();
+			//  payments.push(Payment)
+		}
+
 		return res.json({ newLoan });
 	} catch (error) {
 		console.log(`server error ${error}`);
