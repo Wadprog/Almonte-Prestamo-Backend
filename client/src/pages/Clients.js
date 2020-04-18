@@ -68,7 +68,7 @@ const Clients = ({ profiles, profilesFiltered, filterProfiles, porfileLoading, a
 														className={`text-bold text-${client.punto > 700
 															? 'success'
 															: 'warning'}`}
-													>{`${client.puntos} `}</h5>
+													>{` `}</h5>
 												</div>
 
 												<div className="mb-1">
