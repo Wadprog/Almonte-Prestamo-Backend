@@ -14,6 +14,7 @@ const LatePay = ({ getLoanById, addpay, loan, loanLoading, authLoading, match: {
 		interest: '',
 		fireRedirect: false,
 		interestPayment: false,
+		interestPayment: false,
 		date: new Date()
 	});
 
