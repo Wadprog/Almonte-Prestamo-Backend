@@ -2,13 +2,15 @@ root {
 	--Navcolor: #1b121d;
 }
 
+.pred {
+	min-height: 300px;
+}
 .btn.btn-ouline-purple {
 	border: solid 2px #cd23b2 !important;
 	color: white;
 }
 .btn.btn-ouline-purple:hover,
-.btn-ouline-purple.active
- {
+.btn-ouline-purple.active {
 	background: rgb(255, 255, 255);
 	background: radial-gradient(circle, rgb(246, 213, 213) 2%, rgba(252, 70, 107, 1) 100%);
 }

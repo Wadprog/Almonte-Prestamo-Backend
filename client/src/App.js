@@ -7,7 +7,8 @@ import Clients from './pages/Clients';
 import Loan from './pages/Loan';
 import Client from './pages/Client';
 import Alert from './component/Alert';
-
+import Customer from './pages/Customer';
+import LatePay from './pages/LatePay';
 import Login from './pages/Login';
 import Loading from './component/layout/Loading';
 import Register from './pages/Register';
@@ -108,6 +109,9 @@ function App() {
 								<PrivateRoute path="/newplan" component={NewPlan} />
 								<PrivateRoute path="/register" component={Register} />
 								<PrivateRoute path="/lateLoan" component={LateLoans} />
+
+								<Route path="/customer" component={Customer} />
+								<Route path="/latePay/:id" component={LatePay} />
 							</Switch>
 						</div>
 					</main>

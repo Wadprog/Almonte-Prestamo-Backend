@@ -48,10 +48,10 @@ const LatePay = ({ getLoanById, addpay, loan, loanLoading, authLoading, match: {
 					{loan &&
 					loan != null && (
 						<div className="text-white">
-							<h3 className="text-white text-center card-header">{` Pago para ${loan
+							<h3 className="text-white text-center card-header">{` Registro de pago viejo para ${loan
 								.client.name} ${loan.client.apellido} `}</h3>
 							<div className="my-4">
-								<h6 className="text-center">Informaciones del prestamo</h6>
+								<h6>Informaciones del prestamo</h6>
 								<h5>
 									<div className="d-flex justify-content-between">
 										<div>Monto del Prestamo </div>

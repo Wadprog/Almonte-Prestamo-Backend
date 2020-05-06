@@ -1,6 +1,13 @@
 import axios from 'axios';
 import { setAlert } from './alert';
+import { loadPayment } from './payment';
 import {
+	ADD_PAY_REQUEST,
+ ADD_PAY_SUCCESS,
+ ADD_PAY_FAIL,
+	GET_LOAN_REQUEST,
+	GET_LOAN_FAIL,
+	GET_LOAN_SUCCESS,
 	LOAN_ADD_REQUEST,
 	LOAN_ADD_FAIL,
 	LOAN_ADD_SUCCESS,
@@ -26,6 +33,45 @@ export const filterLoans = (value, loans) => async dispatch => {
 		type: FILTER_LOAN,
 		payload: filter
 	});
+};
+export const addpay = formData => async dispatch => {
+	const config = {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	};
+	const body = JSON.stringify({ ...formData });
+	dispatch({
+		type: ADD_PAY_REQUEST
+	});
+
+	try {
+		const res = await axios.post(`/api/loan/due/${formData.id}`, body, config);
+		dispatch(loadPayment());
+		dispatch(setAlert(`Pago agregado con exito`, 'success'))
+	} catch (error) {
+		dispatch({
+			type: ADD_PAY_FAIL
+		});
+		dispatch(setAlert(`Error ${error.response.data.msg}`, 'danger'));
+	}
+};
+export const getLoanById = id => async dispatch => {
+	dispatch({
+		type: GET_LOAN_REQUEST
+	});
+	try {
+		const res = await axios.get(`/api/loan/${id}`);
+		dispatch({
+			type: GET_LOAN_SUCCESS,
+			payload: res.data
+		});
+	} catch (error) {
+		dispatch({
+			type: GET_LOAN_FAIL
+		});
+		dispatch(setAlert(`Error ${error.response.data.msg}`, 'danger'));
+	}
 };
 
 export const loadLoans = () => async dispatch => {

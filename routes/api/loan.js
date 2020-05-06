@@ -94,7 +94,7 @@ router.post('/due/:id', async (req, res) => {
 			loan: req.params.id,
 			dateToPay: loan_.nextpaymentDate
 		});
-		if (!payment) return res.status(404).json({ msg: 'Pagos Vacio' });
+		if (!payment) return res.status(404).json({ msg: 'Registro Pagos Vacio' });
 
 		var date = null;
 		if (req.body.date) date = moment(req.body.date).format('l');
@@ -105,7 +105,9 @@ router.post('/due/:id', async (req, res) => {
 			payment.dateInterestPaid = date || moment().format('l');
 			payment.status = 'Mora pagada';
 		}
+		
 		if (req.body.amount && req.body.amount != '' && req.body.amount !== 0) {
+			
 			payment.amountPaid = req.body.amount;
 			payment.dateAmountPaid = date || moment().format('l');
 			payment.status = 'Pagado';
@@ -199,11 +201,25 @@ router.post('/renew/:id', async (req, res) => {
 });
 
 router.post('/cancel/:id', async (req, res) => {
+	console.log('WILL CANCEL ');
 	try {
 		let loan_ = await Loan.findById(req.params.id);
 		if (!loan_) return res.status(404).json({ msg: 'Prestamo no existe' });
-		loan_ = cancelLoan(loan_, 'Prestamo Cancelado sin renovar');
-		return res.json({ msg: 'Cancelado con exito' });
+		let payments = await Payment.findOne({
+			loan: req.params.id,
+			status: 'Pagado'
+		});
+		if (payments === null) {
+			console.log('Never paid  ');
+			await Loan.findByIdAndDelete(loan_._id);
+			console.log('Deleted never pay  ');
+			return res.json({ msg: 'Cancelado con exito' });
+		} else {
+			console.log('Her paid L ');
+			loan_ = cancelLoan(loan_, 'Prestamo Cancelado sin renovar');
+			console.log('cancel  paid L ');
+			return res.json({ msg: 'Cancelado con exito' });
+		}
 	} catch (error) {
 		console.log(`server error ${error}`);
 		return res.status(500).json({ _loan });

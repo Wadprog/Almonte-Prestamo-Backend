@@ -22,7 +22,8 @@ const NewLoan = ({
 	const [ formData, setFormData ] = useState({
 		client: id,
 		amount: 0,
-		plan: ''
+		plan: '',
+		date: new Date()
 	});
 	const [ client ] = profiles.filter(profile => profile._id === id);
 	const handleChange = e => {
@@ -37,12 +38,18 @@ const NewLoan = ({
 		setFormData({ ...formData, fireRedirect: true });
 	};
 
-	const { fireRedirect, amount, plan } = formData;
+	const { date, fireRedirect, amount, plan } = formData;
 
 	const Infoverified = () => {
 		console.log(parseInt(amount));
 		return amount !== 0 && plan !== '';
 	};
+	const [ editting, toggleEditting ] = useState();
+
+	const handleDateAdd = e => {
+		toggleEditting({ editting: e.target.checked });
+	};
+
 	return (
 		<div className="container text-white mt-5 pt-5">
 			{!planLoading && !loanLoading && !profileLoading && !authLoading ? (
@@ -79,6 +86,32 @@ const NewLoan = ({
 									{plans.map(plan => <option value={plan._id}>{plan.name}</option>)}
 								</select>
 							</div>
+
+							{editting ? (
+								<div className="Form-group mt-2">
+									<label>Fecha</label>
+									<input
+										type="date"
+										className="form-control"
+										onChange={handleChange}
+										value={date}
+										name="date"
+										className="form-control"
+									/>
+								</div>
+							) : (
+								<label>
+									<input
+	
+										name="editor"
+										onChange={handleDateAdd}
+										className=" d-none "
+										type="checkbox"
+										checked={editting}
+									/>
+									Agregar fecha
+								</label>
+							)}
 
 							<div className="mt-3">
 								<button className="btn btn-block btn-outline-info"> Crear Nuevo Prestamo</button>
