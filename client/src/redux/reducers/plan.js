@@ -4,7 +4,7 @@ import {
 	PLAN_FETCH_FAIL,
 	PLAN_ADD_FAIL,
 	PLAN_ADD_SUCCESS
-} from '../actions/Const';
+} from '../Const';
 const initialState = {
 	plans: [],
 	loading: false

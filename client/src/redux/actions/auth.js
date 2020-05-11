@@ -10,7 +10,7 @@ import {
 	LOG_IN_FAIL,
 	LOG_IN_SUCCESS,
 	LOG_IN_REQUEST
-} from './Const';
+} from '../Const';
 
 import { setAlert } from './alert';
 import setAuthToken from '../../utils/setAuthToken';

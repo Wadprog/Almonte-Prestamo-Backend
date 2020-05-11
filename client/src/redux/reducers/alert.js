@@ -1,4 +1,4 @@
-import { SET_ALERT, REMOVE_ALERT } from '../actions/Const'
+import { SET_ALERT, REMOVE_ALERT } from '../Const'
 const initialState = []
 export default function(state = initialState, action) {
   const { payload } = action

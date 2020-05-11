@@ -5,7 +5,7 @@ import {
 	EXPENSES_ADD_FAIL,
 	EXPENSES_ADD_SUCCESS,
 
-} from '../actions/Const';
+} from '../Const';
 
 import axios from 'axios';
 import { setAlert } from './alert';

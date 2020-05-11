@@ -3,7 +3,7 @@ import {
 	STATISTICS_FETCH_SUCCESS,
 	STATISTICS_FETCH_FAIL,
 	
-} from '../actions/Const';
+} from '../Const';
 const initialState = {
 	statistics: [],
 	loading: false

@@ -1,4 +1,4 @@
-import { ROUTINA_FETCH_SUCCESS, ROUTINA_FETCH_REQUEST, ROUTINA_FETCH_FAIL, PROXY } from '../actions/Const';
+import { ROUTINA_FETCH_SUCCESS, ROUTINA_FETCH_REQUEST, ROUTINA_FETCH_FAIL, PROXY } from '../Const';
 
 import axios from 'axios';
 

@@ -6,7 +6,7 @@ import {
 	REGISTER_SUCCESS,
 	REGISTER_FAIL,
 	
-} from '../actions/Const';
+} from '../Const';
 
 import axios from 'axios';
 import { setAlert } from './alert';

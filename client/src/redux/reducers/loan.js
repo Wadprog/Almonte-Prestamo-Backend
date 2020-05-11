@@ -21,7 +21,7 @@ import {
 	LOAN_RENEW_REQUEST,
 	LOAN_RENEW_SUCCESS,
 	LOAN_RENEW_FAIL
-} from '../actions/Const';
+} from '../Const';
 
 const initialState = {
 	filteredLoans: [],

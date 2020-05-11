@@ -1,4 +1,4 @@
-import { STATISTICS_FETCH_REQUEST, STATISTICS_FETCH_SUCCESS, STATISTICS_FETCH_FAIL, PROXY } from '../actions/Const';
+import { STATISTICS_FETCH_REQUEST, STATISTICS_FETCH_SUCCESS, STATISTICS_FETCH_FAIL, PROXY } from '../Const';
 
 import axios from 'axios';
 import { setAlert } from './alert';

@@ -4,7 +4,7 @@ import {
 	CITY_FETCH_FAIL,
 	CITY_ADD_FAIL,
 	CITY_ADD_SUCCESS
-} from '../actions/Const';
+} from '../Const';
 
 const initialState = {
 	cities: [],

@@ -4,7 +4,7 @@ import {
 	EXPENSES_FETCH_FAIL,
 	EXPENSES_ADD_FAIL,
 	EXPENSES_ADD_SUCCESS,
-} from '../actions/Const';
+} from '../Const';
 const initialState = {
 	expenses: [],
 	loading: false

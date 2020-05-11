@@ -6,7 +6,7 @@ import {
 	LOG_IN_FAIL,
 	LOG_IN_SUCCESS,
 	LOG_IN_REQUEST
-} from '../actions/Const';
+} from '../Const';
 
 const initialState = {
 	token: localStorage.getItem('token'),

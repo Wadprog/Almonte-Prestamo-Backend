@@ -3,7 +3,7 @@ import {
 	DOC_FETCH_SUCCESS,
 	DOC_FETCH_FAIL,
 
-} from '../actions/Const';
+} from '../Const';
 const initialState = {
 	docs: [],
 	loading: false

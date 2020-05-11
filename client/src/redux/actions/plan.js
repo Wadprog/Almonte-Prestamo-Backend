@@ -5,7 +5,7 @@ import {
 	PLAN_ADD_FAIL,
 	PLAN_ADD_SUCCESS,
 	PROXY
-} from '../actions/Const';
+} from '../Const';
 
 import axios from 'axios';
 

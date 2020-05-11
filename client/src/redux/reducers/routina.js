@@ -2,7 +2,7 @@ import {
 	ROUTINA_FETCH_REQUEST,
 	ROUTINA_FETCH_SUCCESS,
 	ROUTINA_FETCH_FAIL
-} from '../actions/Const';
+} from '../Const';
 const initialState = {
 	loans: [],
 	loading: false

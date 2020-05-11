@@ -5,8 +5,9 @@ import {
 	PAYMENT_ADD_FAIL,
 	PAYMENT_ADD_SUCCESS,
 	PAYMENT_ADD_REQUEST
-} from '../actions/Const';
+} from '../Const';
 const initialState = {
+	selectedPayment:[], 
 	payments: [],
 	loading: false
 };

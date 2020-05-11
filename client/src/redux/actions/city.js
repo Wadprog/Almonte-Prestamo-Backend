@@ -5,7 +5,7 @@ import {
 	CITY_ADD_FAIL,
 	CITY_ADD_SUCCESS,
 
-} from '../actions/Const';
+} from '../Const';
 
 import axios from 'axios';
 

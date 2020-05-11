@@ -10,7 +10,7 @@ import {
 	PROFILE_UPDATE_REQUEST,
 	PROFILE_UPDATE_SUCCESS,
 	PROFILE_UPDATE_FAIL
-} from './Const';
+} from '../Const';
 
 import { setAlert } from './alert';
 

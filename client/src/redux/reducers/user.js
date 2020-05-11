@@ -5,7 +5,7 @@ import {
 	REGISTER_REQUEST,
 	REGISTER_SUCCESS,
 	REGISTER_FAIL
-} from '../actions/Const';
+} from '../Const';
 
 const initialState = {
 	users: [],

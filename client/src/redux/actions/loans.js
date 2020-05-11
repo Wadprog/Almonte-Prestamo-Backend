@@ -24,7 +24,7 @@ import {
 	LOAN_RENEW_REQUEST,
 	LOAN_RENEW_SUCCESS,
 	LOAN_RENEW_FAIL
-} from './Const';
+} from '../Const';
 
 export const filterLoans = (value, loans) => async dispatch => {
 	let filter = loans.filter(loan => !loan.client.name.trim().toLowerCase().indexOf(value.trim().toLowerCase()));

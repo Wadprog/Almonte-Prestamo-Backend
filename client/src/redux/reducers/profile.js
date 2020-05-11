@@ -8,7 +8,7 @@ import {
  PROFILE_UPDATE_FAIL,
  PROFILE_SAVE_FAIL,
 	FILTER
-} from '../actions/Const';
+} from '../Const';
 const initialState = {
 	isLoading: false,
 	profiles: [],
