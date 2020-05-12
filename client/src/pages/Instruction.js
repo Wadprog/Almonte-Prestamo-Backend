@@ -1,10 +1,13 @@
-import React from 'react';
+import React ,{useEffect, Fragment}from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Loading from '../component/layout/Loading';
-
-const Instruction = ({ docs, loading }) => {
-	const { Fragment } = React;
+import {loadDoc} from '../redux/actions/doc'
+const Instruction = ({ loadDoc,docs, loading }) => {
+	useEffect(() => {
+		loadDoc()
+		
+	}, [])
 	return (
 		<div>
 			{loading ? (
@@ -39,4 +42,4 @@ const mapStateToProps = state => ({
 	loading: state.doc.loading,
 	docs: state.doc.docs
 });
-export default connect(mapStateToProps, {})(Instruction);
+export default connect(mapStateToProps, {loadDoc})(Instruction);

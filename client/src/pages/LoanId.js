@@ -9,6 +9,7 @@ import { getPaymentsById } from "../redux/actions/payment";
 
 const NewLoan = ({
   getLoanById,
+  getPaymentsById,
   paymentLoading,
   loan,
   loanLoading,
@@ -114,29 +115,14 @@ const NewLoan = ({
               }
             </div>
           ) : (
-            <h4 className=" mt-2  text-center text-white"> **Aun no hay pagos hechos para este prestamo**</h4>
+            <h4 className=" mt-2  text-center text-white">
+              {" "}
+              **Aun no hay pagos hechos para este prestamo**
+            </h4>
           )}
         </Fragment>
       )}
-      {/*!loanLoading && !paymentLoading ? (
-        <Fragment>
-          {loan !== null && (
-            <div key={loan._id} className=" my-info list-group-item mb-2 p-0">
-              <LoanDescription
-                loan={loan}
-                noPaymentBtn={loan.status}
-                noHistoryBtn={true}
-              />
-            </div>
-          )}
-          ) : (
-            <h6 className="text-white">Aun no hay pagos por este prestamo</h6>
-          )}
-        </Fragment>
-      ) : (
-        <Loading />
-	  )*/}
-    </div>
+        </div>
   );
 };
 

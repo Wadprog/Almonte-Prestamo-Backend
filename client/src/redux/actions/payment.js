@@ -14,7 +14,7 @@ export const getPaymentsById = (id) => async (dispatch) => {
     type: SELECTED_PAYMENTS_REQUEST,
   });
   try {
-    const res = await axios.get(`/api/payment/${id}`);
+    const res = await axios.get(`/api/payment/loan/${id}`);
     dispatch({
       type: SELECTED_PAYMENTS_SUCCESS,
       payload: res.data,
