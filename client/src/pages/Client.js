@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
 import NumberFormat from 'react-number-format';
 
@@ -6,12 +6,17 @@ import { connect } from 'react-redux';
 import Loading from '../component/layout/Loading';
 import { updateClient } from '../redux/actions/profile';
 import LoanDescription from '../component/LoanDescription';
+import {loadSelectedProfile} from '../redux/actions/profile'
+import {loadClientLoan} from '../redux/actions/loans'
 
 import './Client.css';
 const Client = ({
+	loadClientLoan,
+	loadSelectedProfile,
 	updateClient,
 	cityLoading,
-	profiles,
+	client,
+	clientLoans,
 	loans,
 	cities,
 	loanLoading,
@@ -19,6 +24,11 @@ const Client = ({
 	authLoading,
 	match: { params: { id } }
 }) => {
+	useEffect(() => {
+		loadSelectedProfile(id)
+		loadClientLoan(id)
+		
+	}, [])
 	const [ fields, setFields ] = useState({
 		fName: false,
 		fCedula: false,
@@ -34,11 +44,9 @@ const Client = ({
 		loanView: false,
 		fireRedirect: false
 	});
-
 	const [ toggle, setToggle ] = useState({
 		loanView: false
 	});
-
 	const [ formData, setFormData ] = useState({
 		id,
 		name: '',
@@ -88,9 +96,9 @@ const Client = ({
 		setFields({ ...fields, [e.target.name]: e.target.checked, modifyProfile: true });
 	};
 
-	const [ client ] = profiles.filter(profile => profile._id === id);
-	let clientLoans = [];
-	if (loans.length > 0) clientLoans = loans.filter(loan => loan.client._id == id);
+
+	
+	
 
 	const { Fragment } = React;
 	return (
@@ -628,12 +636,12 @@ const Client = ({
 };
 
 const mapStateToProps = state => ({
-	profiles: state.profile.profiles,
-	loans: state.loan.loans,
+	client: state.profile.profile,
+	clientLoans: state.loan.selectedLoans,
 	loanLoading: state.loan.loading,
 	profileLoading: state.profile.isLoading,
 	authLoading: state.auth.loading,
 	cityLoading: state.city.loading,
 	cities: state.city.cities
 });
-export default connect(mapStateToProps, { updateClient })(Client);
+export default connect(mapStateToProps, { updateClient, loadSelectedProfile, loadClientLoan })(Client);

@@ -28,6 +28,7 @@ import LoanCancel from "./pages/LoanCancel";
 import NewClient from "./pages/NewClient";
 import Instruction from "./pages/Instruction";
 import LateLoans from "./pages/LateLoans";
+import Many from "./pages/Many";
 
 //Routing ..
 
@@ -37,21 +38,14 @@ import PrivateRoute from "./component/PrivateRoute";
 //Redux ..
 
 import "./App.css";
-import { loadProfiles } from "./redux/actions/profile";
-import { loadLoans } from "./redux/actions/loans";
 
 import setAuthToken from "./utils/setAuthToken";
-import { loadUser } from "./redux/actions/auth";
-
-import { loadStatistic } from "./redux/actions/statistic";
-
-import { loadDoc } from "./redux/actions/doc";
 
 import { Provider } from "react-redux";
 import store from "./redux/store";
 function App() {
   useEffect(() => {
-    store.dispatch(loadUser());
+    //  store.dispatch(loadUser());
   }, []);
 
   if (localStorage.token) setAuthToken(localStorage.token);
@@ -68,11 +62,11 @@ function App() {
             <div class="container-fluid">
               <Alert />
               <Switch>
+                <PrivateRoute exact path="/many" component={Many} />
                 <PrivateRoute exact path="/" component={Home} />
                 <PrivateRoute exact path="/clients" component={Clients} />
                 <PrivateRoute exact path="/loan" component={Loan} />
                 <PrivateRoute path="/client/:id" component={Client} />
-
                 <Route path="/login" component={Login} />
                 <Route path="/instruction" component={Instruction} />
                 <Route path="/sidenav" component={SideNav} />
@@ -85,9 +79,7 @@ function App() {
                 <PrivateRoute path="/newloan/:id" component={NewLoan} />
                 <PrivateRoute path="/city" component={Cities} />
                 <PrivateRoute path="/loan/:id" component={LoanId} />
-
                 <PrivateRoute path="/cancel/:id" component={LoanCancel} />
-
                 <PrivateRoute path="/payment/:id" component={Payment} />
                 <PrivateRoute path="/renew/:id" component={LoanRenew} />
                 <PrivateRoute path="/users" component={Users} />
@@ -96,7 +88,6 @@ function App() {
                 <PrivateRoute path="/newplan" component={NewPlan} />
                 <PrivateRoute path="/register" component={Register} />
                 <PrivateRoute path="/lateLoan" component={LateLoans} />
-
                 <Route path="/customer" component={Customer} />
                 <Route path="/latePay/:id" component={LatePay} />
               </Switch>

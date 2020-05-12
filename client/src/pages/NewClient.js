@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NumberFormat from 'react-number-format';
 import { Redirect } from 'react-router';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { registerClient } from '../redux/actions/profile';
 import Loading from '../component/layout/Loading';
+import {loadCities} from '../redux/actions/city'
+const NewClient = ({ loadCities,cityLoading, cities, registerClient }) => {
+	useEffect(() => {
+		loadCities()
 
-const NewClient = ({ cityLoading, cities, registerClient }) => {
+		
+	}, [])
 	const [ formData, setFormData ] = useState({
 		name: '',
 		apellido: '',
@@ -194,4 +199,4 @@ const mapStateToProps = state => ({
 	cities: state.city.cities,
 	cityLoading: state.city.loading
 });
-export default connect(mapStateToProps, { registerClient })(NewClient);
+export default connect(mapStateToProps, { registerClient, loadCities })(NewClient);
