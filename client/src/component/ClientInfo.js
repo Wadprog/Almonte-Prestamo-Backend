@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from 'react';
 
+
 const Info = ({title, data}) => {
 	const [ editting, toggleEditting ] = useState();
 	const handleChange = e => {

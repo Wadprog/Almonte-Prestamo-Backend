@@ -44,7 +44,7 @@ export const loadClientLoan = (id) => async (dispatch) => {
     dispatch({
       type: GET_SELECTED_LOANS_FAIL,
     });
-    dispatch(setAlert(`Error ${error.response.data.msg}`, "danger"));
+    dispatch(setAlert(`Error ${error}`, "danger"));
   }
 };
 export const filterLoans = (value, loans) => async (dispatch) => {
@@ -94,7 +94,7 @@ export const getLoanById = (id) => async (dispatch) => {
     dispatch({
       type: GET_LOAN_FAIL,
     });
-    dispatch(setAlert(`Error ${error.response.data.msg}`, "danger"));
+    dispatch(setAlert(`Error ${error}`, "danger"));
   }
 };
 

@@ -47,7 +47,7 @@ export default function (state = initialState, action) {
     case GET_LOAN_FAIL:
       return {
         ...state,
-        loan: null,
+        loan: [],
         loading: false,
       };
     case GET_SELECTED_LOANS_SUCCESS:
