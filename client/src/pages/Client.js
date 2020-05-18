@@ -33,7 +33,7 @@ const Client = ({
         <div>
           <div className="row">
             <div className="col col-xs-12 col-sm-4">
-              <div className="card bg-light card-secondary ">
+              <div className="card bg-transparent card-secondary ">
                 <div className="card-body">
                   {!profileLoading ? (
                     <Fragment>
@@ -42,30 +42,69 @@ const Client = ({
                     </Fragment>
                   ) : (
                     <div className="spinner-border">
-                      <span className="sr-only">argando</span>
+                      <span className="sr-only">Cargando</span>
                     </div>
                   )}
                 </div>
               </div>
             </div>
             <div className="col col-xs-12 col-sm-8">
-              <div className="card bg-light h-100">
-                <div className="card-header">
-                  <ul className="nav nav-tabs card-header-tabs">
-                    <li className="nav-item">
-                      <a className="nav-link active" href="#"></a>
-                    </li>
-                  </ul>
-                </div>
-
+              <div className="card bg-transparent h-100">
                 <div className="card-body">
                   {!loanLoading ? (
                     <Fragment>
-                      <h5 className="card-title">Pestamos</h5>
+                      <div className="row">
+                        <div className="col-sm-12 col-md-6">
+                          <a clasName="ml-2" href="">
+                            <h5>
+                              Pestamos
+                              <i className="ml-2 fa fa-plus"></i>
+                            </h5>
+                          </a>
+                        </div>
+                        <div className="col-sm-12 col-md-6">
+                          <form action="">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <button
+                                  className=" text-white btn btn-outline-secondary dropdown-toggle"
+                                  type="button"
+                                  data-toggle="dropdown"
+                                >
+                                  Categoria
+                                </button>
+                                <div className="dropdown-menu">
+                                  <a className="dropdown-item" href="#">
+                                    plan
+                                  </a>
+                                  <a className="dropdown-item" href="#">
+                                    Monto
+                                  </a>
+                                  <a className="dropdown-item" href="#">
+                                    Fecha
+                                  </a>
+                                </div>
+                              </div>
+                              <input
+                                type="text"
+                                type="text"
+                                className="form-control"
+                                disabled={true}
+                              />
+                              <div className="input-group-append">
+                                <button className="btn btn-secondary">
+                                  <i className="fa fa-search"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+
                       {selectedLoans &&
                       selectedLoans != null &&
                       selectedLoans.length > 0 ? (
-                        <table className="table table-borderless table-sm table-responsive-md table-hover ">
+                        <table className="table table-borderless table-sm table-responsive-md table-hover text-white">
                           <thead>
                             <tr>
                               <td scope="col">Fecha</td>
@@ -77,7 +116,10 @@ const Client = ({
                           </thead>
                           <tbody>
                             {selectedLoans.map((loan) => (
-                              <tr key={loan._id}>
+                              <tr
+                                key={loan._id}
+                                className="shadow-box effect1 "
+                              >
                                 <td
                                   data-toggle="tooltip"
                                   data-placement="bottom"
@@ -151,14 +193,9 @@ const Client = ({
                   )}
                 </div>
                 <div className="card-footer">
-                  <div className="d-flex justify-content-between">
-                    <button className="btn btn-outline-primary btn-sm">
-                      Nuevo prestamo
-                    </button>
-                    <button className="btn btn-outline-primary btn-sm">
-                      Varios Prestamo
-                    </button>
-                  </div>
+                  <a href="" className="btn btn-block btn-outline-primary">
+                    Nuevo prestamo
+                  </a>
                 </div>
               </div>
             </div>

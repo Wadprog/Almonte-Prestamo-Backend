@@ -62,7 +62,7 @@ function App() {
             <div class="container-fluid">
               <Alert />
               <Switch>
-                <PrivateRoute exact path="/many" component={Many} />
+                <PrivateRoute exact path="/many/:id" component={Many} />
                 <PrivateRoute exact path="/" component={Home} />
                 <PrivateRoute exact path="/clients" component={Clients} />
                 <PrivateRoute exact path="/loan" component={Loan} />

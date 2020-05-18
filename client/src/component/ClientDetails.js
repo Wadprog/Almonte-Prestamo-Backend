@@ -8,9 +8,9 @@ const ClientDetails = ({ handleChange, name, value, editable, type }) => {
     
   };
   return (
-    <div className="card my-2">
-      <div className="card-body p-0">
-        <div className="form-group p-2">
+    <div className="shadow-box effect1 my-2">
+     
+        <div className="form-group p-2 text-white">
           <label classnme="h6">{name}:</label>
           {edit ? (
             <input
@@ -37,7 +37,7 @@ const ClientDetails = ({ handleChange, name, value, editable, type }) => {
               </label>
             </span>
           )}
-        </div>
+       
       </div>
     </div>
   );

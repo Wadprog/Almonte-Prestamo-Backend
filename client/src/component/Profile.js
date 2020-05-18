@@ -10,7 +10,7 @@ const Profile = ({ client }) => {
   };
   const { name,apellido } = data;
   return (
-    <div>
+    <form>
       <ClientDetails name={"Nombre"} value={name} editable={true} />
       <ClientDetails
         name={"apellido"}
@@ -43,7 +43,8 @@ const Profile = ({ client }) => {
         editable={true}
         handleChange={handleChange}
       />
-    </div>
+      <button className="btn btn-sm btn-primary">Editar</button>
+    </form>
   );
 };
 export default Profile;
