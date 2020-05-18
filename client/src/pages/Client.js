@@ -33,7 +33,7 @@ const Client = ({
         <div>
           <div className="row">
             <div className="col col-xs-12 col-sm-4">
-              <div className="card card-secondary ">
+              <div className="card bg-light card-secondary ">
                 <div className="card-body">
                   {!profileLoading ? (
                     <Fragment>
@@ -49,7 +49,15 @@ const Client = ({
               </div>
             </div>
             <div className="col col-xs-12 col-sm-8">
-              <div className="card h-100">
+              <div className="card bg-light h-100">
+                <div className="card-header">
+                  <ul className="nav nav-tabs card-header-tabs">
+                    <li className="nav-item">
+                      <a className="nav-link active" href="#"></a>
+                    </li>
+                  </ul>
+                </div>
+
                 <div className="card-body">
                   {!loanLoading ? (
                     <Fragment>
