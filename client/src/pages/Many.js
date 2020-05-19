@@ -10,6 +10,7 @@ import { loadSelectedProfile } from "../redux/actions/profile";
 import { loadPlan } from "../redux/actions/plan";
 import PaymentAdder from "../component/PaymentAdder";
 import LoanDisPlayer from "../component/LoanDisPlayer";
+import ClientSelector from "../component/ClientSelector";
 const Many = ({
   plans,
   planLoading,
@@ -43,8 +44,14 @@ const Many = ({
     setLoans(filteredLoans);
   };
   return (
-    <div>
+    <div className="container-md px-md-5">
       <h1 className="text-white text-center "> Agregar Pretamo </h1>
+      <div className="row">
+        <div className="col-sm-4">
+          <ClientSelector />
+        </div>
+      </div>
+
       <PaymentAdder addLoan={addone} />
       <LoanDisPlayer loans={loans} deleteMe={deleteOne} />
     </div>

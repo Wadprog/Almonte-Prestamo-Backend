@@ -1,10 +1,10 @@
 import React from "react";
+import NumberFormat from "react-number-format";
 
 export default function LoanDisPlayer({ loans, deleteMe }) {
   return (
     <div>
-      @twitterCopy
-      <table className="table text-white">
+      <table className="table text-white table-responsive-md">
         <thead>
           <tr>
             <th>Cantidad</th>
@@ -16,7 +16,14 @@ export default function LoanDisPlayer({ loans, deleteMe }) {
         <tbody>
           {loans.map((loan) => (
             <tr>
-              <td>RD$ {loan.amount}</td>
+              <td>
+                <NumberFormat
+                  value={loan.amount}
+                  displayType={"text"}
+                  thousandSeparator={true}
+                  prefix={"RD$"}
+                />
+              </td>
               <td>{loan.plan.name}</td>
               <td>{loan.date}</td>
               <td>

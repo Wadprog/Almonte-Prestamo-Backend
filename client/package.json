@@ -11,6 +11,7 @@
 		"chart.js": "^2.9.3",
 		"concurrently": "^5.1.0",
 		"mdbreact": "^4.25.4",
+		"moment": "^2.25.3",
 		"prop-types": "^15.7.2",
 		"react": "^16.13.0",
 		"react-chartjs-2": "^2.9.0",
