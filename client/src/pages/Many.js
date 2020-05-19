@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { setAlert } from "../redux/actions/alert";
-import NumberFormat from "react-number-format";
+import uuid from "uuid";
 import { addLoan } from "../redux/actions/loans";
 import { Redirect } from "react-router";
 
@@ -8,6 +8,8 @@ import { connect } from "react-redux";
 import Loading from "../component/layout/Loading";
 import { loadSelectedProfile } from "../redux/actions/profile";
 import { loadPlan } from "../redux/actions/plan";
+import PaymentAdder from "../component/PaymentAdder";
+import LoanDisPlayer from "../component/LoanDisPlayer";
 const Many = ({
   plans,
   planLoading,
@@ -27,51 +29,24 @@ const Many = ({
     loadSelectedProfile(id);
     loadPlan();
   }, []);
-
+  const [loans, setLoans] = useState([]);
+  const addone = (loan) => {
+    loan.id = uuid.v4();
+    console.log(loan.id + "given");
+    setLoans([...loans, loan], console.log(loans));
+  };
+  const deleteOne = (id) => {
+    const filteredLoans = loans.filter((loan) => {
+      if (loan.id != id) return loan;
+      else return;
+    });
+    setLoans(filteredLoans);
+  };
   return (
     <div>
       <h1 className="text-white text-center "> Agregar Pretamo </h1>
-      <form className="form w-100">
-        <div className="d-flex w-100">
-          <div className="form-group w-100">
-            <div>
-              <label className="h6 text-white" htmlFor="">
-                Cantidad
-              </label>
-            </div>
-
-            <input type="text" className="form-control-sm" />
-          </div>
-
-          <div className="form-group w-100">
-            <div>
-              {" "}
-              <label className="h6 text-white" htmlFor="">
-                Plan
-              </label>
-            </div>
-
-            <select className="form-control-sm" name="" id=""></select>
-          </div>
-          <div className="form-group w-100">
-            <div>
-              <label className="h6 text-white" htmlFor="">
-                Fecha
-              </label>
-            </div>
-
-            <input type="date" className="form-control-sm" />
-          </div>
-          <div className="form-group w-100">
-            <div>
-              <label></label>
-            </div>
-            <button className="btn  btn-outline-primary btn-sm form-control">
-              <i className="text-success fa fa-plus"></i>
-            </button>
-          </div>
-        </div>
-      </form>
+      <PaymentAdder addLoan={addone} />
+      <LoanDisPlayer loans={loans} deleteMe={deleteOne} />
     </div>
   );
 };
