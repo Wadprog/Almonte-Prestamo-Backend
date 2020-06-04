@@ -71,7 +71,7 @@ const Loan = ({
 				loan.comment !== '' &&
 				loan.comment != null && (
 					<div className="mb-3">
-						<span className={`text-${color} mr-3 h6 `}>{loan.comment}</span>
+						<span className={`text-danger mr-3 h6 `}>{loan.comment}</span>
 					</div>
 				)}
 				{loan.oldLoan &&

@@ -12,19 +12,50 @@ import {
   PROFILE_UPDATE_FAIL,
   LOAD_SELECTED_PROFILE_REQUEST,
   LOAD_SELECTED_PROFILE_SUCCESS,
-  LOAD_SELECTED_PROFILE_FAIL
+  LOAD_SELECTED_PROFILE_FAIL,
+  DELETE_PROFILE_REQUEST,
+  DELETED_PROFILE_SUCCESS,
+  DELETED_PROFILE_FAIL,
 } from "../Const";
 
 import { setAlert } from "./alert";
 
-export const loadSelectedProfile = (id) => async dispatch=>{
+export const deleteClient = formData => async dispatch => {
+  console.log("in delete");
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify({ ...formData });
+
+  dispatch({ type: DELETE_PROFILE_REQUEST });
+
+  try {
+    console.log(" trying to delete");
+    const res = await axios.delete(`/api/client/${formData.id}`, body, config);
+    console.log(res.data)
+    dispatch({
+      type: DELETED_PROFILE_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    console.log('we failed to delete '+ formData.id)
+    dispatch({
+      type: DELETED_PROFILE_FAIL,
+    });
+    dispatch(setAlert(`Error ${error.response.data.msg}`, "danger"));
+  }
+};
+export const loadSelectedProfile = id => async dispatch => {
   dispatch({ type: LOAD_SELECTED_PROFILE_REQUEST });
   try {
-	  const res = await axios.get(`/api/client/${id}`)
-	  dispatch({
-		  type:LOAD_SELECTED_PROFILE_SUCCESS,
-		  payload:res.data
-	  })
+    const res = await axios.get(`/api/client/${id}`);
+    dispatch({
+      type: LOAD_SELECTED_PROFILE_SUCCESS,
+      payload: res.data,
+    });
   } catch (error) {
     dispatch({
       type: LOAD_SELECTED_PROFILE_FAIL,
@@ -32,10 +63,9 @@ export const loadSelectedProfile = (id) => async dispatch=>{
     dispatch(setAlert(`Error ${error.response.data.msg}`, "danger"));
   }
 };
-export const filterProfiles = (value, profiles) => async (dispatch) => {
+export const filterProfiles = (value, profiles) => async dispatch => {
   let filter = profiles.filter(
-    (item) =>
-      !item.name.trim().toLowerCase().indexOf(value.trim().toLowerCase())
+    item => !item.name.trim().toLowerCase().indexOf(value.trim().toLowerCase())
   );
   console.log(`Amen ${profiles[0]} and the filter is ${filter}`);
   dispatch({
@@ -43,7 +73,7 @@ export const filterProfiles = (value, profiles) => async (dispatch) => {
     payload: filter,
   });
 };
-export const loadProfiles = () => async (dispatch) => {
+export const loadProfiles = () => async dispatch => {
   dispatch({
     type: PROFILE_FETCH_REQUEST,
   });
@@ -61,7 +91,7 @@ export const loadProfiles = () => async (dispatch) => {
   }
 };
 
-export const registerClient = (formData) => async (dispatch) => {
+export const registerClient = formData => async dispatch => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -86,7 +116,7 @@ export const registerClient = (formData) => async (dispatch) => {
   }
 };
 
-export const updateClient = (formData) => async (dispatch) => {
+export const updateClient = formData => async dispatch => {
   const config = {
     headers: {
       "Content-Type": "application/json",

@@ -11,6 +11,10 @@ import {
   LOAD_SELECTED_PROFILE_FAIL,
   LOAD_SELECTED_PROFILE_SUCCESS,
   LOAD_SELECTED_PROFILE_REQUEST,
+
+  DELETE_PROFILE_REQUEST,
+  DELETED_PROFILE_SUCCESS,
+  DELETED_PROFILE_FAIL
 } from "../Const";
 const initialState = {
   isLoading: false,
@@ -21,6 +25,7 @@ const initialState = {
 export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
+    case DELETE_PROFILE_REQUEST:
     case LOAD_SELECTED_PROFILE_REQUEST:
     case PROFILE_UPDATE_REQUEST:
     case PROFILE_FETCH_REQUEST:
@@ -28,6 +33,19 @@ export default function (state = initialState, action) {
         ...state,
         isLoading: true,
       };
+    
+
+    case DELETED_PROFILE_SUCCESS:
+      return{
+       ...state,
+       isLoading:false, 
+        profiles:state.profiles.filter(profile=>profile._id!=payload),
+        filteredProfiles: state.profiles.filter(profile => profile._id != payload)
+      }
+
+
+
+
     case PROFILE_FETCH_SUCCESS:
       return {
         ...state,
@@ -63,6 +81,7 @@ export default function (state = initialState, action) {
         profile: null,
         isLoading: false,
       };
+    case DELETED_PROFILE_FAIL:
     case PROFILE_SAVE_FAIL:
     case PROFILE_UPDATE_FAIL:
     case PROFILE_FETCH_FAIL:

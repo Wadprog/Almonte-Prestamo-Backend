@@ -11,39 +11,39 @@ const Profile = ({ client }) => {
   const { name,apellido } = data;
   return (
     <form>
-      <ClientDetails name={"Nombre"} value={name} editable={true} />
+      <ClientDetails name={"Nombre"} value={name} editable={false} />
       <ClientDetails
         name={"apellido"}
         value={apellido}
-        editable={true}
+        editable={false}
         handleChange={handleChange}
       />
       <ClientDetails name="Cedula" value={client.cedula} editable={false} />
       <ClientDetails
         name={"Telefono"}
         value={client.telefono}
-        editable={true}
+        editable={false}
         handleChange={handleChange}
       />
       <ClientDetails
         name={"Dirreccion "}
         value={client.dirreccion}
-        editable={true}
+        editable={false}
         handleChange={handleChange}
       />
       <ClientDetails
         name={"Referencia"}
         value={client.DirReferencia}
-        editable={true}
+        editable={false}
         handleChange={handleChange}
       />
       <ClientDetails
         name={"Ciudad"}
         value={client.ciudad}
-        editable={true}
+        editable={false}
         handleChange={handleChange}
       />
-      <button className="btn btn-sm btn-primary">Editar</button>
+      
     </form>
   );
 };

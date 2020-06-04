@@ -1,14 +1,15 @@
 const express = require('express');
 const path = require('path');
 const connectDB = require('./config/db');
+const cors= require('cors')
 
 const app = express();
 app.use(express.json({ extended: false }));
-
+app.use(cors());
 // connection to database;
 connectDB();
 
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header(
 		'Access-Control-Allow-Headers',
@@ -19,7 +20,7 @@ app.use((req, res, next) => {
 		return res.status(200).json({});
 	}
 	next();
-});
+});*/
 
 //use the routes
 

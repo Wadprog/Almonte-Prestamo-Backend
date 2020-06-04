@@ -159,7 +159,7 @@ router.post("/renew/:id", async (req, res) => {
     console.log("more info" + req.body);
     let loan_ = await Loan.findById(req.params.id).populate("plan");
     if (!loan_) return res.status(404).json({ msg: "Prestamo no existe" });
-    console.log("here bayby 2");
+
     const { _id, interval, steps, interest } = loan_.plan;
     //Cheking if we can renew
     if (loan_.quota == 0 || (loan_.quota / steps) * 100 < 51)
@@ -175,7 +175,7 @@ router.post("/renew/:id", async (req, res) => {
 
     //Calculating new values
 
-    const newLoanAmount = amount - debt;
+    const newLoanAmount = amount;
     var amountPerQuota = Math.round((newLoanAmount * interest) / 100);
     var interestPerQuota = Math.round(
       (amountPerQuota * steps - newLoanAmount) / steps
@@ -196,7 +196,7 @@ router.post("/renew/:id", async (req, res) => {
       nextpaymentDate,
       date: moment(date).format("l"),
       oldLoan: loan_._id,
-      comment: `Prestamo renovado `,
+      comment: `Prestamo renovado Deuda es RD$ ${debt} `,
     });
     console.log("here is the value" + loan_.client);
     newLoan = await newLoan.save();
@@ -260,7 +260,7 @@ router.get("/get/routine/", async (req, res) => {
     console.log(`Before filter ${loans.length}`);
 
     const tempL = [];
-    loans.forEach((loan) => {
+    loans.forEach(loan => {
       let nextpaymentDate = moment(loan.nextpaymentDate);
       let now = moment();
       if (nextpaymentDate.isSameOrBefore(now)) {
@@ -282,7 +282,7 @@ router.get("/get/routine/", async (req, res) => {
       []
     );
     let response = [];
-    cities.forEach((city) => {
+    cities.forEach(city => {
       let tempCity = loans.reduce(
         (allLoans, loan) =>
           loan.client.ciudad != city ? allLoans : [...allLoans, loan],
