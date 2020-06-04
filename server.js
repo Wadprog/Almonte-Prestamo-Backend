@@ -42,5 +42,5 @@ app.get('*', (req, res) => {
 	res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 });
 
-const PORT = process.env.Port || 5000;
+const PORT = process.env.Port || 80;
 app.listen(PORT, () => console.log(`Server runing on port ${PORT}`));
