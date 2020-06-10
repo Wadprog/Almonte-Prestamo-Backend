@@ -27,9 +27,12 @@ import {
   LOAN_RENEW_REQUEST,
   LOAN_RENEW_SUCCESS,
   LOAN_RENEW_FAIL,
+  REMOVE_LASTPAYMENT_SUCCESS,
+  REMOVE_LASTPAYMENT_REQUEST,
+  REMOVE_LASTPAYMENT_FAIL
 } from "../Const";
 
-export const loadClientLoan = (id) => async (dispatch) => {
+export const loadClientLoan = id => async dispatch => {
   dispatch({
     type: GET_SELECTED_LOANS_REQUEST,
   });
@@ -47,9 +50,9 @@ export const loadClientLoan = (id) => async (dispatch) => {
     dispatch(setAlert(`Error ${error}`, "danger"));
   }
 };
-export const filterLoans = (value, loans) => async (dispatch) => {
+export const filterLoans = (value, loans) => async dispatch => {
   let filter = loans.filter(
-    (loan) =>
+    loan =>
       !loan.client.name.trim().toLowerCase().indexOf(value.trim().toLowerCase())
   );
 
@@ -58,7 +61,7 @@ export const filterLoans = (value, loans) => async (dispatch) => {
     payload: filter,
   });
 };
-export const addpay = (formData) => async (dispatch) => {
+export const addpay = formData => async dispatch => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -80,7 +83,7 @@ export const addpay = (formData) => async (dispatch) => {
     dispatch(setAlert(`Error ${error.response.data.msg}`, "danger"));
   }
 };
-export const getLoanById = (id) => async (dispatch) => {
+export const getLoanById = id => async dispatch => {
   dispatch({
     type: GET_LOAN_REQUEST,
   });
@@ -98,7 +101,7 @@ export const getLoanById = (id) => async (dispatch) => {
   }
 };
 
-export const loadLoans = () => async (dispatch) => {
+export const loadLoans = () => async dispatch => {
   dispatch({
     type: LOAN_FETCH_REQUEST,
   });
@@ -116,7 +119,7 @@ export const loadLoans = () => async (dispatch) => {
   }
 };
 
-export const addLoan = (formData) => async (dispatch) => {
+export const addLoan = formData => async dispatch => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -142,7 +145,7 @@ export const addLoan = (formData) => async (dispatch) => {
   }
 };
 
-export const removeLoan = (id) => async (dispatch) => {
+export const removeLoan = id => async dispatch => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -166,7 +169,7 @@ export const removeLoan = (id) => async (dispatch) => {
   }
 };
 
-export const renewLoan = (formData) => async (dispatch) => {
+export const renewLoan = formData => async dispatch => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -196,7 +199,7 @@ export const renewLoan = (formData) => async (dispatch) => {
     dispatch(setAlert(`Error ${error.response.data.msg}`, "danger"));
   }
 };
-export const payLoan = (formData) => async (dispatch) => {
+export const payLoan = formData => async dispatch => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -218,6 +221,30 @@ export const payLoan = (formData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: LOAN_PAYMENT_ADD_FAIL,
+    });
+    dispatch(setAlert(`Error ${error.response.data.msg}`, "danger"));
+  }
+};
+
+export const RemoveLastPayment = id => async dispatch => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    dispatch({
+      type: REMOVE_LASTPAYMENT_REQUEST,
+    });
+    const res = await axios.post("/api/loan/lastpay/" + id, null, config);
+    dispatch({
+      type: REMOVE_LASTPAYMENT_SUCCESS,
+    });
+    dispatch(loadLoans());
+    dispatch(setAlert(` Prestamo cancelado con exito`, "success"));
+  } catch (error) {
+    dispatch({
+      type: REMOVE_LASTPAYMENT_FAIL,
     });
     dispatch(setAlert(`Error ${error.response.data.msg}`, "danger"));
   }

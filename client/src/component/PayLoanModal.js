@@ -36,8 +36,9 @@ const LatePay = ({
   const handleSubmit = e => {
     e.preventDefault();
     addpay(formData);
-    if (redirect != "") setFormData({ ...formData, fireRedirect: true });
     onHide();
+    if (redirect != "") setFormData({ ...formData, fireRedirect: true });
+    else window.location.reload();
   };
   const { date, amount, interest, fireRedirect, interestPayment } = formData;
 

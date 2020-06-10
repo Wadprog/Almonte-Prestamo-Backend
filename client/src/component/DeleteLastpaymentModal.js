@@ -2,41 +2,35 @@ import React, { useState, useEffect, Fragment } from "react";
 import { Button, Modal, Form, Col, Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
-
-import { removeLoan, getLoanById } from "../redux/actions/loans";
-import { getPaymentsById } from "../redux/actions/payment";
-function DeleteLoan({
+import { RemoveLastPayment } from "../redux/actions/loans";
+function DeleteLastPayment({
   PaymentLoading,
-  removeLoan,
   onHide,
   show,
-  getPaymentsById,
-  loanLoading,
-  loan,
-  selectedPayment,
   redirect = "",
+  loan,
+  payments,
+  RemoveLastPayment,
 }) {
-  const hasPayment = () => {
-    return selectedPayment > 0;
-  };
-
   const [confirm, setConfirm] = useState("");
   const [formData, setFormData] = useState({
     id: "",
     fireRedirect: false,
   });
 
+  const [payment] = payments.filter(pay => pay.quota === loan.quota);
   useEffect(() => {
     if (show) {
-      getPaymentsById(loan._id);
+      console.log("we are back ");
+      setFormData({ ...formData, id: payment._id });
     }
   }, [show]);
 
   const handleSubmit = e => {
     e.preventDefault();
-    removeLoan(loan._id);
-    if (redirect !== "") setFormData({ ...formData, fireRedirect: true });
-    else window.location.reload();
+    RemoveLastPayment(formData.id);
+    console.log(formData, redirect);
+    window.location.reload();
     onHide();
   };
 
@@ -49,7 +43,7 @@ function DeleteLoan({
     >
       <Modal.Header>
         <Modal.Title id='contained-modal-title-vcenter'>
-          Borrar un prestamo
+          Borrar un Pago
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -58,25 +52,14 @@ function DeleteLoan({
         ) : (
           <Fragment>
             <p>
-              Intentas borrar a un prestamo de{" "}
+              Intentas borrar el ultimo pago de un prestamo de{" "}
               <b>{loan.client.name + "" + loan.client.apellido}</b> confima esta
-              accion escribiendo <b className='text-danger'>{loan._id} </b>
+              accion escribiendo <b className='text-danger'>{payment._id} </b>
               abajo y presiona al boton
             </p>
 
             <Form onSubmit={handleSubmit}>
               <Form.Group>
-                <Form.Row>
-                  {hasPayment() && (
-                    <Fragment>
-                      <p className='text-danger'>
-                        Nota que ya hay pagos realizado por este Prestamo. Al
-                        cancelarla tambien sera considerado Pagado{" "}
-                        <a href={`/loan/${loan._id}`}>Mas detalles</a>
-                      </p>
-                    </Fragment>
-                  )}
-                </Form.Row>
                 <Form.Row>
                   <Col>
                     <Form.Control
@@ -89,7 +72,7 @@ function DeleteLoan({
                   </Col>
                   <Col>
                     <Button
-                      disabled={!(confirm === loan._id)}
+                      disabled={!(confirm === payment._id)}
                       variant='danger'
                       type='submit'
                     >
@@ -105,8 +88,6 @@ function DeleteLoan({
                 )}
               </Form.Group>
             </Form>
-
-            <p className='text-warning'></p>
           </Fragment>
         )}
       </Modal.Body>
@@ -123,6 +104,6 @@ const mapStateToProps = state => ({
   PaymentLoading: state.payment.loading,
   selectedPayment: state.payment.selectedPayment.length,
 });
-export default connect(mapStateToProps, { getPaymentsById, removeLoan })(
-  DeleteLoan
+export default connect(mapStateToProps, { RemoveLastPayment })(
+  DeleteLastPayment
 );

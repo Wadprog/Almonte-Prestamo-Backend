@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import NumberFormat from "react-number-format";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -6,7 +6,8 @@ import Loading from "../component/layout/Loading";
 import LoanDescription from "../component/LoanDescription";
 import { getLoanById } from "../redux/actions/loans";
 import { getPaymentsById } from "../redux/actions/payment";
-
+import { Button } from "react-bootstrap";
+import DeleteLastPayment from "../component/DeleteLastpaymentModal";
 const NewLoan = ({
   getLoanById,
   getPaymentsById,
@@ -27,10 +28,10 @@ const NewLoan = ({
   }, [getPaymentsById, getLoanById, id]);
   // const [loan] = loans.filter((loan) => loan._id === id);
   // const payments = payments.filter((payment) => payment.loan === id);
+  const [modalShow, setModalShow] = useState(false);
 
-  const { Fragment } = React;
   return (
-    <div className="container mt-5 pt-5">
+    <div className='container mt-5 pt-5'>
       {loanLoading || paymentLoading ? (
         <Loading />
       ) : (
@@ -42,12 +43,23 @@ const NewLoan = ({
               noHistoryBtn={true}
             />
           )}
+
           {payments.length > 0 ? (
             <div>
+              <Button
+                variant='outline-danger'
+                size='lg'
+                block
+                onClick={() => {
+                  setModalShow(true);
+                }}
+              >
+                <i className='fa fa-trash'></i>
+              </Button>
               {
-                <ul className="list-group">
-                  {payments.map((payment) => (
-                    <li className="list-group-item my-info">
+                <ul className='list-group'>
+                  {payments.map(payment => (
+                    <li className='list-group-item my-info'>
                       <div
                         className={`d-flex justify-content-between text-${
                           payment.status === "Pagado" ? "success" : "danger"
@@ -67,15 +79,15 @@ const NewLoan = ({
                       </div>
 
                       <div>
-                        <span className="mr-2">Fecha a pagar:</span>
+                        <span className='mr-2'>Fecha a pagar:</span>
                         <span>{payment.dateToPay}</span>
                       </div>
                       <div>
-                        <span className="mr-2">Fecha que pago:</span>
+                        <span className='mr-2'>Fecha que pago:</span>
                         <span>{payment.dateAmountPaid}</span>
                       </div>
                       <div>
-                        <span className="mr-2">Monto que pago:</span>
+                        <span className='mr-2'>Monto que pago:</span>
                         <span>
                           <NumberFormat
                             value={payment.amountPaid}
@@ -86,11 +98,11 @@ const NewLoan = ({
                         </span>
                       </div>
                       <div>
-                        <span className="mr-2">Fecha que pago el interes:</span>
+                        <span className='mr-2'>Fecha que pago el interes:</span>
                         <span>{payment.dateInterestPaid}</span>
                       </div>
                       <div>
-                        <span className="mr-2">Monto de interes que pago:</span>
+                        <span className='mr-2'>Monto de interes que pago:</span>
                         <span>
                           <NumberFormat
                             value={payment.interestPaid}
@@ -105,7 +117,7 @@ const NewLoan = ({
                         payment.comment != null &&
                         payment.comment !== "" && (
                           <div>
-                            <span className="mr-2">Comentario</span>
+                            <span className='mr-2'>Comentario</span>
                             <span>{payment.dateInterestPaid}</span>
                           </div>
                         )}
@@ -115,14 +127,23 @@ const NewLoan = ({
               }
             </div>
           ) : (
-            <h4 className=" mt-2  text-center text-white">
+            <h4 className=' mt-2  text-center text-white'>
               {" "}
               **Aun no hay pagos hechos para este prestamo**
             </h4>
           )}
         </Fragment>
       )}
-        </div>
+      {loan !== null && payments.length > 0 && (
+        <DeleteLastPayment
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          loan={loan}
+          payments={payments}
+          redirect={`/loan/${loan._id}`}
+        />
+      )}
+    </div>
   );
 };
 
@@ -132,7 +153,7 @@ NewLoan.prototype = {
   payments: PropTypes.array.isRequired,
   paymentLoading: PropTypes.bool.isRequired,
 };
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   payments: state.payment.selectedPayment,
   paymentLoading: state.payment.loading,
   loanLoading: state.loan.loading,

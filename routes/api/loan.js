@@ -310,6 +310,46 @@ router.get("/client/:id", async (req, res) => {
   }
 });
 
+router.post("/lastpay/:id", async (req, res) => {
+  try {
+    const payment = await Payment.findById(req.params.id);
+    if (!payment)
+      return res.status(404).json({ msg: `No hay registro de ese pago` });
+
+    const loan = await Loan.findById(payment.loan).populate("plan");
+    if (!loan)
+      return res.status(404).json({ msg: "Payment reset loan not found " });
+    if (
+      loan.comment === "Prestamo Cancelado sin renovar" ||
+      loan.comment === "Prestamo Cancelado"
+    )
+      return res
+        .status(401)
+        .json({ msg: "no se puede cancelar pago a un prestamo cancelado" });
+    if (payment.amountPaid > 0) {
+      loan.quota -= 1;
+    }
+    const newpayday = moment(loan.nextpaymentDate)
+      .subtract(loan.plan.interval, "days")
+      .format("l");
+    console.log(newpayday);
+    loan.nextpaymentDate = newpayday;
+
+    if (loan.status) loan.status = false;
+    await loan.save();
+    payment.status = "unpaid";
+    payment.interestPaid = null;
+    payment.amountPaid = null;
+    payment.comment = "Canceledo despues de pagar";
+    payment.dateAmountPaid = null;
+    payment.dateInterestPaid = null;
+    await payment.save();
+    return res.json(loan);
+  } catch (error) {
+    return res.status(500).json({ msg: `Server error ${error}` });
+  }
+});
+
 const nextPayment = (date, interval, quota) => {
   return moment(date)
     .add(interval * (quota + 1), "days")

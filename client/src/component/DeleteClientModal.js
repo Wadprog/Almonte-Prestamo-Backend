@@ -46,6 +46,7 @@ function DeleteClient({
     e.preventDefault();
     deleteClient(formData);
     if (redirect !== "") setFormData({ ...formData, fireRedirect: true });
+    else window.location.reload();
     onHide();
   };
   const { ensureDelete } = formData;
@@ -54,7 +55,8 @@ function DeleteClient({
       show={show}
       size='sm'
       aria-labelledby='contained-modal-title-vcenter'
-      centered>
+      centered
+    >
       <Modal.Header>
         <Modal.Title id='contained-modal-title-vcenter'>
           Borror un cliente
@@ -109,7 +111,8 @@ function DeleteClient({
                         confirm === client.cedula && ensureDelete ? false : true
                       }
                       variant='danger'
-                      type='submit'>
+                      type='submit'
+                    >
                       <i className='fa fa-trash'></i>
                     </Button>
                   </Col>

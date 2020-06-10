@@ -23,7 +23,7 @@ export const getPaymentsById = (id) => async (dispatch) => {
     dispatch({
       type: SELECTED_PAYMENTS_FAIL,
     });
-    dispatch(setAlert(`Error ${error.data.msg}`, "danger"));
+    dispatch(setAlert(`Error ${error.response.data.msg}`, "danger"));
   }
 };
 export const loadPayment = () => async (dispatch) => {

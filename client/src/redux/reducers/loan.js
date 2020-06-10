@@ -24,6 +24,9 @@ import {
   GET_SELECTED_LOANS_REQUEST,
   GET_SELECTED_LOANS_FAIL,
   GET_SELECTED_LOANS_SUCCESS,
+  REMOVE_LASTPAYMENT_SUCCESS,
+  REMOVE_LASTPAYMENT_REQUEST,
+  REMOVE_LASTPAYMENT_FAIL,
 } from "../Const";
 
 const initialState = {
@@ -71,6 +74,7 @@ export default function (state = initialState, action) {
         filteredLoans: payload,
         loading: false,
       };
+    case REMOVE_LASTPAYMENT_REQUEST:
     case GET_SELECTED_LOANS_REQUEST:
     case GET_LOAN_REQUEST:
     case LOAN_RENEW_REQUEST:
@@ -106,6 +110,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         filteredLoans: payload,
+      };
+    case REMOVE_LASTPAYMENT_SUCCESS:
+    case REMOVE_LASTPAYMENT_FAIL:
+      return {
+        ...state,
+        loading: false,
       };
     default:
       return { ...state };
