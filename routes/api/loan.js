@@ -61,7 +61,7 @@ router.post("/", async (req, res) => {
     let loan = new Loan({
       ...req.body,
       amountPerQuota,
-      interestPerQuota,   
+      interestPerQuota,
       nextpaymentDate,
       date: moment(date).format("l"),
     });
@@ -328,12 +328,12 @@ router.post("/lastpay/:id", async (req, res) => {
         .json({ msg: "no se puede cancelar pago a un prestamo cancelado" });
     if (payment.amountPaid > 0) {
       loan.quota -= 1;
+      const newpayday = moment(loan.nextpaymentDate)
+        .subtract(loan.plan.interval, "days")
+        .format("l");
+      console.log(newpayday);
+      loan.nextpaymentDate = newpayday;
     }
-    const newpayday = moment(loan.nextpaymentDate)
-      .subtract(loan.plan.interval, "days")
-      .format("l");
-    console.log(newpayday);
-    loan.nextpaymentDate = newpayday;
 
     if (loan.status) loan.status = false;
     await loan.save();

@@ -16,48 +16,48 @@ const Loans = ({
     loadLoans();
   }, []);
 
-  const handleFilter = (e) => {
+  const handleFilter = e => {
     filterLoans(e.target.value, loans);
   };
   return (
     <Fragment>
-      <Fragment className="container mt-5">
+      <Fragment className='container mt-5'>
         <Fragment>
           {loanLoading ? (
             <Loading />
           ) : (
             <Fragment>
-              <div className="row">
-                <div className="col-md-6 " />
-                <div className="col-md-6 col-sm-12 ">
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">
-                        <i className="fa fa-filter" />
-                        <i className="fa fa-user mx-2 text-muted" />
+              <div className='row'>
+                <div className='col-md-6 ' />
+                <div className='col-md-6 col-sm-12 '>
+                  <div className='input-group mb-3'>
+                    <div className='input-group-prepend'>
+                      <span className='input-group-text'>
+                        <i className='fa fa-filter' />
+                        <i className='fa fa-user mx-2 text-muted' />
                       </span>
                     </div>
                     <input
                       onChange={handleFilter}
-                      type="text"
-                      className="form-control"
+                      type='text'
+                      className='form-control'
                     />
                   </div>
                 </div>
               </div>
-              <div classNamee="card p-2">
-                <div className="card-header">
-                  <h5 className=" text-white">Lista de los prestamos</h5>
+              <div classNamee='card p-2'>
+                <div className='card-header'>
+                  <h5 className=' text-white'>Lista de los prestamos</h5>
                 </div>
-                <div className="card-body">
-                  <div className="list-group" />
-                  {filteredLoans.map((loan) => (
-                    <li
+                <div className=' row'>
+                  {filteredLoans.map(loan => (
+                    <div
                       key={loan._id}
-                      className=" my-item list-group-item mb-2 p-0"
+                      className={` col-12 col-sm-6 col-md-4 mb-4
+                      `}
                     >
                       <LoanDescription loan={loan} noPaymentBtn={loan.status} />
-                    </li>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -69,7 +69,7 @@ const Loans = ({
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   loans: state.loan.loans,
   filteredLoans: state.loan.filteredLoans,
   loanLoading: state.loan.loading,

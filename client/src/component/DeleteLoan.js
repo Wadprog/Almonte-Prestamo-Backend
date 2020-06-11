@@ -11,7 +11,6 @@ function DeleteLoan({
   onHide,
   show,
   getPaymentsById,
-  loanLoading,
   loan,
   selectedPayment,
   redirect = "",
@@ -27,6 +26,7 @@ function DeleteLoan({
   });
 
   useEffect(() => {
+    console.log(show);
     if (show) {
       getPaymentsById(loan._id);
     }
