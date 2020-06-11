@@ -49,11 +49,11 @@ router.post("/", async (req, res) => {
 
     const { interval, steps, interest } = plan;
 
-    var amountPerQuota = Math.round((req.body.amount * interest) / 100);
+    var totalInterest = (req.body.amount * interest) / 100;
+    var amountToPay = parseInt(amount) + parseInt(totalInterest);
+    var amountPerQuota = Math.round(amountToPay / steps);
 
-    var interestPerQuota = Math.round(
-      (amountPerQuota * steps - req.body.amount) / steps
-    );
+    var interestPerQuota = Math.round(totalInterest / steps);
 
     var date = moment(req.body.date).format("l") || null;
     if (!req.body.date) date == moment();
@@ -61,7 +61,7 @@ router.post("/", async (req, res) => {
     let loan = new Loan({
       ...req.body,
       amountPerQuota,
-      interestPerQuota,
+      interestPerQuota,   
       nextpaymentDate,
       date: moment(date).format("l"),
     });

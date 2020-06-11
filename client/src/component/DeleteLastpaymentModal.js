@@ -18,7 +18,8 @@ function DeleteLastPayment({
     fireRedirect: false,
   });
 
-  const [payment] = payments.filter(pay => pay.quota === loan.quota);
+  let payment = payments.filter(pay => pay.quota === loan.quota);
+  payment=payment[payment.length-1]
   useEffect(() => {
     if (show) {
       console.log("we are back ");

@@ -3,6 +3,7 @@ import NumberFormat from "react-number-format";
 import DeleteLoan from "./DeleteLoan";
 import RenewLoan from "./RenewLoan";
 import PayLoanModal from "./PayLoanModal";
+import { ProgressBar, Alert } from "react-bootstrap";
 const Loan = ({
   loan,
   color = "dark",
@@ -17,6 +18,11 @@ const Loan = ({
   return (
     <Fragment>
       <div className={`${bgColor} rounded p-4`}>
+        <ProgressBar
+          now={Math.round((loan.quota / loan.plan.steps) * 100)}
+          label={`${Math.round((loan.quota / loan.plan.steps) * 100)}%
+            `}
+        />
         <div className='mb-2'>
           <span className={`text-${loan.status ? "success" : "danger"}`}>
             {loan.status ? "Pagado" : "No Pagado"}
@@ -74,6 +80,50 @@ const Loan = ({
           <span className={`text-${color}`}>
             {loan.client.ciudad.charAt(0).toUpperCase() +
               loan.client.ciudad.slice(1)}
+          </span>
+        </div>
+        <div className={`mb-2 d-${noClientDetails && "none"}`}>
+          <span className={`text-${color} mr-4 h6`}>Deuda :</span>
+          <span className={`text-${color}`}>
+
+          <NumberFormat
+              value={(loan.plan.steps-loan.quota)*loan.amountPerQuota}
+              displayType={"text"}
+              thousandSeparator={true}
+              prefix={"RD$"}
+            />
+           
+          </span>
+        </div>
+
+        <div className={`mb-2 d-${noClientDetails && "none"}`}>
+          <span className={`text-${color} mr-4 h6`}>Deuda :</span>
+          <span className={`text-${color}`}>
+
+          <NumberFormat
+              value={(loan.plan.steps-loan.quota)   }
+              displayType={"text"}
+              thousandSeparator={true}
+              prefix={"RD$"}
+            />
+           
+          </span>
+        </div>
+        <div className={`mb-2 d-${noClientDetails && "none"}`}>
+          <span className={`text-${color} mr-4 h6`}>Pagos Realizado  :</span>
+          <span className={`text-${color}`}>
+
+          {loan.quota} de {loan.plan.steps} 
+           
+          </span>
+        </div>
+
+        <div className={`mb-2 d-${noClientDetails && "none"}`}>
+          <span className={`text-${color} mr-4 h6`}>Monto por cuoata  :</span>
+          <span className={`text-${color}`}>
+
+          {loan.amountPerQuota} 
+           
           </span>
         </div>
         <div className='mb-3'>
