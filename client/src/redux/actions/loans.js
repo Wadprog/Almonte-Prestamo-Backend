@@ -29,7 +29,7 @@ import {
   LOAN_RENEW_FAIL,
   REMOVE_LASTPAYMENT_SUCCESS,
   REMOVE_LASTPAYMENT_REQUEST,
-  REMOVE_LASTPAYMENT_FAIL
+  REMOVE_LASTPAYMENT_FAIL,
 } from "../Const";
 
 export const loadClientLoan = id => async dispatch => {
@@ -241,7 +241,7 @@ export const RemoveLastPayment = id => async dispatch => {
       type: REMOVE_LASTPAYMENT_SUCCESS,
     });
     dispatch(loadLoans());
-    dispatch(setAlert(` Prestamo cancelado con exito`, "success"));
+    dispatch(setAlert(` El ultimo pago fue cancelado con exito`, "success"));
   } catch (error) {
     dispatch({
       type: REMOVE_LASTPAYMENT_FAIL,

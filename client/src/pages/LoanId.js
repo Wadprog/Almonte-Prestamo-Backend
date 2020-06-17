@@ -54,7 +54,7 @@ const NewLoan = ({
                   setModalShow(true);
                 }}
               >
-                <i className='fa fa-trash'></i>
+                Cancelar ultimo pago
               </Button>
               {
                 <ul className='list-group'>

@@ -82,7 +82,7 @@ const Loan = ({
               loan.client.ciudad.slice(1)}
           </span>
         </div>
-        <div className={`mb-2 d-${noClientDetails && "none"}`}>
+        {/*<div className={`mb-2 d-${noClientDetails && "none"}`}>
           <span className={`text-${color} mr-4 h6`}>Deuda :</span>
           <span className={`text-${color}`}>
 
@@ -108,24 +108,22 @@ const Loan = ({
             />
            
           </span>
-        </div>
+        </div>*/}
         <div className={`mb-2 d-${noClientDetails && "none"}`}>
-          <span className={`text-${color} mr-4 h6`}>Pagos Realizado  :</span>
+          <span className={`text-${color} mr-4 h6`}>Pagos Realizado :</span>
           <span className={`text-${color}`}>
-
-          {loan.quota} de {loan.plan.steps} 
-           
+            {loan.quota} de {loan.plan.steps}
           </span>
         </div>
 
-        <div className={`mb-2 d-${noClientDetails && "none"}`}>
+        {/* <div className={`mb-2 d-${noClientDetails && "none"}`}>
           <span className={`text-${color} mr-4 h6`}>Monto por cuoata  :</span>
           <span className={`text-${color}`}>
 
           {loan.amountPerQuota} 
            
           </span>
-        </div>
+        </div>*/}
         <div className='mb-3'>
           <span className={`text-${color} mr-3 h6 `}>{`Fecha ${
             loan.status ? "ultimo" : "proximo"
@@ -194,14 +192,6 @@ const Loan = ({
             >
               Cancelar
             </button>
-          </div>
-          <div className='text-center'>
-            <a
-              href={`/latePay/${loan._id}`}
-              className={`  d-${noPaymentBtn && "none"}`}
-            >
-              Agregar pagos atrasados
-            </a>
           </div>
         </div>
       </div>
