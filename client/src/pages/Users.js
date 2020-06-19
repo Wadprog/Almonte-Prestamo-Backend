@@ -9,33 +9,32 @@ const User = ({ loadUsers, users, userLoading }) => {
     loadUsers();
   }, [loadUsers]);
 
-  const { Fragment } = React;
   return (
-    <div className="container mt-5 pt-5">
-      <div className="my-info  mb-2 p-0 rounded-0">
+    <div className='container mt-5 pt-5'>
+      <div className='my-info  mb-2 p-0 rounded-0'>
         <div>
           <a
-            href="/newuser"
-            className=" text-white btn btn-outline-secondary btn-block "
+            href='/newuser'
+            className=' text-white btn btn-outline-secondary btn-block '
           >
             Crear nuevo usuario
           </a>
         </div>
       </div>
       {!userLoading ? (
-        <ul className="list-group">
-          <li className="list-group-item disabled">Usuarios</li>
+        <ul className='list-group'>
+          <li className='list-group-item disabled'>Usuarios</li>
           {users &&
             users !== null &&
             users.length > 0 &&
-            users.map((user) => (
-              <li className="list-group-item">
+            users.map(user => (
+              <li className='list-group-item'>
                 <div>
-                  <span className="mr-2"> Nombre :</span>
+                  <span className='mr-2'> Nombre :</span>
                   <span>{user.name}</span>
                 </div>
                 <div>
-                  <span className="mr-2"> Usuario:</span>
+                  <span className='mr-2'> Usuario:</span>
                   <span>{user.nombreUsuarios}</span>
                 </div>
               </li>
@@ -52,8 +51,8 @@ User.prototype = {
   userLoading: PropTypes.bool.isRequired,
   users: PropTypes.array.isRequired,
 };
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   userLoading: state.user.loading,
   users: state.user.users,
 });
-export default connect(mapStateToProps, {loadUsers})(User);
+export default connect(mapStateToProps, { loadUsers })(User);

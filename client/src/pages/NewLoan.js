@@ -35,10 +35,10 @@ const NewLoan = ({
     date: new Date(),
   });
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (Infoverified()) addLoan(formData);
     //addLoan(formData);
@@ -54,28 +54,31 @@ const NewLoan = ({
   };
   const [editting, toggleEditting] = useState();
 
-  const handleDateAdd = (e) => {
+  const handleDateAdd = e => {
     toggleEditting({ editting: e.target.checked });
   };
 
   return (
-    <div className="container text-white mt-5 pt-5">
-      {!planLoading && !loanLoading && !profileLoading && client!=null &&client? (
+    <div className='container text-white mt-5 pt-5'>
+      {!planLoading &&
+      !loanLoading &&
+      !profileLoading &&
+      client != null &&
+      client ? (
         <div>
-          <div className="h6 card-header">
-			  {`Crear Prestamo por ${client.name} ${client.apellido}`}
-			  </div>
-
-          <div className="card-body">
+          <div className='h6 card-header'>
+            {`Crear Prestamo por ${client.name} ${client.apellido}`}
+          </div>
+          <div className='card-body'>
             <form onSubmit={handleSubmit}>
-              <div className="Form-group mb-3">
+              <div className='Form-group mb-3'>
                 <label>Cantidad</label>
                 <NumberFormat
-                  className="form-control"
+                  className='form-control'
                   value={amount}
                   thousandSeparator={true}
                   prefix={"$"}
-                  onValueChange={(values) => {
+                  onValueChange={values => {
                     const { formattedValue, value } = values;
                     // formattedValue = $2,223
                     // value ie, 2223
@@ -83,49 +86,51 @@ const NewLoan = ({
                   }}
                 />
               </div>
-              <div className="Form-group">
+              <div className='Form-group'>
                 <label>Elegir el plan</label>
                 <select
-                  className="form-control"
+                  className='form-control'
                   onChange={handleChange}
                   value={plan}
-                  name="plan"
-                  className="form-control"
+                  name='plan'
+                  className='form-control'
                 >
                   <option />
-                  {plans.map((plan) => (
-                    <option value={plan._id}>{plan.name}</option>
+                  {plans.map(plan => (
+                    <option key={plan._id} value={plan._id}>
+                      {plan.name}
+                    </option>
                   ))}
                 </select>
               </div>
 
               {editting ? (
-                <div className="Form-group mt-2">
+                <div className='Form-group mt-2'>
                   <label>Fecha</label>
                   <input
-                    type="date"
-                    className="form-control"
+                    type='date'
+                    className='form-control'
                     onChange={handleChange}
                     value={date}
-                    name="date"
-                    className="form-control"
+                    name='date'
+                    className='form-control'
                   />
                 </div>
               ) : (
                 <label>
                   <input
-                    name="editor"
+                    name='editor'
                     onChange={handleDateAdd}
-                    className=" d-none "
-                    type="checkbox"
+                    className=' d-none '
+                    type='checkbox'
                     checked={editting}
                   />
                   Agregar fecha
                 </label>
               )}
 
-              <div className="mt-3">
-                <button className="btn btn-block btn-outline-info">
+              <div className='mt-3'>
+                <button className='btn btn-block btn-outline-info'>
                   {" "}
                   Crear Nuevo Prestamo
                 </button>
@@ -141,7 +146,7 @@ const NewLoan = ({
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   client: state.profile.profile,
   profileLoading: state.profile.isLoading,
   plans: state.plan.plans,

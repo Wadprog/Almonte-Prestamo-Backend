@@ -19,7 +19,7 @@ const Login = ({ loading, isAuthenticated, login, loadUser }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
   };
   if (isAuthenticated) {
-   // loadUser();
+    // loadUser();
     return <Redirect to='/' />;
   }
 
@@ -34,7 +34,7 @@ const Login = ({ loading, isAuthenticated, login, loadUser }) => {
             >
               <div className='w-100'>
                 <div className='form-group'>
-                  <label htmlfor='exampleInputEmail1'>Usuario</label>
+                  <label>Usuario</label>
                   <input
                     name='name'
                     type='text'
@@ -45,7 +45,7 @@ const Login = ({ loading, isAuthenticated, login, loadUser }) => {
                   />
                 </div>
                 <div className='form-group'>
-                  <label htmlfor='exampleInputPassword1'>Contrasena</label>
+                  <label>Contrasena</label>
                   <input
                     name='password'
                     type='password'

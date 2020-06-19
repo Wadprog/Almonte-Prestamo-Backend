@@ -32,7 +32,7 @@ const Client = ({
   return (
     <div>
       {profileLoading && loanLoading ? (
-        <Loading />
+        <Loading message='Cargando el cliente ' />
       ) : (
         <div>
           <div className='row'>
@@ -45,11 +45,12 @@ const Client = ({
                       {client != null && <Profile client={client} />}
                       <Button
                         variant='outline-danger'
-                        size="lg"
+                        size='lg'
                         onClick={() => {
                           setSelectedClient(client);
                           setModalShow(true);
-                        }}>
+                        }}
+                      >
                         <i className='fa fa-trash'></i>
                       </Button>
                     </Fragment>
@@ -75,9 +76,7 @@ const Client = ({
                             </h5>
                           </a>
                         </div>
-                        <div className='col-sm-12 col-md-6'>
-                         
-                        </div>
+                        <div className='col-sm-12 col-md-6'></div>
                       </div>
 
                       {selectedLoans &&
@@ -97,41 +96,44 @@ const Client = ({
                             {selectedLoans.map(loan => (
                               <tr
                                 key={loan._id}
-                                className='shadow-box effect1 '>
+                                className='shadow-box effect1 '
+                              >
                                 <td
                                   data-toggle='tooltip'
                                   data-placement='bottom'
                                   data-animation='true'
-                                  title={"Fecha creada"}>
+                                  title={"Fecha creada"}
+                                >
                                   {loan.date}
                                 </td>
                                 <td> RD${loan.amount}</td>
                                 <td>{loan.plan.name}</td>
-                                <td
-                                 >
+                                <td>
                                   <i
                                     className={` fa fa-${
                                       loan.status
                                         ? "check text-success"
                                         : "times text-danger"
-                                    }`}></i>
+                                    }`}
+                                  ></i>
                                 </td>
                                 <td>
                                   <div>
                                     <Button
                                       variant='outline-primary'
                                       size='sm'
-                                      href={`/payment/${loan._id}`}>
+                                      href={`/payment/${loan._id}`}
+                                    >
                                       Pagar
                                     </Button>
                                     <Button
                                       size='sm'
                                       variant='outline-info'
                                       className='mx-2  '
-                                      href={`/loan/${loan._id}`}>
+                                      href={`/loan/${loan._id}`}
+                                    >
                                       Info
                                     </Button>
-                                    
                                   </div>
                                 </td>
                               </tr>
@@ -142,7 +144,8 @@ const Client = ({
                         <div className='h-100 w-100 d-flex justify-content-center align-items-center'>
                           <a
                             href={`/newLoan/${id}`}
-                            className='btn btn-outline-primary border border-0'>
+                            className='btn btn-outline-primary border border-0'
+                          >
                             <i className='fa fa-plus fa-5x'></i>
                             <div>Agregar un prestamo</div>
                           </a>
@@ -158,7 +161,8 @@ const Client = ({
                 <div className='card-footer'>
                   <a
                     href={`/newLoan/${id}`}
-                    className='btn btn-block btn-outline-primary'>
+                    className='btn btn-block btn-outline-primary'
+                  >
                     Nuevo prestamo
                   </a>
                 </div>

@@ -21,7 +21,7 @@ const Loans = ({
   };
   return (
     <Fragment>
-      <Fragment className='container mt-5'>
+      <div className='container mt-5'>
         <Fragment>
           {loanLoading ? (
             <Loading />
@@ -45,7 +45,7 @@ const Loans = ({
                   </div>
                 </div>
               </div>
-              <div classNamee='card p-2'>
+              <div className=' p-2'>
                 <div className='card-header'>
                   <h5 className=' text-white'>Lista de los prestamos</h5>
                 </div>
@@ -64,7 +64,7 @@ const Loans = ({
             </Fragment>
           )}
         </Fragment>
-      </Fragment>
+      </div>
     </Fragment>
   );
 };

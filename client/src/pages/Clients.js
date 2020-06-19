@@ -21,7 +21,6 @@ const Clients = ({
 
   const [selectedClient, setSelectedClient] = useState({});
   const [modalShow, setModalShow] = React.useState(false);
-  
 
   const handleFilter = e => {
     filterProfiles(e.target.value, profiles);
@@ -39,15 +38,15 @@ const Clients = ({
                   type='text'
                   className='form-control'
                 />
-                <div class='input-group-append'>
-                  <span class='input-group-text'>
+                <div className='input-group-append'>
+                  <span className='input-group-text'>
                     <i className='fa fa-user' />
                   </span>
                 </div>
               </div>
             </div>
           </div>
-          <div classNamee='card p-2'>
+          <div className=' p-2'>
             <div className='card-header'>
               <div className='d-flex justify-content-between text-white'>
                 <h5>Lista de los clientes</h5>
@@ -64,7 +63,8 @@ const Clients = ({
                   profilesFiltered.map(client => (
                     <li
                       key={client._id}
-                      className='my-item list-group-item mb-2 p-0'>
+                      className='my-item list-group-item mb-2 p-0'
+                    >
                       <div className=' bg-light  rounded p-4'>
                         <div className='d-flex justify-content-between text-bold '>
                           <h5 className=''>{`${client.name} ${client.apellido}`}</h5>
@@ -72,7 +72,8 @@ const Clients = ({
                           <h5
                             className={`text-bold text-${
                               client.punto > 700 ? "success" : "warning"
-                            }`}>{` `}</h5>
+                            }`}
+                          >{` `}</h5>
                         </div>
 
                         <div className='mb-1'>
@@ -142,7 +143,8 @@ const Clients = ({
                           <div className='col-sm-12 col-md-6 mb-2'>
                             <a
                               href={`/client/${client._id}`}
-                              className='btn btn-outline-info btn-block'>
+                              className='btn btn-outline-info btn-block'
+                            >
                               Detalle
                             </a>
                           </div>
@@ -150,7 +152,8 @@ const Clients = ({
                           <div className='col-sm-12 col-md-6'>
                             <a
                               href={`newloan/${client._id}`}
-                              className='btn btn-outline-info btn-block '>
+                              className='btn btn-outline-info btn-block '
+                            >
                               Nuevo Prestamo
                             </a>
                           </div>
@@ -163,7 +166,8 @@ const Clients = ({
                               onClick={() => {
                                 setSelectedClient(client);
                                 setModalShow(true);
-                              }}>
+                              }}
+                            >
                               Borrar
                             </Button>
                           </div>
@@ -185,7 +189,7 @@ const Clients = ({
           />
         </Fragment>
       ) : (
-        <Loading />
+        <Loading message=' Cargando los clientes' />
       )}
     </div>
   );
