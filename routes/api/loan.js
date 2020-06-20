@@ -264,23 +264,29 @@ router.post("/cancel/:id", async (req, res) => {
 router.get("/get/routine/", async (req, res) => {
   try {
     let loans = await Loan.find({ status: false }).populate(["client", "plan"]);
+    let payments = await Payment.find({status:{$ne:"unpaid"}});
+    // console.log(`Before filter ${loans.length}`);
 
-    console.log(`Before filter ${loans.length}`);
-
+    async function addpay(loan) {
+      let payments = await Payment.find({ loan: loan._id });
+      return payments;
+    }
     const tempL = [];
     loans.forEach(loan => {
       let nextpaymentDate = moment(loan.nextpaymentDate);
       let now = moment();
       if (nextpaymentDate.isSameOrBefore(now)) {
-        console.log(
-          `here is the next pay ${nextpaymentDate} and we are ${now}`
-        );
+        /*console.log(
+          `here is the next pay ${nextpaymentDate} and we are ${now}`        );*/
+
         tempL.push(loan);
       }
     });
 
     loans = tempL;
-    console.log(` After filter ${loans.length}`);
+   
+     
+    
 
     const cities = loans.reduce(
       (unique, loan) =>
@@ -299,7 +305,7 @@ router.get("/get/routine/", async (req, res) => {
       response.push({ city: tempCity });
     });
 
-    res.json({ count: loans.length, cities, response });
+    res.json({ count: loans.length, cities, response, payments });
   } catch (error) {
     console.log(`Get not complete task get all Loan`);
     res.json({ msg: `Server error ${error}` });
