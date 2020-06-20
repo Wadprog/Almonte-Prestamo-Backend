@@ -33,7 +33,7 @@ const NewCity = ({ addCity, cityLoading }) => {
               <label className='text-white h6'>Nombre de la ciudad</label>
 
               <input
-                required='true'
+                required={true}
                 name='name'
                 type='text'
                 value={name}

@@ -42,7 +42,7 @@ const NewUser = ({ register, userLoading }) => {
 						<div className="Form-group">
 							<label className="text-white h6">Nombre del usuario *</label>
 							<input
-								required="true"
+								required={true}
 								name="name"
 								type="text"
 								value={name}
@@ -54,7 +54,7 @@ const NewUser = ({ register, userLoading }) => {
 						<div className="Form-group">
 							<label className="text-white h6">Usuario</label>
 							<input
-								required="true"
+								required={true}
 								name="nombreUsuarios"
 								type="text"
 								value={nombreUsuarios}
@@ -66,7 +66,7 @@ const NewUser = ({ register, userLoading }) => {
 						<div className="Form-group">
 							<label className="text-white h6">Contrasena</label>
 							<input
-								required="true"
+								required={true}
 								name="password"
 								type="password"
 								value={password}
@@ -77,7 +77,7 @@ const NewUser = ({ register, userLoading }) => {
 						<div className="Form-group">
 							<label className="text-white h6">Verificar contrasena</label>
 							<input
-								required="true"
+								required={true}
 								name="password2"
 								type="password"
 								value={password2}

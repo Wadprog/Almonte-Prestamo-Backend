@@ -9,45 +9,45 @@ const Plan = ({ loadPlan, addPlan, plans, planLoading, authLoading }) => {
   }, [loadPlan]);
   const { Fragment } = React;
   return (
-    <div className="container mt-5 pt-5">
+    <div className='container mt-5 pt-5'>
       {!planLoading ? (
         <Fragment>
-          <div className="my-info  mb-2 p-0 rounded-0">
-            <div className="  ">
+          <div className='my-info  mb-2 p-0 rounded-0'>
+            <div className='  '>
               <a
-                href="/newplan"
-                className=" text-white btn btn-outline-secondary btn-block "
+                href='/newplan'
+                className=' text-white btn btn-outline-secondary btn-block '
               >
                 Crear nuevo plan
               </a>
             </div>
           </div>
           {plans.length > 0 ? (
-            <ul className="list-group">
-              <li className="list-group-item disabled">Planes</li>
-              {plans.map((plan) => (
-                <li className="list-group-item">
+            <ul className='list-group'>
+              <li className='list-group-item disabled'>Planes</li>
+              {plans.map(plan => (
+                <li className='list-group-item' key={plan._id}>
                   <div>
-                    <span className="mr-2">Nombre:</span>
+                    <span className='mr-2'>Nombre:</span>
                     <span>{plan.name}</span>
                   </div>
                   <div>
-                    <span className="mr-2">Interes:</span>
+                    <span className='mr-2'>Interes:</span>
                     <span>{plan.interest} % </span>
                   </div>
                   <div>
-                    <span className="mr-2">Intervalo:</span>
+                    <span className='mr-2'>Intervalo:</span>
                     <span> cada {plan.interval} dias </span>
                   </div>
                   <div>
-                    <span className="mr-2">Cantidad de pasos:</span>
+                    <span className='mr-2'>Cantidad de pasos:</span>
                     <span> {plan.steps} </span>
                   </div>
                 </li>
               ))}
             </ul>
           ) : (
-            <h4 className="text-center text-white ">
+            <h4 className='text-center text-white '>
               No hay definido ningun plan aun
             </h4>
           )}
@@ -64,7 +64,7 @@ Plan.prototype = {
   authLoading: PropTypes.bool.isRequired,
   plan: PropTypes.array.isRequired,
 };
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   planLoading: state.plan.loading,
   authLoading: state.auth.loading,
   plans: state.plan.plans,

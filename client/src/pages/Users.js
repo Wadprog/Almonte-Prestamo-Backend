@@ -28,7 +28,7 @@ const User = ({ loadUsers, users, userLoading }) => {
             users !== null &&
             users.length > 0 &&
             users.map(user => (
-              <li className='list-group-item'>
+              <li className='list-group-item' key={user._id}>
                 <div>
                   <span className='mr-2'> Nombre :</span>
                   <span>{user.name}</span>
