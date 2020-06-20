@@ -9,18 +9,6 @@ app.use(cors());
 // connection to database;
 connectDB();
 
-/*app.use((req, res, next) => {
-	res.header('Access-Control-Allow-Origin', '*');
-	res.header(
-		'Access-Control-Allow-Headers',
-		'Origin, X-Requested-With,x-auth-token, Content-Type, Accept, Authorization'
-	);
-	if (req.method === 'OPTIONS') {
-		res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-		return res.status(200).json({});
-	}
-	next();
-});*/
 
 //use the routes
 
@@ -42,5 +30,5 @@ app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 });
 
-const PORT = process.env.Port || 5000;
+const PORT = process.env.Port || 80;
 app.listen(PORT, () => console.log(`Server runing on port ${PORT}`));
