@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Redirect } from "react-router";
 import NumberFormat from "react-number-format";
-import { Button } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import Loading from "../component/layout/Loading";
 import { updateClient } from "../redux/actions/profile";
@@ -10,6 +10,7 @@ import { loadSelectedProfile } from "../redux/actions/profile";
 import { loadClientLoan } from "../redux/actions/loans";
 import Profile from "../component/Profile";
 import DeleteClient from "../component/DeleteClientModal";
+import EditClient from "../component/EditClientModal";
 import "./Client.css";
 const Client = ({
   client,
@@ -28,7 +29,9 @@ const Client = ({
   }, []);
 
   const [selectedClient, setSelectedClient] = useState({});
-  const [modalShow, setModalShow] = React.useState(false);
+  const [modalShow, setModalShow] = useState(false);
+
+  const [editClientmodalShow, setEditClientmodalShow] = useState(false);
   return (
     <div>
       {profileLoading && loanLoading ? (
@@ -43,16 +46,35 @@ const Client = ({
                     <Fragment>
                       <h5 className=' text-left'>Cliente</h5>
                       {client != null && <Profile client={client} />}
-                      <Button
-                        variant='outline-danger'
-                        size='lg'
-                        onClick={() => {
-                          setSelectedClient(client);
-                          setModalShow(true);
-                        }}
-                      >
-                        <i className='fa fa-trash'></i>
-                      </Button>
+                      <Row>
+                        <Col>
+                          {" "}
+                          <Button
+                            block
+                            variant='info'
+                            size='sm'
+                            onClick={() => {
+                              setSelectedClient(client);
+                              setEditClientmodalShow(true);
+                            }}
+                          >
+                            <i className='fa fa-pencil'></i>
+                          </Button>
+                        </Col>
+                        <Col>
+                          <Button
+                            block
+                            variant='outline-danger'
+                            size='sm'
+                            onClick={() => {
+                              setSelectedClient(client);
+                              setModalShow(true);
+                            }}
+                          >
+                            <i className='fa fa-trash'></i>
+                          </Button>
+                        </Col>
+                      </Row>
                     </Fragment>
                   ) : (
                     <div className='spinner-border'>
@@ -174,6 +196,13 @@ const Client = ({
       <DeleteClient
         show={modalShow}
         onHide={() => setModalShow(false)}
+        client={selectedClient}
+        redirect='/clients'
+      />
+
+      <EditClient
+        show={editClientmodalShow}
+        onHide={() => setEditClientmodalShow(false)}
         client={selectedClient}
         redirect='/clients'
       />
