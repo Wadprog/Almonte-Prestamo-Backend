@@ -6,8 +6,11 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Loading from "../component/layout/Loading";
 import { loadProfiles } from "../redux/actions/profile";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Form, Col, Alert, Table } from "react-bootstrap";
 import DeleteClient from "../component/DeleteClientModal";
+
+import ClientList from "../component/Client/ClientList";
+
 const Clients = ({
   loadProfiles,
   profiles,
@@ -26,171 +29,118 @@ const Clients = ({
     filterProfiles(e.target.value, profiles);
   };
   return (
-    <div className='container mt-5'>
-      {!porfileLoading ? (
-        <Fragment>
-          <div className='row'>
-            <div className='col-md-6 ' />
-            <div className='col-md-6 col-sm-12 '>
-              <div className='input-group mb-3'>
-                <input
-                  onChange={handleFilter}
-                  type='text'
-                  className='form-control'
+    <div className='container-fluid text-white'>
+      <div className='row mb-3'>
+        <div className='col-12 d-flex justify-content-between'>
+          <h6 className='text-bold text-white'>Lista de cliente</h6>
+          <span>
+            <Button
+              href='/newclient'
+              variant='secondary'
+              type='submit'
+              size='sm'
+              className='mx-3'
+            >
+              <i className='fa fa-plus-circle mx-2 text-success'></i>
+              Agregar nuevo cliente
+            </Button>
+          </span>
+        </div>
+      </div>
+
+      <div className='row'>
+        <div className='col-12 mb-2'>
+          <Alert variant='warning' className='justify-content'>
+            This page list your clients your <Link to='#'>clients</Link>,{" "}
+            <Link to='#'>prospects</Link>, <Link to='#'>lead</Link>. Use{" "}
+            <Link to='#'>Advanced Search</Link> above to sort by affiliate or
+            team member. Use quick filter to sort by status (for followed-up).
+            Click a client's name to access records, the pencil icon to edit a
+            profile or click a status to change it. If you enable portal access
+            or set an agreement in a new client profile, icons of envelopes or
+            checkmarks will appear below. Mouse-over the icons below to see more
+            details. To learn the system, use your{" "}
+            <Link to='#'>Sample Client</Link>.
+          </Alert>
+        </div>
+      </div>
+
+      <div className='row'>
+        <div className='col-md-6 '>Filtrar por nombre</div>
+        <div className='col-md-6 col-sm-12 '>
+          <div className='input-group mb-3'>
+            <input
+              onChange={handleFilter}
+              type='text'
+              className='form-control'
+            />
+            <div className='input-group-append'>
+              <span className='input-group-text'>
+                <i className='fa fa-user' />
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className='row mb-3'>
+        <div className='col-12 d-flex justify-content-between'>
+          <Form className='form-inline'>
+            <Form.Group>
+              <Form.Label column sm='6'>
+                Quick Filter:
+              </Form.Label>
+              <Col sm='6'>
+                <Form.Control
+                  size='sm'
+                  as='select'
+                  name='search'
+                  value={""}
+                  onChange={""}
+                >
+                  <option>All</option>
+                </Form.Control>
+              </Col>
+            </Form.Group>
+          </Form>
+          <div className='align-self-center'>
+            <Link to='#' className='mx-2'>
+              Import CSV
+            </Link>
+            <Link to='#' className='mx-2'>
+              Export CSV
+            </Link>
+            <Link to='#' className='mx-2'>
+              print
+            </Link>
+          </div>
+        </div>
+      </div>
+      <div>
+        {!porfileLoading ? (
+          <Fragment>
+            <div>
+              {profiles && profiles !== null && profiles.length > 0 ? (
+                <ClientList
+                  profiles={profilesFiltered}
+                  setModalShow={setModalShow}
+                  setSelectedClient={setSelectedClient}
                 />
-                <div className='input-group-append'>
-                  <span className='input-group-text'>
-                    <i className='fa fa-user' />
-                  </span>
-                </div>
-              </div>
+              ) : (
+                <h1 className='text-white'> Aun no has agregado clientes</h1>
+              )}
             </div>
-          </div>
-          <div className=' p-2'>
-            <div className='card-header'>
-              <div className='d-flex justify-content-between text-white'>
-                <h5>Lista de los clientes</h5>
-                <div>
-                  <a href='/newclient' className='btn btn-info'>
-                    Crear nuevo Cliente
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className='card-body'>
-              <div className='list-group'>
-                {profiles && profiles !== null && profiles.length > 0 ? (
-                  profilesFiltered.map(client => (
-                    <li
-                      key={client._id}
-                      className='my-item list-group-item mb-2 p-0'
-                    >
-                      <div className=' bg-light  rounded p-4'>
-                        <div className='d-flex justify-content-between text-bold '>
-                          <h5 className=''>{`${client.name} ${client.apellido}`}</h5>
 
-                          <h5
-                            className={`text-bold text-${
-                              client.punto > 700 ? "success" : "warning"
-                            }`}
-                          >{` `}</h5>
-                        </div>
-
-                        <div className='mb-1'>
-                          <span className='text-muted mr-4'>Cedula</span>
-
-                          <span className='text-muted mr-4 '>
-                            {client.cedula.split().length == 11 ? (
-                              <NumberFormat
-                                value={client.cedula}
-                                displayType={"text"}
-                                format='###-#######-#'
-                              />
-                            ) : (
-                              client.cedula
-                            )}
-                          </span>
-                        </div>
-                        <div className='mb-1'>
-                          <span className=' text-muted mr-4'> Telefono</span>
-
-                          <span className='text-muted mr-4  '>
-                            <NumberFormat
-                              value={client.telefono}
-                              displayType={"text"}
-                              format='(###) ###-####'
-                            />
-                          </span>
-                        </div>
-
-                        {client.telefono2 && (
-                          <div className='mb-1'>
-                            <span className='text-muted mr-4'>Telefono 2:</span>
-
-                            <span className='text-muted '>
-                              <NumberFormat
-                                value={client.telefono2}
-                                displayType={"text"}
-                                format='(###) ###-####'
-                              />
-                            </span>
-                          </div>
-                        )}
-                        {client.telefono3 && (
-                          <div className='mb-1'>
-                            <span className='text-muted mr-4'>Telefono 3</span>
-
-                            <span className='text-muted '>
-                              <NumberFormat
-                                value={client.telefono3}
-                                displayType={"text"}
-                                format='(###) ###-####'
-                              />
-                            </span>
-                          </div>
-                        )}
-                        <div className='mb-1'>
-                          <span className='text-muted '>{`${client.dirreccion} `}</span>
-                        </div>
-
-                        <div className='mb-3'>
-                          <span className='text-muted '>{`${
-                            client.ciudad.charAt(0).toUpperCase() +
-                            client.ciudad.slice(1)
-                          } `}</span>
-                        </div>
-                        <div className='row'>
-                          <div className='col-sm-12 col-md-6 mb-2'>
-                            <a
-                              href={`/client/${client._id}`}
-                              className='btn btn-outline-info btn-block'
-                            >
-                              Detalle
-                            </a>
-                          </div>
-
-                          <div className='col-sm-12 col-md-6'>
-                            <a
-                              href={`newloan/${client._id}`}
-                              className='btn btn-outline-info btn-block '
-                            >
-                              Nuevo Prestamo
-                            </a>
-                          </div>
-
-                          <div className='col-sm-12 '>
-                            <Button
-                              variant='outline-danger'
-                              block
-                              size='sm'
-                              onClick={() => {
-                                setSelectedClient(client);
-                                setModalShow(true);
-                              }}
-                            >
-                              Borrar
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  ))
-                ) : (
-                  <h1 className='text-white'> Aun no has agregado clientes</h1>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <DeleteClient
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-            client={selectedClient}
-          />
-        </Fragment>
-      ) : (
-        <Loading message=' Cargando los clientes' />
-      )}
+            <DeleteClient
+              show={modalShow}
+              onHide={() => setModalShow(false)}
+              client={selectedClient}
+            />
+          </Fragment>
+        ) : (
+          <Loading message=' Cargando los clientes' />
+        )}
+      </div>
     </div>
   );
 };
