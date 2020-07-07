@@ -263,8 +263,8 @@ router.post("/cancel/:id", async (req, res) => {
 
 router.get("/get/routine/", async (req, res) => {
   try {
-    let loans = await Loan.find({ status: false }).populate(["client", "plan"]);
-    let payments = await Payment.find({status:{$ne:"unpaid"}});
+    let loans = await Loan.find({ status: false }).populate(["client"]);
+    let payments = await Payment.find({ status: { $ne: "unpaid" } });
     // console.log(`Before filter ${loans.length}`);
 
     async function addpay(loan) {
@@ -284,9 +284,6 @@ router.get("/get/routine/", async (req, res) => {
     });
 
     loans = tempL;
-   
-     
-    
 
     const cities = loans.reduce(
       (unique, loan) =>
