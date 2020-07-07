@@ -48,22 +48,7 @@ const Clients = ({
         </div>
       </div>
 
-      <div className='row'>
-        <div className='col-12 mb-2'>
-          <Alert variant='warning' className='justify-content'>
-            This page list your clients your <Link to='#'>clients</Link>,{" "}
-            <Link to='#'>prospects</Link>, <Link to='#'>lead</Link>. Use{" "}
-            <Link to='#'>Advanced Search</Link> above to sort by affiliate or
-            team member. Use quick filter to sort by status (for followed-up).
-            Click a client's name to access records, the pencil icon to edit a
-            profile or click a status to change it. If you enable portal access
-            or set an agreement in a new client profile, icons of envelopes or
-            checkmarks will appear below. Mouse-over the icons below to see more
-            details. To learn the system, use your{" "}
-            <Link to='#'>Sample Client</Link>.
-          </Alert>
-        </div>
-      </div>
+ 
 
       <div className='row'>
         <div className='col-md-6 '>Filtrar por nombre</div>
@@ -83,39 +68,7 @@ const Clients = ({
         </div>
       </div>
 
-      <div className='row mb-3'>
-        <div className='col-12 d-flex justify-content-between'>
-          <Form className='form-inline'>
-            <Form.Group>
-              <Form.Label column sm='6'>
-                Quick Filter:
-              </Form.Label>
-              <Col sm='6'>
-                <Form.Control
-                  size='sm'
-                  as='select'
-                  name='search'
-                  value={""}
-                  onChange={""}
-                >
-                  <option>All</option>
-                </Form.Control>
-              </Col>
-            </Form.Group>
-          </Form>
-          <div className='align-self-center'>
-            <Link to='#' className='mx-2'>
-              Import CSV
-            </Link>
-            <Link to='#' className='mx-2'>
-              Export CSV
-            </Link>
-            <Link to='#' className='mx-2'>
-              print
-            </Link>
-          </div>
-        </div>
-      </div>
+      
       <div>
         {!porfileLoading ? (
           <Fragment>
