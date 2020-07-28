@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import CardContainer from "../component/CardContainer";
+import PerDayData from "../component/Months";
 import Loading from "../component/layout/Loading";
 import { Line, Bar } from "react-chartjs-2";
 import { MDBContainer } from "mdbreact";
@@ -45,7 +46,7 @@ const Home = ({
     selectedOption: "1",
   });
   const { selectedOption } = option;
-  const handleOption = (e) => {
+  const handleOption = e => {
     setOption({ ...option, selectedOption: e.target.value });
   };
 
@@ -91,17 +92,17 @@ const Home = ({
     <div>
       {!expenseLoading && !paymentLoading && !loanLoading ? (
         <div>
-          <div className="mt-5">
+          <div className='mt-5'>
             <CardContainer />
           </div>
 
-          <div className="row my-4">
-            <div className="col-sm-12">
-              <div className="card card-chart">
-                <div className="card- pl-4 pt-4">
-                  <div className="row">
-                    <div className="col-sm-6 text-white">
-                      <div className="text-muted mb-2">
+          <div className='row my-4'>
+            <div className='col-sm-12'>
+              <div className='card card-chart'>
+                <div className='card- pl-4 pt-4'>
+                  <div className='row'>
+                    <div className='col-sm-6 text-white'>
+                      <div className='text-muted mb-2'>
                         {`${
                           selectedOption == "0"
                             ? "Pagos Cobrada"
@@ -110,7 +111,7 @@ const Home = ({
                             : "Gastos"
                         } por meses del ${new Date().getFullYear()}`}
                       </div>
-                      <div className="h4">
+                      <div className='h4'>
                         RD$
                         {dataGraph12[parseInt(selectedOption)].reduce(
                           (sum, el) => sum + el,
@@ -118,25 +119,25 @@ const Home = ({
                         )}
                       </div>
                     </div>
-                    <div className="col-sm-6 ">
-                      <div className="row">
-                        <div className="col-sm-12 d-flex justify-content-end pr-4 ">
-                          <form className="btn-group ">
+                    <div className='col-sm-6 '>
+                      <div className='row'>
+                        <div className='col-sm-12 d-flex justify-content-end pr-4 '>
+                          <form className='btn-group '>
                             <label
                               className={`${
                                 selectedOption == "0" && "active"
                               } btn btn-sm btn-ouline-purple `}
                             >
                               <input
-                                value="0"
+                                value='0'
                                 checked={selectedOption == "0"}
                                 onChange={handleOption}
-                                type="radio"
-                                className="d-none "
+                                type='radio'
+                                className='d-none '
                               />
-                              <span className="d-none d-md-block">Pagos</span>
-                              <span className="d-sm-block d-md-none">
-                                <i className="fa fa-pied-piper-pp" />
+                              <span className='d-none d-md-block'>Pagos</span>
+                              <span className='d-sm-block d-md-none'>
+                                <i className='fa fa-pied-piper-pp' />
                               </span>
                             </label>
                             <label
@@ -145,17 +146,17 @@ const Home = ({
                               } btn btn-sm  btn-ouline-purple `}
                             >
                               <input
-                                value="1"
+                                value='1'
                                 checked={selectedOption == "1"}
                                 onChange={handleOption}
-                                type="radio"
-                                className="d-none"
+                                type='radio'
+                                className='d-none'
                               />
-                              <span className="d-none d-md-block">
+                              <span className='d-none d-md-block'>
                                 Prestamo
                               </span>
-                              <span className="d-sm-block d-md-none">
-                                <i className="fa fa-pinterest" />
+                              <span className='d-sm-block d-md-none'>
+                                <i className='fa fa-pinterest' />
                               </span>
                             </label>
 
@@ -165,15 +166,15 @@ const Home = ({
                               } btn btn-sm btn-ouline-purple `}
                             >
                               <input
-                                value="2"
+                                value='2'
                                 checked={selectedOption == "2"}
                                 onChange={handleOption}
-                                type="radio"
-                                className="d-none"
+                                type='radio'
+                                className='d-none'
                               />
-                              <span className="d-none d-md-block">Gastos</span>
-                              <span className="d-sm-block d-md-none">
-                                <i className="fa fa-sort-amount-desc" />
+                              <span className='d-none d-md-block'>Gastos</span>
+                              <span className='d-sm-block d-md-none'>
+                                <i className='fa fa-sort-amount-desc' />
                               </span>
                             </label>
                           </form>
@@ -182,7 +183,7 @@ const Home = ({
                     </div>
                   </div>
                 </div>
-                <MDBContainer className="py-2">
+                <MDBContainer className='py-2'>
                   <Line
                     data={dataLine}
                     options={gradientChartOptionsConfiguration}
@@ -190,16 +191,20 @@ const Home = ({
                 </MDBContainer>
               </div>
             </div>
+            <PerDayData loans={loans} payments={payments} expenses={expenses} />
           </div>
+         
         </div>
       ) : (
         <Loading />
       )}
+
+      
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   loans: state.loan.loans,
   payments: state.payment.payments,
   expenses: state.expense.expenses,

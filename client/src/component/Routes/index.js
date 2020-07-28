@@ -34,6 +34,8 @@ import Instruction from "../../pages/Instruction";
 import LateLoans from "../../pages/LateLoans";
 import Many from "../../pages/Many";
 
+import Cuadre from "../Months";
+
 const Routes = () => {
   return (
     <Fragment>
@@ -68,6 +70,7 @@ const Routes = () => {
         <Route path='/customer' component={Customer} />
         <Route path='/latePay/:id' component={LatePay} />
         <Route exact path='/login' component={Login} />
+        <Route exact path='/cuadre' component={Cuadre} />
       </Switch>
     </Fragment>
   );

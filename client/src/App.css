@@ -1,8 +1,8 @@
 root {
   --Navcolor: #1b121d;
 }
-.text-transparent{
-	color:transparent
+.text-transparent {
+  color: transparent;
 }
 .shadow-box {
   width: 70%;
@@ -247,8 +247,6 @@ root {
   transform: skew(8deg) rotate(3deg);
 }
 
-
-
 .pred {
   min-height: 300px;
 }
@@ -306,10 +304,35 @@ body {
     rgba(13, 13, 13, 1) 100%
   );
 
-
   background-size: cover;
 }
+*::-webkit-scrollbar {
+  display: none;
+}
 
+.Day-container {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Month {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+.dot {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  border-radius: 50%;
+  background: #000;
+}
 body {
   font-size: 0.9rem;
 }
