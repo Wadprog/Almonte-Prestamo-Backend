@@ -77,9 +77,7 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
                         <td>{payment.quota}</td>
                         <td>{loan.client.name}</td>
                         <td>{ThousandSeparator(loan.amount)}</td>
-                        <td>
-                          {ThousandSeparator(payment.amountPaid)}
-                        </td>
+                        <td>{ThousandSeparator(payment.amountPaid)}</td>
                       </tr>
                     );
                   })}
@@ -167,7 +165,9 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
             <Row>
               <Col>Restante (pagos+ reditos- gastos): </Col>
               <Col>
-                {TotalAmountPaid + TotalInterestPaid - TotalExpenses}
+                {ThousandSeparator(
+                  TotalAmountPaid + TotalInterestPaid - TotalExpenses
+                )}
                 $RDS
               </Col>
             </Row>
