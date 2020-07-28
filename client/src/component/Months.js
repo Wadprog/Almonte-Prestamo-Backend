@@ -10,9 +10,7 @@ export const Months = ({ payments, loans, expenses }) => {
   const [selected, setselected] = useState(moment().month() + 1);
   const [maxDays, setMaxDays] = useState(31);
 
-  const [selectedDay, setselectedDay] = useState(
-    parseInt(moment().date())
-  );
+  const [selectedDay, setselectedDay] = useState(parseInt(moment().date()));
 
   const handleSelect = number => {
     setselected(number);
@@ -130,7 +128,7 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
               ) {
                 console.log(payment.amountPaid, payment._id, idx);
                 return total + payment.amountPaid;
-              } else return 0;
+              } else return total + 0;
             }, 0)}
           </Accordion.Toggle>
           <Accordion.Collapse eventKey='0'>
@@ -186,7 +184,7 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
                 var exp = parseFloat(expense.amount);
                 if (exp < 0) exp *= -1;
                 return total + exp;
-              } else return 0;
+              } else return total+0;
             }, 0)}
           </Accordion.Toggle>
           <Accordion.Collapse eventKey='1'>
@@ -223,7 +221,7 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
                 var interest = parseFloat(payment.interestPaid);
                 if (interest < 0) interest *= -1;
                 return total + interest;
-              } else return 0;
+              } else return total + 0;
             }, 0)}
           </Accordion.Toggle>
           <Accordion.Collapse eventKey='2'>
@@ -285,7 +283,7 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
                     var interest = parseFloat(payment.interestPaid);
                     if (interest < 0) interest *= -1;
                     return total + interest;
-                  } else return 0;
+                  } else return total+0;
                 }, 0) +
                   payments.reduce(function (total, payment, idx) {
                     if (
@@ -295,7 +293,7 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
                     ) {
                       console.log(payment.amountPaid, payment._id, idx);
                       return total + payment.amountPaid;
-                    } else return 0;
+                    } else return total+0;
                   }, 0)}
               </Col>
             </Row>
@@ -312,7 +310,7 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
                     var interest = parseFloat(payment.interestPaid);
                     if (interest < 0) interest *= -1;
                     return total + interest;
-                  } else return 0;
+                  } else return total+0;
                 }, 0) +
                   payments.reduce(function (total, payment, idx) {
                     if (
@@ -322,7 +320,7 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
                     ) {
                       console.log(payment.amountPaid, payment._id, idx);
                       return total + payment.amountPaid;
-                    } else return 0;
+                    } else return total+0;
                   }, 0) -
                   expenses.reduce(function (total, expense, idx) {
                     console.log(expense);
@@ -334,7 +332,7 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
                       var exp = parseFloat(expense.amount);
                       if (exp < 0) exp *= -1;
                       return total + exp;
-                    } else return 0;
+                    } else return total+0;
                   }, 0)}
                 $RDS
               </Col>
