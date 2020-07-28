@@ -9,7 +9,7 @@ app.use(cors());
 // connection to database;
 connectDB();
 
-//use the routes
+//use the route
 
 app.use("/api/client", require("./routes/api/client"));
 app.use("/api/plan", require("./routes/api/plan"));
@@ -29,5 +29,5 @@ app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 });
 
-const PORT = process.env.Port || 80;
+const PORT = process.env.Port || 5000;
 app.listen(PORT, () => console.log(`Server runing on port ${PORT}`));

@@ -58,14 +58,14 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
             <Card.Body>
               <h5 className='text-muted'> Los Pagos</h5>
               <Table striped bordered hover>
-                <tdead>
+                <thead>
                   <tr>
                     <td># Pago</td>
                     <td>Deudor</td>
                     <td>Deuda</td>
                     <td>Pago</td>
                   </tr>
-                </tdead>
+                </thead>
                 <tbody>
                   {filteredAmountPaidPayments.map(payment => {
                     const loan = loans.filter(
@@ -92,12 +92,12 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
           <Accordion.Collapse eventKey='1'>
             <Card.Body>
               <Table striped bordered hover>
-                <tdead>
+                <thead>
                   <tr>
                     <td>Cantidad</td>
                     <td>Descripcion</td>
                   </tr>
-                </tdead>
+                </thead>
                 <tbody>
                   {filteredExpenses.map(expense => (
                     <tr>
@@ -118,14 +118,14 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
           <Accordion.Collapse eventKey='2'>
             <Card.Body>
               <Table striped bordered hover>
-                <tdead>
+                <thead>
                   <tr>
                     <td># Pago</td>
                     <td>Deudor</td>
                     <td>Deuda</td>
                     <td>Pago</td>
                   </tr>
-                </tdead>
+                </thead>
                 <tbody>
                   {filteredInterestPaidPayments.map(payment => {
                     const loan = loans.filter(
