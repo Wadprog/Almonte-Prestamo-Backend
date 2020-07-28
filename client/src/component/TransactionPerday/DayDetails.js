@@ -1,6 +1,7 @@
 import React from "react";
 import { Accordion, Card, Table, Row, Col } from "react-bootstrap";
 import moment from "moment";
+import NumberFormat from "react-number-format";
 
 const DayDetails = ({ loans, payments, expenses, date }) => {
   const filteredAmountPaidPayments = payments.filter(
@@ -52,7 +53,7 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
       <Accordion className='text-dark'>
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey='0'>
-            Total Pagos hechos{TotalAmountPaid}
+            Total Pagos hechos {ThousandSeparator(TotalAmountPaid)}
           </Accordion.Toggle>
           <Accordion.Collapse eventKey='0'>
             <Card.Body>
@@ -75,8 +76,10 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
                       <tr>
                         <td>{payment.quota}</td>
                         <td>{loan.client.name}</td>
-                        <td>{loan.amount}</td>
-                        <td>{payment.amountPaid}.00 S$RDS</td>
+                        <td>{ThousandSeparator(loan.amount)}</td>
+                        <td>
+                          {ThousandSeparator(payment.amountPaid)}
+                        </td>
                       </tr>
                     );
                   })}
@@ -87,7 +90,7 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
         </Card>
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey='1'>
-            Total Gastos hechos:{TotalExpenses}
+            Total Gastos hechos:{ThousandSeparator(TotalExpenses)}
           </Accordion.Toggle>
           <Accordion.Collapse eventKey='1'>
             <Card.Body>
@@ -101,7 +104,7 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
                 <tbody>
                   {filteredExpenses.map(expense => (
                     <tr>
-                      <td>{expense.amount}.00 $RDS</td>
+                      <td>{ThousandSeparator(expense.amount)}</td>
                       <td>{expense.description}</td>
                     </tr>
                   ))}
@@ -113,7 +116,7 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
 
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey='2'>
-            Total Reditos:{TotalInterestPaid}
+            Total Reditos:{ThousandSeparator(TotalInterestPaid)}
           </Accordion.Toggle>
           <Accordion.Collapse eventKey='2'>
             <Card.Body>
@@ -135,12 +138,13 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
                       <tr>
                         <td>{payment.quota}</td>
                         <td>{loan.client.name}</td>
-                        <td>{loan.amount}</td>
+                        <td>{ThousandSeparator(loan.amount)}</td>
                         <td>
-                          {parseFloat(payment.interestPaid) < 0
-                            ? parseFloat(payment.interestPaid) * -1
-                            : parseFloat(payment.interestPaid)}
-                          .00 S$RDS
+                          {ThousandSeparator(
+                            parseFloat(payment.interestPaid) < 0
+                              ? parseFloat(payment.interestPaid) * -1
+                              : parseFloat(payment.interestPaid)
+                          )}
                         </td>
                       </tr>
                     );
@@ -155,7 +159,9 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
           <Card.Header>
             <Row>
               <Col>Total Pagos Y Reditos: </Col>
-              <Col>{TotalAmountPaid + TotalInterestPaid} $RDS</Col>
+              <Col>
+                {ThousandSeparator(TotalAmountPaid + TotalInterestPaid)}{" "}
+              </Col>
             </Row>
 
             <Row>
@@ -173,3 +179,14 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
 };
 
 export default DayDetails;
+
+const ThousandSeparator = amount => {
+  return (
+    <NumberFormat
+      value={amount}
+      displayType={"text"}
+      thousandSeparator={true}
+      prefix={"RD$"}
+    />
+  );
+};
