@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import CardContainer from "../component/CardContainer";
-import PerDayData from "../component/Months";
+import PerDayData from "../component/TransactionPerday";
 import Loading from "../component/layout/Loading";
 import { Line, Bar } from "react-chartjs-2";
 import { MDBContainer } from "mdbreact";

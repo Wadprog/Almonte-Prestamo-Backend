@@ -20,7 +20,6 @@ const Months = [
   "Noviembre",
   "Diciembre",
 ];
-
 export const allMonths = year => {
   const numberofDays = (monthpos, year) => {
     const BixYear = year => {
@@ -29,15 +28,15 @@ export const allMonths = year => {
       if (year % 400 != 0) return false;
       return true;
     };
-    const monthswith31days = [0, 2, 4, 6, 7, 9, 11];
-    if (monthpos === 1) return BixYear(year) ? 29 : 28;
+    const monthswith31days = [1, 3, 5, 7, 8, 10, 12];
+    if (monthpos == 2) return BixYear(year) ? 29 : 28;
     return monthswith31days.join().includes(monthpos) ? 31 : 30;
   };
 
   return Months.map((month, idx) => {
-    return { name: month, number: idx, days: numberofDays(idx, year) };
+    if (month != null)
+      return { name: month, number: idx, days: numberofDays(idx + 1, year) };
   });
 };
 
 console.log(allMonths(2004));
-

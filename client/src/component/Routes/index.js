@@ -34,7 +34,7 @@ import Instruction from "../../pages/Instruction";
 import LateLoans from "../../pages/LateLoans";
 import Many from "../../pages/Many";
 
-import Cuadre from "../Months";
+import Cuadre from "../TransactionPerday";
 
 const Routes = () => {
   return (
