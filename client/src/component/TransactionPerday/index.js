@@ -39,37 +39,54 @@ const Calendar = ({ payments, loans, expenses }) => {
     );
   }
   return (
-    <div className=''>
-      <div className='row no-gutters'>
-        <div className=' cols-xs-12 col-sm-6 col-md-5'>
+    <div className='pt-3'>
+      <div className='d-flex'>
+        <div className=''>
           <div>
-            <div
-              style={{ backgroundColor: " #27293d !important" }}
-            >
-              <div className='row  '>
-                <div className='form-group ml-auto'>
-                  <h6>Selecciona el Ano</h6>
-                  <input
-                    type='text'
-                    value={selectedYear}
-                    onChange={handleSelectYear}
-                    className='my-2 '
-                  />
-                </div>
-              </div>
-              <div className='row'>
-                {months.map(month => (
-                  <div className='col-sm-4'>
-                    <Month
-                      {...month}
-                      selected={selected}
-                      handleSelect={handleSelect}
-                    />
+            <div className='py-3' style={{ backgroundColor: " #27293d " }}>
+              <div className='d-flex justify-content-around '>
+                {selected > 1 && (
+                  <div
+                    onClick={() => {
+                      handleSelect(selected - 1);
+                    }}
+                  >
+                    <i className=' text-white fa-2x fa fa-arrow-left'></i>
                   </div>
-                ))}
+                )}
+
+                <div className='text-white'>
+                  <h4>
+                    {" "}
+                    {months[selected - 1].name}
+                    <input
+                      type='text'
+                      value={selectedYear}
+                      onChange={handleSelectYear}
+                      className='my-2  text-white'
+                      style={{
+                        backgroundColor: " #27293d ",
+                        webkitAppearance: "none",
+                        webkitAppearance: "none",
+                        outline: "none",
+                        width: "60px",
+                        textAlign: "center",
+                      }}
+                    />
+                  </h4>
+                </div>
+
+                {selected < 12 && (
+                  <div
+                    onClick={() => {
+                      handleSelect(selected + 1);
+                    }}
+                  >
+                    <i className=' text-white fa-2x fa fa-arrow-right'></i>
+                  </div>
+                )}
               </div>
             </div>
-
             <div
               className=' pt-5 px-3  mt-0'
               style={{ backgroundColor: "#F8F8F8" }}
