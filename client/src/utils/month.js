@@ -30,13 +30,14 @@ export const allMonths = year => {
     };
     const monthswith31days = [1, 3, 5, 7, 8, 10, 12];
     if (monthpos == 2) return BixYear(year) ? 29 : 28;
-    return monthswith31days.join().includes(monthpos) ? 31 : 30;
+    return monthswith31days.includes(monthpos) ? 31 : 30;
   };
 
   return Months.map((month, idx) => {
     if (month != null)
-      return { name: month, number: idx, days: numberofDays(idx + 1, year) };
+      return { name: month, number: idx, days: numberofDays(idx, year) };
   });
 };
+
 
 console.log(allMonths(2004));

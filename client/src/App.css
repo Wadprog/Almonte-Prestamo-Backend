@@ -265,7 +265,10 @@ root {
 }
 .card.card-chart {
   background-color: #27293d !important;
-  max-height: 600px;
+  max-height: 900px;
+  overflow: scroll;
+  border-radius: 0px;
+  border: none;
 }
 .my-item {
   max-width: 500px;

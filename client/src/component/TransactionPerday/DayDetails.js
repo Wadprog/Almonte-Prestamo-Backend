@@ -3,23 +3,37 @@ import { Accordion, Card, Table, Row, Col } from "react-bootstrap";
 import moment from "moment";
 import NumberFormat from "react-number-format";
 
-const DayDetails = ({ loans, payments, expenses, date }) => {
-  const filteredAmountPaidPayments = payments.filter(
-    payment =>
+const DayDetails = ({ loans, payments, expenses, date, city }) => {
+  const filteredAmountPaidPayments = payments.filter(payment => {
+    if (
       payment.amountPaid != undefined &&
       payment.amountPaid != null &&
       payment.amountPaid &&
       payment.dateAmountPaid &&
       moment(date).isSame(payment.dateAmountPaid)
-  );
-  const filteredInterestPaidPayments = payments.filter(
-    payment =>
+    ) {
+      if (city == "Todas") return payment;
+      else {
+        const [loan] = loans.filter(loan => loan._id == payment.loan);
+        if (loan.client.ciudad === city) return payment;
+      }
+    }
+  });
+  const filteredInterestPaidPayments = payments.filter(payment => {
+    if (
       payment.interestPaid != undefined &&
       payment.interestPaid != null &&
       payment.interestPaid &&
       payment.dateInterestPaid &&
       moment(date).isSame(payment.dateInterestPaid)
-  );
+    ) {
+      if (city == "Todas") return payment;
+      else {
+        const [loan] = loans.filter(loan => loan._id == payment.loan);
+        if (loan.client.ciudad === city) return payment;
+      }
+    }
+  });
   const filteredExpenses = expenses.filter(
     expense =>
       expense.amount != undefined &&
@@ -45,13 +59,13 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
     0
   );
   return (
-    <div className='text-white'>
+    <div className='text-white w-100 p-3'>
       <h4>
-        Datos para el dia <small> {date}</small>{" "}
+        Datos para el dia <small> {date}</small> y Ciudad {city}
       </h4>
 
-      <Accordion className='text-dark'>
-        <Card>
+      <Accordion className='text-dark w-100'>
+        <Card className=' w-100'>
           <Accordion.Toggle as={Card.Header} eventKey='0'>
             Total Pagos hechos {ThousandSeparator(TotalAmountPaid)}
           </Accordion.Toggle>
@@ -86,7 +100,7 @@ const DayDetails = ({ loans, payments, expenses, date }) => {
             </Card.Body>
           </Accordion.Collapse>
         </Card>
-        <Card>
+        <Card className=' w-100'>
           <Accordion.Toggle as={Card.Header} eventKey='1'>
             Total Gastos hechos:{ThousandSeparator(TotalExpenses)}
           </Accordion.Toggle>
