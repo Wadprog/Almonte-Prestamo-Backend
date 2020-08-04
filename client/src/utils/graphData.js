@@ -176,7 +176,9 @@ const paymentTotal = payment => {
     amountPaid = payment.amountPaid;
   if (payment.interestPaid && payment.interestPaid != null)
     interestPaid = payment.interestPaid;
-  return amountPaid + interestPaid;
+  return interestPaid > 0
+    ? amountPaid + interestPaid
+    : amountPaid + interestPaid * -1;
 };
 const paymentInarray = (payment, array) => {
   for (let i = 0; i < array.length; i++) {
@@ -218,15 +220,20 @@ const dataByCity = (loans, payments, expenses, actualYear) => {
 };
 
 const Graph1dataSet = (loans, payments, expenses, actualYear) => {
-  loans = loans.filter(loan => new Date(loan.date).getFullYear() == actualYear);
-  const loanMonthsTotal = totalPerMonth(loans, montInObject(loans));
+  const newLoans = loans.filter(
+    loan => new Date(loan.date).getFullYear() == actualYear
+  );
+  const loanMonthsTotal = totalPerMonth(newLoans, montInObject(newLoans));
 
-  expenses = expenses.filter(
+  const newExpenses = expenses.filter(
     expense => new Date(expense.date).getFullYear() == actualYear
   );
-  const expenseMonthsTotal = totalPerMonth(expenses, montInObject(expenses));
+  const expenseMonthsTotal = totalPerMonth(
+    newExpenses,
+    montInObject(newExpenses)
+  );
 
-  payments = payments.filter(payment => {
+  const newPayments = payments.filter(payment => {
     if (
       payment.status !== "unpaid" &&
       PaymentHasCorrectDate(payment, actualYear) &&
@@ -235,10 +242,10 @@ const Graph1dataSet = (loans, payments, expenses, actualYear) => {
       return payment;
   });
   const paymentMonthsTotal = PaymenttotalPerMonth(
-    payments,
-    montInPayment(payments)
+    newPayments,
+    montInPayment(newPayments)
   );
-  const revenue = revenuePerMonth(loans, payments, expenses);
+  const revenue = revenuePerMonth(newLoans, newPayments, newExpenses);
   return [
     dataPositionInObject(loanMonthsTotal),
     dataPositionInObject(expenseMonthsTotal),
