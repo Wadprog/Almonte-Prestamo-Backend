@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { allMonths } from "../../utils/month";
-import { Form } from "react-bootstrap";
+import { Form, Col } from "react-bootstrap";
 import moment from "moment";
-import Month from "./Month";
 import Day from "./Day";
 import DayDetails from "./DayDetails";
 
@@ -39,7 +38,7 @@ const Calendar = ({ payments, loans, expenses }) => {
     );
   }
   return (
-    <div className='pt-3'>
+    <div className='pt-3 mb-5'>
       <div className='d-flex'>
         <div className=''>
           <div>
@@ -65,6 +64,7 @@ const Calendar = ({ payments, loans, expenses }) => {
                       onChange={handleSelectYear}
                       className='my-2  text-white'
                       style={{
+                        border: "none",
                         backgroundColor: " #27293d ",
                         webkitAppearance: "none",
                         webkitAppearance: "none",
@@ -96,36 +96,47 @@ const Calendar = ({ payments, loans, expenses }) => {
           </div>
         </div>
 
-        <div className=' col-xs-12 col-sm-6 col-md-7 w-100 h-100 px-2 bg-warning'>
-          <div className='row'>
-            <div className='col-x2-12'>
-              <Form>
-                <Form.Group>
-                  <Form.Label> Seleciona Ciudad</Form.Label>
-                  <Form.Control
-                    value={city}
-                    as='select'
-                    onChange={e => {
-                      setCity(e.target.value);
-                    }}
-                  >
-                    <option>Todas</option>
-                    {getUniquecities(loans).map(city => (
-                      <option value={city}>{city}</option>
-                    ))}
-                  </Form.Control>
-                </Form.Group>
-              </Form>
-            </div>
-            <div className='col h-100'>
-              <DayDetails
-                date={`${selected}/${selectedDay}/${selectedYear}`}
-                city={city}
-                loans={loans}
-                payments={payments}
-                expenses={expenses}
-              />
-            </div>
+        <div
+          className=' ml-5 col-xs-12 col-sm-6 col-md-7 w-100 h-100 px-2 py-5'
+          style={{ backgroundColor: " #27293d " }}
+        >
+          <div className='d-flex pb-3'>
+            <h4 className='text-white mr-3'>Ciudad:</h4>
+
+            <Form.Control
+              value={city}
+              as='select'
+              onChange={e => {
+                setCity(e.target.value);
+              }}
+              style={{
+                border: "none",
+                backgroundColor: " #27293d ",
+                webkitAppearance: "none",
+                webkitAppearance: "none",
+                outline: "none",
+                width: "60px",
+                textAlign: "center",
+                color: "white",
+                width: "100px",
+              }}
+              className='h4'
+            >
+              <option>Todas</option>
+              {getUniquecities(loans).map(city => (
+                <option value={city}>{city}</option>
+              ))}
+            </Form.Control>
+          </div>
+
+          <div className=' h-100'>
+            <DayDetails
+              date={`${selected}/${selectedDay}/${selectedYear}`}
+              city={city}
+              loans={loans}
+              payments={payments}
+              expenses={expenses}
+            />
           </div>
         </div>
       </div>

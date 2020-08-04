@@ -39,11 +39,15 @@ const Home = ({
     <div>
       {!cityLoading && !expenseLoading && !paymentLoading && !loanLoading ? (
         <div>
+          Almonte 
           <div className='mt-5'>
             <CardContainer />
           </div>
           {/* Below goes the main graph and citiessummary */}
-          <div className='row no-gutters border border-0 bg-white '>
+          <div
+            className='row no-gutters border border-0  '
+            style={{ backgroundColor: " #27293d " }}
+          >
             <div className='col-sm-8'>
               <MainGraph
                 loans={loans}

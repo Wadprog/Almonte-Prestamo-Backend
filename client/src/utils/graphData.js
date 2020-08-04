@@ -1,3 +1,4 @@
+import moment from "moment";
 // Exported as they are
 export const Months = [
   "Enero",
@@ -198,14 +199,12 @@ const revenuePerMonth = (loans, payments, gastos) => {
   return benefits;
 };
 // not calculated
-const dataByCity = (loans, payments, expenses) => {
-  loans = loans.filter(
-    loan => new Date(loan.date).getFullYear() == new Date().getFullYear()
-  );
+const dataByCity = (loans, payments, expenses, actualYear) => {
+  loans = loans.filter(loan => new Date(loan.date).getFullYear() == actualYear);
   const loanMonthsTotal = totalPerMonth(loans, montInObject(loans));
 
   expenses = expenses.filter(
-    expense => new Date(expense.date).getFullYear() == new Date().getFullYear()
+    expense => new Date(expense.date).getFullYear() == actualYear
   );
   const expenseMonthsTotal = totalPerMonth(expenses, montInObject(expenses));
 
@@ -218,18 +217,23 @@ const dataByCity = (loans, payments, expenses) => {
   return [loanMonthsTotal, expenseMonthsTotal, paymentMonthsTotal];
 };
 
-const Graph1dataSet = (loans, payments, expenses) => {
-  loans = loans.filter(
-    loan => new Date(loan.date).getFullYear() == new Date().getFullYear()
-  );
+const Graph1dataSet = (loans, payments, expenses, actualYear) => {
+  loans = loans.filter(loan => new Date(loan.date).getFullYear() == actualYear);
   const loanMonthsTotal = totalPerMonth(loans, montInObject(loans));
 
   expenses = expenses.filter(
-    expense => new Date(expense.date).getFullYear() == new Date().getFullYear()
+    expense => new Date(expense.date).getFullYear() == actualYear
   );
   const expenseMonthsTotal = totalPerMonth(expenses, montInObject(expenses));
 
-  payments = payments.filter(payment => payment.status !== "unpaid");
+  payments = payments.filter(payment => {
+    if (
+      payment.status !== "unpaid" &&
+      PaymentHasCorrectDate(payment, actualYear) &&
+      !paymentLoansCanceled(loans, payment)
+    )
+      return payment;
+  });
   const paymentMonthsTotal = PaymenttotalPerMonth(
     payments,
     montInPayment(payments)
@@ -252,9 +256,9 @@ export const dataPositionInObject = dataoB => {
 
   return data;
 };
-export const GraphsDataSet = (loans, payments, expenses) => {
-  var data = Graph1dataSet(loans, payments, expenses);
-  var dataBc = dataByCity(loans, payments, expenses);
+export const GraphsDataSet = (loans, payments, expenses, actualYear) => {
+  var data = Graph1dataSet(loans, payments, expenses, actualYear);
+  var dataBc = dataByCity(loans, payments, expenses, actualYear);
   return [
     [data[2], data[0], data[1], data[3]],
     [dataBc[0], dataBc[2], dataBc[1], data[3]],
@@ -276,3 +280,23 @@ export const dataGraph2 = [
   [78, 480],
   [145, 480],
 ];
+
+const PaymentHasCorrectDate = (payment, date) => {
+  if (payment.dateAmountPaid) {
+    if (new Date(payment.dateAmountPaid).getFullYear() == date) return true;
+  }
+
+  if (payment.dateInterestPaid) {
+    if (new Date(payment.dateInterestPaid).getFullYear() == date) return true;
+  }
+  return false;
+};
+
+const paymentLoansCanceled = (loans, payment) => {
+  const [loan] = loans.filter(loan => loan._id == payment.loan);
+  if (!loan.comment) return false;
+  else {
+    if (loan.comment.indexOf("Cancelado") == -1) return false;
+    else return true;
+  }
+};

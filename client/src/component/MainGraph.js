@@ -12,7 +12,11 @@ import {
 } from "../utils/graphData";
 
 const MainGraph = ({ loans, payments, expenses }) => {
-  var dataGraph12 = GraphsDataSet(loans, payments, expenses)[0];
+  const [actualYear, setActualYear] = useState(new Date().getFullYear());
+  const handleYear = ({ target: { value } }) => {
+    setActualYear(value);
+  };
+  var dataGraph12 = GraphsDataSet(loans, payments, expenses, actualYear)[0];
   const [option, setOption] = useState({
     selectedOption: "1",
   });
@@ -70,7 +74,26 @@ const MainGraph = ({ loans, payments, expenses }) => {
                   : selectedOption == "1"
                   ? " Prestamo Pagado"
                   : "Gastos"
-              } por meses del ${new Date().getFullYear()}`}
+              } por meses del ${actualYear}`}
+
+              <h4>
+                Seleccionar Ano:
+                <input
+                  type='number'
+                  value={actualYear}
+                  onChange={handleYear}
+                  className='my-2  text-white'
+                  style={{
+                    border: "none",
+                    backgroundColor: " #27293d ",
+                    webkitAppearance: "none",
+                    webkitAppearance: "none",
+                    outline: "none",
+                    width: "75px",
+                    textAlign: "center",
+                  }}
+                />
+              </h4>
             </div>
             <div className='h4'>
               RD$

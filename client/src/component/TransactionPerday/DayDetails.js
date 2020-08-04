@@ -59,20 +59,25 @@ const DayDetails = ({ loans, payments, expenses, date, city }) => {
     0
   );
   return (
-    <div className='text-white w-100 p-3'>
+    <div className='text-white w-100 p-3 '>
       <h4>
-        Datos para el dia <small> {date}</small> y Ciudad {city}
+        Fecha: <small> {date}</small>
       </h4>
+      <h4>Ciudad: {city}</h4>
 
-      <Accordion className='text-dark w-100'>
-        <Card className=' w-100'>
+      <Accordion
+        className='text-white w-100 p-2'
+        variant='dark'
+        style={{ backgroundColor: " #27293d " }}
+      >
+        <Card style={{ backgroundColor: " #27293d " }}>
           <Accordion.Toggle as={Card.Header} eventKey='0'>
             Total Pagos hechos {ThousandSeparator(TotalAmountPaid)}
           </Accordion.Toggle>
           <Accordion.Collapse eventKey='0'>
             <Card.Body>
               <h5 className='text-muted'> Los Pagos</h5>
-              <Table striped bordered hover>
+              <Table striped hover variant='dark'>
                 <thead>
                   <tr>
                     <td># Pago</td>
@@ -100,13 +105,13 @@ const DayDetails = ({ loans, payments, expenses, date, city }) => {
             </Card.Body>
           </Accordion.Collapse>
         </Card>
-        <Card className=' w-100'>
+        <Card style={{ backgroundColor: " #27293d " }}>
           <Accordion.Toggle as={Card.Header} eventKey='1'>
             Total Gastos hechos:{ThousandSeparator(TotalExpenses)}
           </Accordion.Toggle>
           <Accordion.Collapse eventKey='1'>
             <Card.Body>
-              <Table striped bordered hover>
+              <Table striped bordered hover variant='dark'>
                 <thead>
                   <tr>
                     <td>Cantidad</td>
@@ -126,13 +131,13 @@ const DayDetails = ({ loans, payments, expenses, date, city }) => {
           </Accordion.Collapse>
         </Card>
 
-        <Card>
+        <Card style={{ backgroundColor: " #27293d " }}>
           <Accordion.Toggle as={Card.Header} eventKey='2'>
             Total Reditos:{ThousandSeparator(TotalInterestPaid)}
           </Accordion.Toggle>
           <Accordion.Collapse eventKey='2'>
             <Card.Body>
-              <Table striped bordered hover>
+              <Table striped bordered hover variant='dark'>
                 <thead>
                   <tr>
                     <td># Pago</td>
@@ -167,7 +172,7 @@ const DayDetails = ({ loans, payments, expenses, date, city }) => {
           </Accordion.Collapse>
         </Card>
 
-        <Card>
+        <Card style={{ backgroundColor: " #27293d " }}>
           <Card.Header>
             <Row>
               <Col>Total Pagos Y Reditos: </Col>
