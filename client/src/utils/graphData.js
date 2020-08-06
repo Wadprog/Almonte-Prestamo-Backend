@@ -1,4 +1,3 @@
-import moment from "moment";
 // Exported as they are
 export const Months = [
   "Enero",
