@@ -4,6 +4,7 @@ import moment from "moment";
 import NumberFormat from "react-number-format";
 
 const DayDetails = ({ loans, payments, expenses, date, city }) => {
+
   const filteredAmountPaidPayments = payments.filter(payment => {
     if (
       payment.amountPaid != undefined &&
@@ -19,6 +20,7 @@ const DayDetails = ({ loans, payments, expenses, date, city }) => {
       }
     }
   });
+  
   const filteredInterestPaidPayments = payments.filter(payment => {
     if (
       payment.interestPaid != undefined &&
