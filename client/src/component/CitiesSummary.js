@@ -4,6 +4,10 @@ import NumberFormat from "react-number-format";
 const CitiesSummary = ({ loans, payments, expenses, cities }) => {
   const citIesData = cities.map(city => {
     const CityLoans = LoanByCity(loans, city.name);
+    const CityPayment = payments.filter(payment => {
+      const [loan] = CityLoans.filter(loan => loan._id == payment.loan);
+      if (loan != undefined && loan != null) return payment;
+    });
     return {
       name: city.name,
       loansAmount: CityLoans.length,
@@ -28,7 +32,7 @@ const CitiesSummary = ({ loans, payments, expenses, cities }) => {
         }).reduce((acc, loan) => acc + loan.amount, 0)
       ),
       sumPaidPrestamao: ThousandSeparator(
-        payments
+        CityPayment
           .filter(payment => {
             const [loan] = loans.filter(loan => loan._id === payment.loan);
             if (!loan.comment) {
@@ -44,7 +48,7 @@ const CitiesSummary = ({ loans, payments, expenses, cities }) => {
           .reduce((acc, payment) => acc + parseFloat(payment.amountPaid), 0)
       ),
 
-      sumReditos: payments
+      sumReditos: CityPayment
         .filter(payment => {
           const [loan] = loans.filter(loan => loan._id === payment.loan);
           if (!loan.comment) {
