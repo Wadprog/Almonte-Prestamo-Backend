@@ -1,5 +1,6 @@
 import React from "react";
 import NumberFormat from "react-number-format";
+
 const CitiesSummary = ({ loans, payments, expenses, cities }) => {
   const citIesData = cities.map(city => {
     const CityLoans = LoanByCity(loans, city.name);
@@ -57,9 +58,11 @@ const CitiesSummary = ({ loans, payments, expenses, cities }) => {
           }
         })
         .reduce((acc, payment) => {
-          return acc + parseFloat(payment.interestPaid) > 0
-            ? parseFloat(payment.interestPaid)
-            : parseFloat(payment.interestPaid) * -1;
+          var a =
+            parseFloat(payment.interestPaid) > 0
+              ? parseFloat(payment.interestPaid)
+              : parseFloat(payment.interestPaid) * -1;
+          return acc + a;
         }, 0),
       sumcanceledLoans: ThousandSeparator(
         CityLoans.filter(loan => {
